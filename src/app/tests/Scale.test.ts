@@ -27,4 +27,13 @@ describe("test Scale", function () {
         scale.steps = "10 20 30";
         expect(scale.positions).toStrictEqual([0, 0.05, 0.15, 0.3, 1]);
     });
+
+    it("test set non valid steps", function () {
+        const scale = new Scale( { min: -100, max: 100, steps: "50" } );
+        scale.steps = "asd 34 sd 73@";
+        expect(scale.steps).toBe("");
+
+        scale.steps = "sdfdfg234sdf";
+        expect(scale.steps).toBe("");
+    });
 });

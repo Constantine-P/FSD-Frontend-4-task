@@ -13,7 +13,7 @@ export default class Range extends EventEmitter{
         this._max = (range.min > range.max) ? range.min : range.max;
     }
 
-    private normalize() {
+    normalize() {
         if (!isNumber(this._min)) {
             this.min = 0;
         }

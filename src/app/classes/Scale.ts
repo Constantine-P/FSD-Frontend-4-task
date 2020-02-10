@@ -1,5 +1,7 @@
 import Range from "./Range";
 import IScale from "../interfaces/IScale";
+import isValidNumberSteps from "../functions/isValidNumberSteps";
+import isNumber from "../functions/isNumber";
 
 export default class Scale extends Range {
     private _steps: string;
@@ -7,6 +9,13 @@ export default class Scale extends Range {
     constructor(scale: IScale = { min: 0, max: 0, steps: ""}) {
         super(scale);
         this._steps = scale.steps;
+        this.normalize();
+    }
+
+    normalize() {
+        if (!isValidNumberSteps(this._steps)) {
+            this.steps = "";
+        }
     }
 
     private get parseSteps() {
@@ -30,6 +39,7 @@ export default class Scale extends Range {
     }
 
     set steps(value) {
+        if (!isValidNumberSteps(value)) value = "";
         this._steps = value;
         this.emit("change");
     }
