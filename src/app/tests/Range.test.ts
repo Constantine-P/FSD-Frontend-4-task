@@ -33,4 +33,17 @@ describe("test Range", function () {
         range.max = -200;
         expect(range.max).toBe(-100);
     });
+
+    it("test set non valid min, max", function () {
+        const range = new Range( { min: -100, max: 100 } );
+
+        // @ts-ignore
+        range.min = "-200";
+        expect(range.min).toBe(0);
+
+        // @ts-ignore
+        range.max = "200";
+        expect(range.min).toBe(0);
+
+    });
 });

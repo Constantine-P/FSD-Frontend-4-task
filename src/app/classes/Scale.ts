@@ -31,6 +31,7 @@ export default class Scale extends Range {
 
     set steps(value) {
         this._steps = value;
+        this.emit("change");
     }
 
     get positions() {
