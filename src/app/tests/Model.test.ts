@@ -1,4 +1,5 @@
 import Model from "../layers/Model";
+import Range from "../classes/Range";
 import {SliderType} from "../types/SliderType";
 
 describe("test Model", function () {
@@ -73,7 +74,7 @@ describe("test Model", function () {
 
     it("test get exportedData", function () {
         const model = new Model(options);
-        expect(model.exportedData).toStrictEqual({ min: 2, max: 8 });
+        expect((model.range as Range).range).toStrictEqual({ min: 2, max: 8 });
     });
 
 });

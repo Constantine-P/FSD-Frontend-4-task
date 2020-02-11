@@ -1,10 +1,11 @@
 import EventEmitter from "../classes/EventEmitter";
 import Scale from "../classes/Scale";
 import Range from "../classes/Range";
-import minMax from "../functions/minMax";
 import ISliderOptions from "../interfaces/ISliderOptions";
 import IRange from "../interfaces/IRange";
 import IScale from "../interfaces/IScale";
+import ITransmittedData from "../interfaces/ITransmittedData";
+import minMax from "../functions/minMax";
 
 export default class Model extends EventEmitter {
     private _range: Range;
@@ -28,11 +29,18 @@ export default class Model extends EventEmitter {
         this._range = new Range();
 
         this.init(options);
+
+        this._range.on("change", this.rangeScaleChangeHandler.bind(this));
+        this._scale.on("change", this.rangeScaleChangeHandler.bind(this));
     }
 
     private init(options) {
         this._range = new Range(options.range);
         this._scale = new Scale(options.scale);
+    }
+
+    private rangeScaleChangeHandler() {
+        this.emit("change");
     }
 
     get range() {
@@ -63,29 +71,38 @@ export default class Model extends EventEmitter {
     set relRange(range: IRange) {
         range.min = minMax(0, range.min, 1);
         range.max = minMax(0, range.max, 1);
-        this.range.min = range.min * (<Scale>this.scale).length + this.scale.min;
-        this.range.max = range.max * (<Scale>this.scale).length + this.scale.min;
-        this.emit('change');
+        this.range = {
+            min: range.min * (<Scale>this.scale).length + this.scale.min,
+            max: range.max * (<Scale>this.scale).length + this.scale.min
+        };
     }
 
-    get scale(): IScale | Scale {
+    get scale() {
         return this._scale;
     }
 
-    set scale(scale: IScale | Scale) {
-        if (scale instanceof Scale) {
-            this._scale = scale;
-        }
-        this._scale.min   = scale.min;
-        this._scale.max   = scale.max;
+    set scale(scale: IScale) {
+        this._scale.range = {
+          min: scale.min,
+          max: scale.max
+        };
         if (scale.steps !== undefined) this._scale.steps = scale.steps;
-        this.emit('change');
     }
 
-    get exportedData() {
+    get data(): ITransmittedData {
         return {
-            min: this.range.min,
-            max: this.range.max,
+            range: this.range,
+            relRange: this.relRange,
+            scale: this.scale,
         }
+    }
+
+    set data(value: ITransmittedData) {
+        const fields = ["range", "relRange", "scale"];
+        fields.forEach(key => {
+            if (value[key] !== undefined) {
+                this[key] = value[key];
+            }
+        });
     }
 }
