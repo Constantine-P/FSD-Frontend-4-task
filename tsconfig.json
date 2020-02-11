@@ -6,6 +6,7 @@
     "target": "es6",
     "allowJs": true,
     "sourceMap": true,
-    "removeComments": true
+    "removeComments": true,
+    "esModuleInterop": true
   }
 }
