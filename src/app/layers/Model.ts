@@ -48,6 +48,7 @@ export default class Model extends EventEmitter {
     }
 
     set range(range: IRange) {
+        this._range.disableEmitting();
         this._range.min = minMax(
             this.scale.min,
             range.min,
@@ -58,6 +59,7 @@ export default class Model extends EventEmitter {
             range.max,
             this.scale.max
         );
+        this._range.enableEmitting();
         this.emit("change");
     }
 
@@ -82,11 +84,14 @@ export default class Model extends EventEmitter {
     }
 
     set scale(scale: IScale) {
+        this.disableEmitting();
         this._scale.range = {
           min: scale.min,
           max: scale.max
         };
         if (scale.steps !== undefined) this._scale.steps = scale.steps;
+        this.enableEmitting();
+        this.emit("change");
     }
 
     get data(): ITransmittedData {
@@ -98,11 +103,13 @@ export default class Model extends EventEmitter {
     }
 
     set data(value: ITransmittedData) {
-        const fields = ["range", "relRange", "scale"];
-        fields.forEach(key => {
-            if (value[key] !== undefined) {
-                this[key] = value[key];
-            }
-        });
+        this.disableEmitting();
+        this._range.range = value.range;
+        this._scale.range = {
+            min: value.scale.min,
+            max: value.scale.max,
+        };
+        this._scale.steps = value.scale.steps;
+        this.enableEmitting();
     }
 }

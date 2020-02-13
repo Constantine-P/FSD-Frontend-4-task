@@ -21,7 +21,7 @@ export default class ViewModel extends EventEmitter {
 
     constructor(options: ISliderOptions) {
         super();
-        this._type = "horizontal";
+        this._type = "";
         this._isRange = true;
         this._isVisibleTooltip = true;
         this._isVisibleScale = true;
@@ -130,11 +130,9 @@ export default class ViewModel extends EventEmitter {
 
         fields.forEach(key => {
             if (value[key] !== undefined) {
-                this[key] = value[key];
+                this[`_${key}`] = value[key];
             }
         });
-
-        this.emit("change");
     }
 
     updateRelRange(x: number) {
@@ -152,8 +150,9 @@ export default class ViewModel extends EventEmitter {
                 this.relRange.max = x;
             }
         } else {
-            this.relRange.min = 0;
+            this.relRange.min = x;
             this.relRange.max = x;
         }
+        this.emit('change');
     }
 };

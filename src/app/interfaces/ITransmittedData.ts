@@ -1,10 +1,14 @@
+import IRange from './IRange';
+import IScale from './IScale';
+import {SliderType} from '../types/SliderType';
+
 export default interface ITransmittedData {
-    range?: any,
-    relRange?: any,
-    scale?: any,
-    isRange?: any,
-    isVisibleTooltip?: any,
-    isVisibleScale?: any,
-    isReverseDirection?: any,
-    type?: any
+    range?: IRange,
+    relRange?: IRange,
+    scale?: IScale,
+    isRange?: boolean,
+    isVisibleTooltip?: boolean,
+    isVisibleScale?: boolean,
+    isReverseDirection?: boolean,
+    type?: SliderType
 }

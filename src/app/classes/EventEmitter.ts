@@ -1,8 +1,10 @@
 export default class EventEmitter {
     private _events: {};
+    private _canEmit: boolean;
 
     constructor() {
         this._events = {};
+        this._canEmit = true
     }
 
     on(evt: string, listener: EventListener) {
@@ -11,6 +13,16 @@ export default class EventEmitter {
     }
 
     emit(evt: string, arg?) {
-        (this._events[evt] || []).slice().forEach(lsn => lsn(arg));
+        if (this._canEmit) {
+            (this._events[evt] || []).slice().forEach(lsn => lsn(arg));
+        }
+    }
+
+    enableEmitting() {
+        this._canEmit = true;
+    }
+
+    disableEmitting() {
+        this._canEmit = false;
     }
 };
