@@ -150,7 +150,7 @@ export default class ViewModel extends EventEmitter {
                 this.relRange.max = x;
             }
         } else {
-            this.relRange.min = x;
+            this.relRange.min = 0;
             this.relRange.max = x;
         }
         this.emit('change');

@@ -44,6 +44,14 @@ class Controller {
   private panelChangeHandler(panel) {
     this.view.model.data = panel.data;
     this.model.data = panel.data;
+    const isRangeMinDisabled = () => {
+      return (!this.view.model.isRange && (this.model.range.min !== this.model.scale.min));
+    };
+    if (isRangeMinDisabled()) {
+      this.model.disableEmitting();
+      this.model.range.min = this.model.scale.min;
+      this.model.enableEmitting();
+    }
     this.updateViewModel();
     this.updatePanels();
   }
