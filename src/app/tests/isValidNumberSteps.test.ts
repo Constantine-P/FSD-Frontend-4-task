@@ -37,4 +37,12 @@ describe("isValidNumberSteps", function () {
         expect(isValidNumberSteps(undefined)).toBe(false);
     });
 
+    it("5*20", function () {
+        expect(isValidNumberSteps("5*20")).toBe(true);
+    });
+
+    it("5*20", function () {
+        expect(isValidNumberSteps("5*20 4*5.5 2*1.1")).toBe(true);
+    });
+
 });
