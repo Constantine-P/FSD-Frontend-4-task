@@ -6,6 +6,7 @@ import IRange from "../interfaces/IRange";
 import IScale from "../interfaces/IScale";
 import ITransmittedData from "../interfaces/ITransmittedData";
 import minMax from "../functions/minMax";
+import findClosest from '../functions/findClosest';
 
 export default class Model extends EventEmitter {
     private _range: Range;
@@ -48,6 +49,11 @@ export default class Model extends EventEmitter {
     }
 
     set range(range: IRange) {
+        if (this.scale.steps !== "") {
+            range.min = findClosest((<Scale>this.scale).values, range.min, this.range.min);
+            range.max = findClosest((<Scale>this.scale).values, range.max, this.range.max);
+        }
+
         this._range.disableEmitting();
         this._range.min = minMax(
             this.scale.min,
@@ -104,12 +110,12 @@ export default class Model extends EventEmitter {
 
     set data(value: ITransmittedData) {
         this.disableEmitting();
-        this._range.range = value.range;
         this._scale.range = {
             min: value.scale.min,
             max: value.scale.max,
         };
         this._scale.steps = value.scale.steps;
+        this.range = value.range;
         this.enableEmitting();
     }
 }

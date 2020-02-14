@@ -35,6 +35,14 @@ describe("test Model", function () {
 
         expect(model.range.min).toBe(-5);
         expect(model.range.max).toBe(10);
+
+        model.scale.steps = "3";
+        model.range = {
+            min: -4,
+            max: 9
+        };
+        expect(model.range.min).toBe(-2);
+        expect(model.range.max).toBe(7);
     });
 
     it("test get relRange", function () {
@@ -48,8 +56,8 @@ describe("test Model", function () {
             min: 0.1,
             max: 0.9
         };
-        expect(model.range.min).toBe(-3.5);
-        expect(model.range.max).toBe(8.5);
+        expect(model.range.min).toBe(-3);
+        expect(model.range.max).toBe(9);
     });
 
     it("test get scale", function () {
