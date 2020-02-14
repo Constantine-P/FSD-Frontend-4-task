@@ -106,8 +106,8 @@ export default class View extends EventEmitter {
         this._elements.minHandle.style.transform = this.directionStyles.handleTransform;
         this._elements.maxHandle.style.transform = this.directionStyles.handleTransform;
 
-        this._elements.minValueTooltip.style.transform = this.directionStyles.handleTransform;
-        this._elements.maxValueTooltip.style.transform = this.directionStyles.handleTransform;
+        this._elements.minValueTooltip.style.transform = this.directionStyles.tooltipTransform;
+        this._elements.maxValueTooltip.style.transform = this.directionStyles.tooltipTransform;
     }
 
     private alignSliderElementsVisibility() {
@@ -151,7 +151,8 @@ export default class View extends EventEmitter {
         const styles = {
             position: "",
             size: "",
-            handleTransform: ""
+            handleTransform: "",
+            tooltipTransform: ""
         };
 
         if (this.model.type === "horizontal") {
@@ -160,19 +161,23 @@ export default class View extends EventEmitter {
             if (this.model.isReverseDirection) {
                 styles.position = "right";
                 styles.handleTransform = "translateX(50%)";
+                styles.tooltipTransform = "translateX(50%)";
             } else {
                 styles.position = "left";
                 styles.handleTransform = "translateX(-50%)";
+                styles.tooltipTransform = "translateX(-50%)";
             }
         } else {
             styles.size = "height";
 
             if (this.model.isReverseDirection) {
                 styles.position = "top";
-                styles.handleTransform = "translateY(-50%)";
+                styles.handleTransform = "translateY(-50%) rotate(90deg)";
+                styles.tooltipTransform = "translateY(-50%)";
             } else {
                 styles.position = "bottom";
-                styles.handleTransform = "translateY(50%)";
+                styles.handleTransform = "translateY(50%) rotate(90deg)";
+                styles.tooltipTransform = "translateY(50%)";
             }
         }
 
@@ -197,6 +202,7 @@ export default class View extends EventEmitter {
             value.classList.add("value");
             value.textContent = this.model.scale.values[i].toString();
             value.style[this.directionStyles.position] = toPercent(item);
+            value.style.transform = this.directionStyles.tooltipTransform;
             this._elements.scaleValues.append(value);
         });
     }
