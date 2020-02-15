@@ -47,7 +47,7 @@ describe("test Model", function () {
 
     it("test get relRange", function () {
         const model = new Model(options);
-        expect(model.relRange).toStrictEqual({ min: 7/15, max: 13/15 });
+        expect((<Range>model.relRange).range).toStrictEqual({ min: 7/15, max: 13/15 });
     });
 
     it("test set relRange", function () {

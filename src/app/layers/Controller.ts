@@ -61,16 +61,13 @@ class Controller {
   }
 
   private updateViewModel() {
-      this.view.model.relRange = <Range>this.model.relRange;
-      this.view.model.outputRange = (<Range>this.model.range).range;
-      this.view.model.scale = <Scale>this.model.scale;
+      this.view.model.data = this.model.data;
       this.view.render();
   }
 
   private updatePanels() {
       this.panels.forEach(panel => {
-        panel.data = this.model.data;
-        panel.data = this.view.model.data;
+        panel.data = Object.assign(this.model.data, this.view.model.data);
       });
     }
 }

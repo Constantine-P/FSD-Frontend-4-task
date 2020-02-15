@@ -110,15 +110,15 @@ describe("test ViewModel", function () {
     });
 
 
-    it("test get outputRange", function () {
+    it("test get range", function () {
         const viewModel = new ViewModel(options);
-        expect(viewModel.outputRange).toStrictEqual({ min: 2, max: 8 });
+        expect(viewModel.range).toStrictEqual({ min: 2, max: 8 });
     });
 
-    it("test set outputRange", function () {
+    it("test set range", function () {
         const viewModel = new ViewModel(options);
-        viewModel.outputRange = { min: 123, max: 456 };
-        expect(viewModel.outputRange).toStrictEqual({ min: 123, max: 456 });
+        viewModel.range = { min: 123, max: 456 };
+        expect(viewModel.range).toStrictEqual({ min: 123, max: 456 });
     });
 
     it("test updateRelRange", function () {

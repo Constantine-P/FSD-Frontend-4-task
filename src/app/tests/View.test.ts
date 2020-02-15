@@ -27,7 +27,7 @@ describe("test View", function () {
         document.body.innerHTML = `<div class="slider"></div>`;
         const slider = document.querySelector(".slider") as HTMLElement;
         const view = new View(slider, options);
-        view.model.outputRange = options.range;
+        view.model.range = options.range;
         view.render();
 
         describe("test existence of elements", function () {
@@ -116,7 +116,7 @@ describe("test View", function () {
         document.body.innerHTML = `<div class="slider"></div>`;
         const slider = document.querySelector(".slider") as HTMLElement;
         const view = new View(slider, options);
-        view.model.outputRange = options.range;
+        view.model.range = options.range;
         view.render();
 
         it("test get model", function () {
@@ -128,7 +128,7 @@ describe("test View", function () {
         document.body.innerHTML = `<div class="slider"></div>`;
         const slider = document.querySelector(".slider") as HTMLElement;
         const view = new View(slider, options);
-        view.model.outputRange = options.range;
+        view.model.range = options.range;
         view.model.isVisibleTooltip = false;
         view.model.isVisibleScale = false;
         view.model.isRange = true;

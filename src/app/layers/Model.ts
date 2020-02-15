@@ -70,10 +70,10 @@ export default class Model extends EventEmitter {
     }
 
     get relRange() {
-        return {
+        return new Range({
             min: (this.range.min - this.scale.min) / (<Scale>this.scale).length,
             max: (this.range.max - this.scale.min) / (<Scale>this.scale).length,
-        };
+        });
     }
 
     set relRange(range: IRange) {
@@ -102,7 +102,7 @@ export default class Model extends EventEmitter {
 
     get data(): ITransmittedData {
         return {
-            range: this.range,
+            range: (<Range>this.range).range,
             relRange: this.relRange,
             scale: this.scale,
         }

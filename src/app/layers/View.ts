@@ -92,8 +92,8 @@ export default class View extends EventEmitter {
         this._elements.minValueTooltip.style[this.directionStyles.position] = toPercent(this.model.relRange.min);
         this._elements.maxValueTooltip.style[this.directionStyles.position] = toPercent(this.model.relRange.max);
 
-        this._elements.minValueTooltip.textContent = this.model.outputRange.min.toString();
-        this._elements.maxValueTooltip.textContent = this.model.outputRange.max.toString();
+        this._elements.minValueTooltip.textContent = this.model.range.min.toString();
+        this._elements.maxValueTooltip.textContent = this.model.range.max.toString();
 
         this._elements.rangeLine.style[this.directionStyles.position] = (this.model.isRange)
             ? toPercent(this.model.relRange.min)

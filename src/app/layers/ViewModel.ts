@@ -17,7 +17,7 @@ export default class ViewModel extends EventEmitter {
     private _isVisibleTooltip: boolean;
     private _isVisibleScale: boolean;
     private _isReverseDirection: boolean;
-    private _outputRange: IRange;
+    private _range: IRange;
 
     constructor(options: ISliderOptions) {
         super();
@@ -28,7 +28,7 @@ export default class ViewModel extends EventEmitter {
         this._isReverseDirection = true;
         this._scale = { positions: [], values: [] };
         this._relRange = new Range();
-        this._outputRange = { min: 0, max: 0 };
+        this._range = { min: 0, max: 0 };
 
         this.init(options);
     }
@@ -41,7 +41,7 @@ export default class ViewModel extends EventEmitter {
         this.isReverseDirection = options.isReverseDirection;
         this.scale = { positions: [], values: [] };
         this.relRange = new Range( { min: 0, max: 1 } );
-        this.outputRange = { min: options.range.min, max: options.range.max };
+        this.range = { min: options.range.min, max: options.range.max };
     }
 
     get scale(): IViewScale {
@@ -106,12 +106,12 @@ export default class ViewModel extends EventEmitter {
         this.emit('change');
     }
 
-    get outputRange(): IRange {
-        return this._outputRange;
+    get range(): IRange {
+        return this._range;
     }
 
-    set outputRange(value: IRange) {
-        this._outputRange = value;
+    set range(value: IRange) {
+        this._range = value;
     }
 
     get data(): ITransmittedData {
@@ -125,7 +125,7 @@ export default class ViewModel extends EventEmitter {
     }
 
     set data(value: ITransmittedData) {
-        const fields = ["isRange", "isVisibleTooltip", "isVisibleScale",
+        const fields = ["range", "relRange", "scale", "isRange", "isVisibleTooltip", "isVisibleScale",
             "isReverseDirection", "type"];
 
         fields.forEach(key => {
