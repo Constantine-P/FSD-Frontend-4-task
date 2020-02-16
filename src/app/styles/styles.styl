@@ -1,0 +1,200 @@
+@import "variables.styl"
+
+.panel
+  display grid
+  grid-gap 10px
+  min-width 250px
+  justify-self center
+  align-self center
+  padding 10px 10px 0 10px
+  font-size font-size
+
+  label
+    width 100%
+    display flex
+    justify-content space-between
+    align-items center
+    margin-bottom 10px
+
+    input, select
+      font-family Garamond, sans-serif
+      padding-left 5px
+      padding-right 3px
+      width 100px
+      box-sizing border-box
+      font-size font-size
+
+    input[type="checkbox"]
+      width auto
+
+.slider
+  height 100%
+  display flex
+  justify-content center
+  justify-self center
+  align-self center
+  align-items center
+  border-radius 3px
+  padding 40px
+  box-sizing border-box
+  user-select none
+  font-size font-size
+
+  &__horizontal
+    width 100%
+    min-width 150px
+    height 50px
+
+    .slider-inner
+      position relative
+      min-width 100%
+      height 8px
+
+    .scale-line
+      width 100%
+      height 8px
+
+    .range-line
+      width 100%
+      height 6px
+      top 1px
+
+    .min-handle, .max-handle
+      top -6px
+      transform translateX(-50%)
+      height 12px
+      width 20px
+
+    .min-value-tooltip, .max-value-tooltip
+      bottom 250%
+      transform translateX(-50%)
+
+    .scale-values
+      bottom -8px
+      width 100%
+
+  &__vertical
+    min-height 250px
+    height 100%
+    width 50px
+
+    .slider-inner
+      position relative
+      width 8px
+      height 100%
+
+    .scale-line
+      height 100%
+      width 8px
+
+    .range-line
+      height 100%
+      width 6px
+      left 1px
+
+    .min-handle, .max-handle
+      left -4.5px
+      transform translateY(50%)
+
+    .min-value-tooltip, .max-value-tooltip
+      left 15px
+      transform translateY(50%)
+
+    .scale-values
+      left -35px
+      height 100%
+
+
+  .slider-inner
+    position relative
+    box-sizing border-box
+
+  .scale-line
+    position absolute
+    border 1px solid border-color
+    border-radius 3px
+    box-sizing border-box
+    background-color scale-color
+    box-shadow 1px 1px 3px 0 shadow-color
+
+  .range-line
+    z-index 1
+    position absolute
+    box-sizing border-box
+    border-radius 3px
+    transition 300ms
+    background-color range-color
+
+  .min-handle, .max-handle
+    position absolute
+    border-radius 8px
+    box-sizing border-box
+    z-index 2
+    cursor pointer
+    transition 300ms
+    background center / contain no-repeat url("pointer.png")
+    width 16px
+    height 20px
+
+  .scale-values
+    position absolute
+    box-sizing border-box
+    color text-color
+
+    .value
+      position absolute
+
+  .min-value-tooltip, .max-value-tooltip
+    display flex
+    justify-content center
+    align-items center
+    position absolute
+    box-sizing border-box
+    border-left  1px solid text-color
+    border-right  1px solid text-color
+    border-radius 3px
+    padding-right 5px
+    padding-left 5px
+    transition 300ms
+    color text-color
+
+  .hidden
+    display none !important
+
+.slider-wrapper
+  max-width 1000px
+  display grid
+  grid-template-rows auto 1fr
+  grid-gap 10px
+  margin 10px
+  color main-text-color
+  padding 10px
+  font-family Garamond, sans-serif
+  background-color background-color
+  border 1px solid border-color
+  box-shadow 1px 1px 3px 0 shadow-color
+
+  .panel_big
+    grid-column 2
+    grid-row 1 / span 2
+    align-self start
+
+    @media screen and (max-width: 700px)
+      grid-column 1
+      grid-row 3
+
+  .panel_small
+    grid-column 1
+    grid-row 1
+    display grid
+    grid-template-columns 1fr 1fr
+    grid-gap 5px
+    width auto
+
+    label
+      display grid
+      grid-gap 5px
+
+  .slider
+    grid-column 1
+    grid-row 2
