@@ -1,15 +1,15 @@
-import Slider from "./Slider";
-import ISliderOptions from './interfaces/ISliderOptions';
-// import "@types/jquery";
+import Slider from './Slider';
+import SliderOptions from './interfaces/SliderOptions';
 
-$.fn.rangeSlider = function (options: ISliderOptions, panels: HTMLElement | HTMLElement[] | JQuery) {
-
+$.fn.rangeSlider = function rangeSlider(options: SliderOptions,
+  panels: HTMLElement | HTMLElement[] | JQuery): Slider {
+  let pans = panels;
   if (panels instanceof Array) {
-    panels = panels.map(item => {
-      return (item instanceof jQuery) ? item[0] : item;
-    });
+    pans = panels.map((item) => ((item instanceof jQuery) ? item[0] : item));
   } else if (panels instanceof jQuery) {
-    panels = panels[0];
+    const zero = 0;
+    pans = panels[zero];
   }
-  return new Slider(this.get(0), options, <HTMLElement | HTMLElement[]>panels);
+
+  return new Slider(this.get(0), options, pans as HTMLElement | HTMLElement[]);
 };

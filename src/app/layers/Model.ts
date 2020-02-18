@@ -1,121 +1,141 @@
-import EventEmitter from "../classes/EventEmitter";
-import Scale from "../classes/Scale";
-import Range from "../classes/Range";
-import ISliderOptions from "../interfaces/ISliderOptions";
-import IRange from "../interfaces/IRange";
-import IScale from "../interfaces/IScale";
-import ITransmittedData from "../interfaces/ITransmittedData";
-import minMax from "../functions/minMax";
+import EventEmitter from '../classes/EventEmitter';
+import SliderOptions from '../interfaces/SliderOptions';
+import Range from '../classes/Range';
+import Scale from '../classes/Scale';
+import isValidNumberSteps from '../functions/isValidNumberSteps';
+import normalizeToNum from '../functions/normalizeToNum';
+import minMax from '../functions/minMax';
+import RangeValue from '../interfaces/RangeValue';
+import TransitData from '../interfaces/TransitData';
 import findClosest from '../functions/findClosest';
 
-export default class Model extends EventEmitter {
-    private _range: Range;
-    private _scale: Scale;
+class Model extends EventEmitter {
+  _min: number;
 
-    constructor(options: ISliderOptions) {
-        super();
-        let defaultOptions = {
-            range: {
-                min: 0,
-                max: 100
-            },
-            scale: {
-                min: 0,
-                max: 100,
-                steps: "1"
-            }
-        };
-        Object.assign(defaultOptions, options);
-        this._scale = new Scale();
-        this._range = new Range();
+  _max: number;
 
-        this.init(options);
+  _scaleMin: number;
 
-        this._range.on("change", this.rangeScaleChangeHandler.bind(this));
-        this._scale.on("change", this.rangeScaleChangeHandler.bind(this));
-    }
+  _scaleMax: number;
 
-    private init(options) {
-        this._range = new Range(options.range);
-        this._scale = new Scale(options.scale);
-    }
+  _scaleSteps: string;
 
-    private rangeScaleChangeHandler() {
-        this.emit("change");
-    }
+  constructor(options: SliderOptions) {
+    super();
+    const defaultOptions: SliderOptions = {
+      min: 0, max: 0, scaleMin: 0, scaleMax: 0, scaleSteps: '',
+    };
+    Object.assign(defaultOptions, options);
+    this._min = options.min;
+    this._max = options.max;
+    this._scaleMin = options.scaleMin;
+    this._scaleMax = options.scaleMax;
+    this._scaleSteps = options.scaleSteps;
+  }
 
-    get range() {
-        return this._range;
-    }
+  get min(): number {
+    return this._min;
+  }
 
-    set range(range: IRange) {
-        if (this.scale.steps !== "") {
-            range.min = findClosest((<Scale>this.scale).values, range.min, this.range.min);
-            range.max = findClosest((<Scale>this.scale).values, range.max, this.range.max);
-        }
+  set min(value: number) {
+    this._min = minMax(
+      this.scaleMin,
+      // normalizeToNum(value),
+      findClosest(this.scale.values, normalizeToNum(value), this._min),
+      Math.min(this.max, this.scaleMax),
+    );
+    this.emit('change');
+  }
 
-        this._range.disableEmitting();
-        this._range.min = minMax(
-            this.scale.min,
-            range.min,
-            Math.min(this._range.max, this.scale.max)
-        );
-        this._range.max = minMax(
-            Math.max(this._range.min, this.scale.min),
-            range.max,
-            this.scale.max
-        );
-        this._range.enableEmitting();
-        this.emit("change");
-    }
+  get max(): number {
+    return this._max;
+  }
 
-    get relRange() {
-        return new Range({
-            min: (this.range.min - this.scale.min) / (<Scale>this.scale).length,
-            max: (this.range.max - this.scale.min) / (<Scale>this.scale).length,
-        });
-    }
+  set max(value: number) {
+    this._max = minMax(
+      Math.max(this.min, this.scaleMin),
+      // normalizeToNum(value),
+      findClosest(this.scale.values, normalizeToNum(value), this._max),
+      this.scaleMax,
+    );
+    this.emit('change');
+  }
 
-    set relRange(range: IRange) {
-        range.min = minMax(0, range.min, 1);
-        range.max = minMax(0, range.max, 1);
-        this.range = {
-            min: range.min * (<Scale>this.scale).length + this.scale.min,
-            max: range.max * (<Scale>this.scale).length + this.scale.min
-        };
-    }
+  get scaleMin(): number {
+    return this._scaleMin;
+  }
 
-    get scale() {
-        return this._scale;
-    }
+  set scaleMin(value: number) {
+    const val = normalizeToNum(value);
+    this._scaleMin = (val > this.scaleMax) ? this.scaleMax : val;
+    this.emit('change');
+  }
 
-    set scale(scale: IScale) {
-        this.disableEmitting();
-        this._scale.range = {
-          min: scale.min,
-          max: scale.max
-        };
-        if (scale.steps !== undefined) this._scale.steps = scale.steps;
-        this.enableEmitting();
-        this.emit("change");
-    }
+  get scaleMax(): number {
+    return this._scaleMax;
+  }
 
-    get data(): ITransmittedData {
-        return {
-            range: (<Range>this.range).range,
-            relRange: this.relRange,
-            scale: this.scale,
-        }
-    }
+  set scaleMax(value: number) {
+    const val = normalizeToNum(value);
+    this._scaleMax = (val < this.scaleMin) ? this.scaleMin : val;
+    this.emit('change');
+  }
 
-    set data(value: ITransmittedData) {
-        this.disableEmitting();
-        this._scale.range = {
-            min: value.scale.min,
-            max: value.scale.max,
-        };
-        this._scale.steps = value.scale.steps;
-        this.range = value.range;
-        this.enableEmitting();
-    }
+  get scaleSteps(): string {
+    return this._scaleSteps;
+  }
+
+  set scaleSteps(value: string) {
+    this._scaleSteps = isValidNumberSteps(value) ? value : '';
+    this.emit('change');
+  }
+
+  get data(): TransitData {
+    return {
+      min: this._min,
+      max: this._max,
+      scaleMin: this._scaleMin,
+      scaleMax: this._scaleMax,
+      scaleSteps: this._scaleSteps,
+      range: this.range,
+      relRange: this.relRange,
+      scale: { values: this.scale.values, positions: this.scale.positions },
+    };
+  }
+
+  set data(value: TransitData) {
+    const fields = ['scaleMin', 'scaleMax', 'scaleSteps', 'min', 'max'];
+    this.disableEmitting();
+    fields.forEach((key) => {
+      if (value[key] !== undefined) this[key] = value[key];
+    });
+    this.enableEmitting();
+  }
+
+  get range(): Range {
+    return new Range({ min: this.min, max: this.max });
+  }
+
+  set range(value: Range) {
+    this.min = value.min;
+    this.max = value.max;
+  }
+
+  get relRange(): RangeValue {
+    return ({
+      min: (this.min - this.scaleMin) / this.scale.length,
+      max: (this.max - this.scaleMin) / this.scale.length,
+    });
+  }
+
+  set relRange(value: RangeValue) {
+    this.min = value.min * this.scale.length + this.scaleMin;
+    this.max = value.max * this.scale.length + this.scaleMin;
+  }
+
+  get scale(): Scale {
+    return new Scale({ min: this.scaleMin, max: this.scaleMax, steps: this.scaleSteps });
+  }
 }
+
+export default Model;

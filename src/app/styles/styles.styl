@@ -42,13 +42,14 @@
 
   &__horizontal
     width 100%
-    min-width 150px
+    min-width 200px
     height 50px
 
     .slider-inner
       position relative
-      min-width 100%
+      width 100%
       height 8px
+      min-width 200px
 
     .scale-line
       width 100%
@@ -65,7 +66,7 @@
       height 12px
       width 20px
 
-    .min-value-tooltip, .max-value-tooltip
+    .min-tooltip, .max-tooltip
       bottom 250%
       transform translateX(-50%)
 
@@ -82,6 +83,7 @@
       position relative
       width 8px
       height 100%
+      min-height 200px
 
     .scale-line
       height 100%
@@ -96,7 +98,7 @@
       left -4.5px
       transform translateY(50%)
 
-    .min-value-tooltip, .max-value-tooltip
+    .min-tooltip, .max-tooltip
       left 15px
       transform translateY(50%)
 
@@ -144,14 +146,14 @@
     .value
       position absolute
 
-  .min-value-tooltip, .max-value-tooltip
+  .min-tooltip, .max-tooltip
     display flex
     justify-content center
     align-items center
     position absolute
     box-sizing border-box
-    border-left  1px solid text-color
-    border-right  1px solid text-color
+    border-left 1px solid text-color
+    border-right 1px solid text-color
     border-radius 3px
     padding-right 5px
     padding-left 5px
@@ -160,41 +162,3 @@
 
   .hidden
     display none !important
-
-.slider-wrapper
-  max-width 1000px
-  display grid
-  grid-template-rows auto 1fr
-  grid-gap 10px
-  margin 10px
-  color main-text-color
-  padding 10px
-  font-family Garamond, sans-serif
-  background-color background-color
-  border 1px solid border-color
-  box-shadow 1px 1px 3px 0 shadow-color
-
-  .panel_big
-    grid-column 2
-    grid-row 1 / span 2
-    align-self start
-
-    @media screen and (max-width: 700px)
-      grid-column 1
-      grid-row 3
-
-  .panel_small
-    grid-column 1
-    grid-row 1
-    display grid
-    grid-template-columns 1fr 1fr
-    grid-gap 5px
-    width auto
-
-    label
-      display grid
-      grid-gap 5px
-
-  .slider
-    grid-column 1
-    grid-row 2

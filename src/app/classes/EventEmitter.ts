@@ -1,28 +1,29 @@
 export default class EventEmitter {
-    private _events: {};
-    private _canEmit: boolean;
+  private _events: {};
 
-    constructor() {
-        this._events = {};
-        this._canEmit = true
-    }
+  private _canEmit: boolean;
 
-    on(evt: string, listener: EventListener) {
-        (this._events[evt] || (this._events[evt] = [])).push(listener);
-        return this;
-    }
+  constructor() {
+    this._events = {};
+    this._canEmit = true;
+  }
 
-    emit(evt: string, arg?) {
-        if (this._canEmit) {
-            (this._events[evt] || []).slice().forEach(lsn => lsn(arg));
-        }
-    }
+  on(evt: string, listener: EventListener): EventEmitter {
+    (this._events[evt] || (this._events[evt] = [])).push(listener);
+    return this;
+  }
 
-    enableEmitting() {
-        this._canEmit = true;
+  emit(evt: string, arg?): void {
+    if (this._canEmit) {
+      (this._events[evt] || []).slice().forEach((lsn) => lsn(arg));
     }
+  }
 
-    disableEmitting() {
-        this._canEmit = false;
-    }
-};
+  enableEmitting(): void {
+    this._canEmit = true;
+  }
+
+  disableEmitting(): void {
+    this._canEmit = false;
+  }
+}

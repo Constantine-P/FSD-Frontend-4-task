@@ -1,27 +1,23 @@
 import Slider from '../Slider';
-import {SliderType} from '../types/SliderType';
+import { SliderType } from '../types/SliderType';
 import '@testing-library/jest-dom';
-import ViewModel from '../layers/ViewModel';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('jsdom-global')();
 
-describe("test Scale", function () {
+describe('test Scale', () => {
   let slider: Slider;
   const options = {
-    range: {
-      min: 2,
-      max: 8,
-    },
-    scale: {
-      min: -5,
-      max: 10,
-      steps: "1"
-    },
-    isVisibleTooltip: true,
+    min: 2,
+    max: 8,
+    scaleMin: -5,
+    scaleMax: 10,
+    scaleSteps: '1',
+    areTooltipsVisible: true,
     isRange: true,
-    isVisibleScale: true,
+    isScaleVisible: true,
     isReverseDirection: true,
-    type: <SliderType>"horizontal",
+    type: 'horizontal' as SliderType,
   };
   beforeEach(() => {
     document.body.innerHTML = `
@@ -33,103 +29,83 @@ describe("test Scale", function () {
       <input type="number" data-js="scaleMax" value="50">
       <input type="text"   data-js="steps" value="6">
       <input type="checkbox" data-js="isRange" checked>
-      <input type="checkbox" data-js="isVisibleTooltip" checked>
-      <input type="checkbox" data-js="isVisibleScale" checked>
+      <input type="checkbox" data-js="areTooltipsVisible" checked>
+      <input type="checkbox" data-js="isScaleVisible" checked>
       <input type="checkbox" data-js="isReverseDirection" checked>
       <select data-js="type">
         <option>horizontal</option>
         <option selected>vertical</option>
       </select>
     </div>`;
-    const sliderEl = document.querySelector(".slider") as HTMLElement;
-    const panel = document.querySelector(".panel") as HTMLElement;
+    const sliderEl = document.querySelector('.slider') as HTMLElement;
+    const panel = document.querySelector('.panel') as HTMLElement;
     slider = new Slider(sliderEl, options, panel);
   });
 
-  it("test get range", function () {
+  it('test get range', () => {
     expect(slider.range.min).toBe(2);
-    expect(slider.range.max).toBe(8)
+    expect(slider.range.max).toBe(8);
   });
 
-  it("test set range", function () {
+  it('test set range', () => {
     slider.range = {
       min: -100500,
-      max: 100500
+      max: 100500,
     };
 
     expect(slider.range.min).toBe(-5);
     expect(slider.range.max).toBe(10);
 
-    slider.scale.steps = "3";
+    slider.scaleSteps = '3';
     slider.range = {
       min: -4,
-      max: 9
+      max: 9,
     };
     expect(slider.range.min).toBe(-2);
     expect(slider.range.max).toBe(7);
   });
 
-  it("test get scale", function () {
-    expect(slider.scale.min).toBe(-5);
-    expect(slider.scale.max).toBe(10);
-    expect(slider.scale.steps).toBe("1");
+  it('test get type', () => {
+    expect(slider.type).toBe('horizontal');
   });
 
-  it("test set scale", function () {
-    slider.scale = {
-      min: -100,
-      max: 100,
-      steps: "75"
-    };
-    expect(slider.scale.min).toBe(-100);
-    expect(slider.scale.max).toBe(100);
-    expect(slider.scale.steps).toStrictEqual("75");
+  it('test set type', () => {
+    slider.type = 'vertical';
+    expect(slider.type).toBe('vertical');
   });
 
-  it("test get type", function () {
-    expect(slider.type).toBe("horizontal");
-  });
-
-  it("test set type", function () {
-    slider.type = "vertical";
-    expect(slider.type).toBe("vertical");
-  });
-
-
-  it("test get isRange", function () {
+  it('test get isRange', () => {
     expect(slider.isRange).toBe(true);
   });
 
-  it("test set isRange", function () {
+  it('test set isRange', () => {
     slider.isRange = false;
     expect(slider.isRange).toBe(false);
   });
 
-
-  it("test get isVisibleTooltip", function () {
-    expect(slider.isVisibleTooltip).toBe(true);
+  it('test get areTooltipsVisible', () => {
+    expect(slider.areTooltipsVisible).toBe(true);
   });
 
-  it("test set isVisibleTooltip", function () {
-    slider.isVisibleTooltip = false;
-    expect(slider.isVisibleTooltip).toBe(false);
+  it('test set areTooltipsVisible', () => {
+    slider.areTooltipsVisible = false;
+    expect(slider.areTooltipsVisible).toBe(false);
   });
 
-
-  it("test get isVisibleScale", function () {
-    expect(slider.isVisibleScale).toBe(true);
+  it('test get isScaleVisible', () => {
+    expect(slider.isScaleVisible).toBe(true);
   });
 
-  it("test set isVisibleScale", function () {
-    slider.isVisibleScale = false;
-    expect(slider.isVisibleScale).toBe(false);
+  it('test set isScaleVisible', () => {
+    slider.isScaleVisible = false;
+    expect(slider.isScaleVisible).toBe(false);
   });
 
-  it("test get isReverseDirection", function () {
+  it('test get isReverseDirection', () => {
     expect(slider.isReverseDirection).toBe(true);
   });
 
-  it("test set isReverseDirection", function () {
+  it('test set isReverseDirection', () => {
     slider.isReverseDirection = false;
     expect(slider.isReverseDirection).toBe(false);
   });

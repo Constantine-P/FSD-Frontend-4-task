@@ -1,33 +1,22 @@
-export default function isValidNumberSteps(value: string): boolean {
+function isValidNumberSteps(value: string): boolean {
   if (value === undefined || value === null) return false;
-  if (value === "") return true;
-  const strArr = value.split(" ");
+  if (value === '') return true;
+  const productArr = value.split(' ');
+  if (productArr.length === 0) return false;
+
   let isValid = true;
+  productArr.forEach((item) => {
+    const product = item.split('*');
+    const isProductNotValid = (): boolean => (
+      (product.length === 1 && Number(product[0]).toString() !== product[0])
+      || (product.length > 2)
+      || (product.length === 2 && (Number(product[0]).toString() !== product[0]
+          || Number(product[1]).toString() !== product[1])));
 
-  if (strArr.length === 0) return false;
-
-  strArr.forEach(item => {
-    const product = item.split("*");
-    const isProductElementsNotNumber = () => {
-      return (Number(product[0]).toString() !== product[0]
-        || Number(product[1]).toString() !== product[1])
-    };
-
-    if (product.length === 1) {
-      if (Number(item).toString() !== item) {
-        isValid = false;
-        return;
-      } else {
-        return;
-      }
-    } else if (product.length > 2) {
-      isValid = false;
-      return;
-    } else if (isProductElementsNotNumber()) {
-      isValid = false;
-      return;
-    }
+    if (isProductNotValid()) isValid = false;
   });
 
   return isValid;
 }
+
+export default isValidNumberSteps;

@@ -1,12 +1,12 @@
-import Model from "./Model";
-import View from "./View";
+import Model from './Model';
+import View from './View';
 import PanelView from './PanelView';
-import Scale from "../classes/Scale";
-import Range from "../classes/Range";
 
 class Controller {
   private readonly model: Model;
+
   private readonly view: View;
+
   private readonly panels: PanelView[];
 
   constructor(model: Model, view: View, panels?: PanelView[]) {
@@ -20,56 +20,56 @@ class Controller {
     this.view.render();
   }
 
-  private addHandlers() {
-    this.model.on("change", this.modelChangeHandler.bind(this));
+  private addHandlers(): void {
+    this.model.on('change', this.modelChangeHandler.bind(this));
     this.view.model.on('change', this.viewModelChangeHandler.bind(this));
 
     if (this.panels) {
-      this.panels.forEach(panel => {
-        panel.on("change", this.panelChangeHandler.bind(this, panel));
+      this.panels.forEach((panel) => {
+        panel.on('change', this.panelChangeHandler.bind(this, panel));
       });
     }
   }
 
-  private modelChangeHandler() {
+  private modelChangeHandler(): void {
     this.updateViewModel();
     if (this.panels) this.updatePanels();
   }
 
-  private viewModelChangeHandler() {
+  private viewModelChangeHandler(): void {
     this.updateModel();
     if (this.panels) this.updatePanels();
   }
 
-  private panelChangeHandler(panel) {
+  private panelChangeHandler(panel): void {
     this.view.model.data = panel.data;
     this.model.data = panel.data;
-    const isRangeMinDisabled = () => {
-      return (!this.view.model.isRange && (this.model.range.min !== this.model.scale.min));
-    };
-    if (isRangeMinDisabled()) {
+    const isRangeMinDisabled = (!this.view.model.isRange
+      && (this.model.range.min !== this.model.scale.min));
+
+    if (isRangeMinDisabled) {
       this.model.disableEmitting();
-      this.model.range.min = this.model.scale.min;
+      this.model.min = this.model.scaleMin;
       this.model.enableEmitting();
     }
     this.updateViewModel();
     this.updatePanels();
   }
 
-  private updateModel() {
-      this.model.relRange = this.view.model.relRange;
+  private updateModel(): void {
+    this.model.relRange = this.view.model.relRange;
   }
 
-  private updateViewModel() {
-      this.view.model.data = this.model.data;
-      this.view.render();
+  private updateViewModel(): void {
+    this.view.model.data = this.model.data;
+    this.view.render();
   }
 
-  private updatePanels() {
-      this.panels.forEach(panel => {
-        panel.data = Object.assign(this.model.data, this.view.model.data);
-      });
-    }
+  private updatePanels(): void {
+    this.panels.forEach((panel: PanelView) => {
+      panel.data = Object.assign(this.model.data, this.view.model.data);
+    });
+  }
 }
 
 export default Controller;

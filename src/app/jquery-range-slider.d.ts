@@ -1,3 +1,3 @@
 interface JQuery {
-  rangeSlider(options: any, panels?: any): any;
+  rangeSlider(options, panels?);
 }

@@ -1,3 +1,5 @@
-export default function isNumber(value: any): boolean {
-    return !isNaN(value) && (typeof value === "number");
+function isNumber(value): boolean {
+  return !Number.isNaN(value) && (typeof value === 'number');
 }
+
+export default isNumber;
