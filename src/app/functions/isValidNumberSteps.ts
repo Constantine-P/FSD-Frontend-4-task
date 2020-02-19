@@ -1,5 +1,5 @@
 function isValidNumberSteps(value: string): boolean {
-  if (value === undefined || value === null) return false;
+  if (value === undefined || value === null || value === '0') return false;
   if (value === '') return true;
   const productArr = value.split(' ');
   if (productArr.length === 0) return false;

@@ -1,7 +1,7 @@
-import isNumber from './isNumber';
+import isNumeric from './isNumeric';
 
-function normalizeToNum(value): number {
-  return (isNumber(value)) ? value : 0;
+function normalizeToNum(value, valueInstead = 0): number {
+  return (isNumeric(value)) ? value : valueInstead;
 }
 
 export default normalizeToNum;

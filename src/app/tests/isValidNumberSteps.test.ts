@@ -6,7 +6,7 @@ describe('isValidNumberSteps', () => {
   });
 
   it('"0"', () => {
-    expect(isValidNumberSteps('0')).toBe(true);
+    expect(isValidNumberSteps('0')).toBe(false);
   });
 
   it('"12 13 14"', () => {
