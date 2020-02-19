@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 const merge = require('webpack-merge');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const common = {
   module: {
@@ -49,6 +50,23 @@ const common = {
       $: 'jquery',
       jQuery: 'jquery',
     }),
+    new FaviconsWebpackPlugin({
+      logo: path.join(__dirname, 'src/app/styles/logo.png'),
+      mode: 'webapp',
+      devMode: 'webapp',
+      favicons: {
+        appName: 'slider-demo-page',
+        appDescription: 'slider demo page',
+        developerName: 'Constantin P.',
+        developerURL: null,
+        background: '#ddd',
+        theme_color: '#333',
+        icons: {
+          coast: false,
+          yandex: false
+        }
+      }
+    })
   ],
 };
 
@@ -88,7 +106,7 @@ const production = {
         move: [
           {source: 'dist/demo.js', destination: 'dist/demo/demo.js'},
           {source: 'dist/demo.css', destination: 'dist/demo/demo.css'},
-          {source: 'dist/demo.html', destination: 'dist/demo/demo.html'},
+          {source: 'dist/index.html', destination: 'dist/demo/index.html'},
           {source: 'dist/assets/', destination: 'dist/demo/assets/'},
           {source: 'dist/app.js', destination: 'dist/app/app.js'},
           {source: 'dist/app.css', destination: 'dist/app/app.css'},
