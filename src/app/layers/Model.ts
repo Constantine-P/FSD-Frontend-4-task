@@ -4,7 +4,6 @@ import Range from '../classes/Range';
 import Scale from '../classes/Scale';
 import isValidNumberSteps from '../functions/isValidNumberSteps';
 import normalizeToNum from '../functions/normalizeToNum';
-import minMax from '../functions/minMax';
 import RangeValue from '../interfaces/RangeValue';
 import TransitData from '../interfaces/TransitData';
 import findClosest from '../functions/findClosest';
@@ -20,17 +19,21 @@ class Model extends EventEmitter {
 
   _scaleSteps: string;
 
+  isRange: boolean;
+
   constructor(options: SliderOptions) {
     super();
     const defaultOptions: SliderOptions = {
-      min: 0, max: 0, scaleMin: 0, scaleMax: 0, scaleSteps: '',
+      min: Number.MIN_SAFE_INTEGER, max: 0, scaleMin: 0, scaleMax: 0, scaleSteps: '',
     };
     Object.assign(defaultOptions, options);
-    this._min = options.min;
-    this._max = options.max;
-    this._scaleMin = options.scaleMin;
-    this._scaleMax = options.scaleMax;
-    this._scaleSteps = options.scaleSteps;
+    this._scaleMin = Number.MIN_SAFE_INTEGER;
+    this._scaleMax = Number.MAX_SAFE_INTEGER;
+    this._min = Number.MIN_SAFE_INTEGER;
+    this._max = Number.MAX_SAFE_INTEGER;
+    this._scaleSteps = '';
+    this.isRange = true;
+    this.data = options;
   }
 
   get min(): number {
@@ -38,12 +41,14 @@ class Model extends EventEmitter {
   }
 
   set min(value: number) {
-    this._min = minMax(
-      this.scaleMin,
-      // normalizeToNum(value),
-      findClosest(this.scale.values, normalizeToNum(value), this._min),
-      Math.min(this.max, this.scaleMax),
+    let val = findClosest(
+      this.scale.values,
+      Math.round(normalizeToNum(value, this.scaleMin)),
+      this._min,
     );
+    const isNotValid = val < this.scaleMin || val > this.scaleMax || val >= this.max;
+    if (isNotValid) val = this._min;/* Math.max(this._min, this.scaleMin); */
+    this._min = val;
     this.emit('change');
   }
 
@@ -52,12 +57,15 @@ class Model extends EventEmitter {
   }
 
   set max(value: number) {
-    this._max = minMax(
-      Math.max(this.min, this.scaleMin),
-      // normalizeToNum(value),
-      findClosest(this.scale.values, normalizeToNum(value), this._max),
-      this.scaleMax,
+    let val = findClosest(
+      this.scale.values,
+      Math.round(normalizeToNum(value, this.scaleMax)),
+      this._max,
     );
+    const isNotValid = val < this.scaleMin || val > this.scaleMax
+      || (this.isRange ? val <= this.min : false);
+    if (isNotValid) val = this._max;
+    this._max = val;
     this.emit('change');
   }
 
@@ -66,8 +74,11 @@ class Model extends EventEmitter {
   }
 
   set scaleMin(value: number) {
-    const val = normalizeToNum(value);
-    this._scaleMin = (val > this.scaleMax) ? this.scaleMax : val;
+    let val = normalizeToNum(value, this.min);
+    if (val >= this.scaleMax) val = this.scaleMax - 1;
+    if (val > this.min) this.min = val;
+    if (val > this.max) this.max = val;
+    this._scaleMin = val;
     this.emit('change');
   }
 
@@ -76,8 +87,11 @@ class Model extends EventEmitter {
   }
 
   set scaleMax(value: number) {
-    const val = normalizeToNum(value);
-    this._scaleMax = (val < this.scaleMin) ? this.scaleMin : val;
+    let val = normalizeToNum(value, this.max);
+    if (val <= this.scaleMin) val = this.scaleMin + 1;
+    if (val < this.min) this.min = val;
+    if (val < this.max) this.max = val;
+    this._scaleMax = val;
     this.emit('change');
   }
 
@@ -86,7 +100,7 @@ class Model extends EventEmitter {
   }
 
   set scaleSteps(value: string) {
-    this._scaleSteps = isValidNumberSteps(value) ? value : '';
+    this._scaleSteps = isValidNumberSteps(value) ? value : this._scaleSteps;
     this.emit('change');
   }
 
@@ -104,10 +118,12 @@ class Model extends EventEmitter {
   }
 
   set data(value: TransitData) {
-    const fields = ['scaleMin', 'scaleMax', 'scaleSteps', 'min', 'max'];
+    const fields = ['scaleMin', 'scaleMax', 'scaleSteps', 'min', 'max', 'isRange'];
     this.disableEmitting();
     fields.forEach((key) => {
-      if (value[key] !== undefined) this[key] = value[key];
+      if (value[key] !== undefined && this[key] !== value[key]) {
+        this[key] = value[key];
+      }
     });
     this.enableEmitting();
   }

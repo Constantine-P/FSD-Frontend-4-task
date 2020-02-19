@@ -55,7 +55,8 @@ class PanelView extends EventEmitter {
   private updateElements(): void {
     Object.keys(this.elements).forEach((key) => {
       const el = this.elements[key];
-      const isItemHasValue = (el.type === 'number' || el.type === 'text' || el instanceof HTMLSelectElement);
+      const isItemHasValue = (el.type === 'number' || el.type === 'text' || el instanceof HTMLSelectElement)
+        && this.model[key] !== undefined;
 
       if (isItemHasValue) {
         el.value = this.model[key];
