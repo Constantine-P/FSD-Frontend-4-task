@@ -3,40 +3,62 @@ text-color = black
 border-color = #FFFFFF
 shadow-color = #838383
 
-.slider-wrapper
-  max-width 1000px
+.page-wrapper
   display grid
-  grid-template-rows auto 1fr
-  grid-gap 10px
+  grid-template-rows 1fr 1fr
+  grid-template-columns 1fr 1fr
+  grid-gap 15px
   margin 10px
+
+  @media (max-width 1200px)
+    grid-template-rows auto
+    grid-template-columns 1fr
+
+.slider-wrapper
+  display grid
+  grid-template-areas 'panel-small panel-big'\
+                      'slider      panel-big'
+  grid-template-rows auto 1fr
+  grid-template-columns 1fr 1fr
+  grid-gap 30px
+  padding 20px 10px 20px 10px
   color text-color
-  padding 10px
-  font-family Garamond, sans-serif
+  font-family Garamond, serif
   background-color background-color
   border 1px solid border-color
   box-shadow 1px 1px 3px 0 shadow-color
 
-  .panel_big
-    grid-column 2
-    grid-row 1 / span 2
-    align-self start
+  @media (max-width 800px)
+    grid-template-areas 'panel-small ' 'slider' 'panel-big'
+    grid-template-columns 1fr
 
-    @media screen and (max-width: 700px)
-      grid-column 1
-      grid-row 3
+  .panel_size_s
+    .panel__row
+      justify-content center
 
-  .panel_small
-    grid-column 1
-    grid-row 1
-    display grid
-    grid-template-columns 1fr 1fr
-    grid-gap 5px
-    width auto
+  .panel_size_m
+    grid-area panel-big
 
-    label
+    .panel__row
       display grid
-      grid-gap 5px
+      grid-template-rows 1fr
+      grid-template-columns auto 1fr
+
+      @media (max-width 400px)
+        grid-template-rows 1fr 1fr
+        grid-template-columns 1fr
+
+      .data-input:not([type="checkbox"])
+        width 110px
+        min-width 50px
+
+        @media (max-width 400px)
+          width 100%
+
+      &_check
+        @media (max-width 400px)
+          grid-template-rows 1fr
+          grid-template-columns auto 1fr
 
   .slider
-    grid-column 1
-    grid-row 2
+    grid-area slider

@@ -3,63 +3,284 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="initial-scale=1.0, width=device-width">
-  <title>Title</title>
+  <meta name="keywords" content="Slider">
+  <meta name="description" content="Slider widget demo page">
+  <meta name="viewport" content="initial-scale=1.0, width=device-width">
+  <title>Slider demo</title>
 </head>
 <body>
 
+<div class="page-wrapper">
 
-<div class="slider-wrapper">
-  <div class="panel panel_small" id="panel-11">
-    <label> Minimum <input type="number" class="min" step="any" data-js="min"> </label>
-    <label> Maximum <input type="number" class="max" step="any" data-js="max"> </label>
+  <div class="slider-wrapper">
+    <div class="panel panel_size_s" id="panel-11">
+      <label class="panel__row">
+        Minimum
+        <input type="number" class="data-input min" step="any" data-js="min">
+      </label>
+      <label class="panel__row">
+        Maximum
+        <input type="number" class="data-input max" step="any" data-js="max">
+      </label>
+    </div>
+
+    <div class="panel panel_size_m" id="panel-12">
+      <label class="panel__row">
+        Scale minimum
+        <input type="number" class="data-input scaleMin" data-js="scaleMin">
+      </label>
+
+      <label class="panel__row">
+        Scale maximum
+        <input type="number" class="data-input scaleMax" data-js="scaleMax">
+      </label>
+
+      <label class="panel__row">
+        Scale steps
+        <input type="text" class="data-input scaleSteps" data-js="scaleSteps">
+      </label>
+
+      <label class="panel__row">
+        Range minimum
+        <input type="number" class="data-input min" data-js="min" step="1">
+      </label>
+
+      <label class="panel__row">
+        Range maximum
+        <input type="number" class="data-input max" data-js="max" step="1">
+      </label>
+
+      <label class="panel__row"> Type
+        <select class="data-input type" data-js="type">
+          <option value="horizontal">horizontal</option>
+          <option value="vertical">vertical</option>
+        </select>
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Show tooltips
+        <input type="checkbox" class="data-input areTooltipsVisible" data-js="areTooltipsVisible">
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Show scale
+        <input type="checkbox" class="data-input isScaleVisible" data-js="isScaleVisible">
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Enable range
+        <input type="checkbox" class="data-input isRange" data-js="isRange">
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Reverse direction
+        <input type="checkbox" class="data-input isReverseDirection" data-js="isReverseDirection">
+      </label>
+    </div>
+
+    <div class="slider" id="slider-1"></div>
   </div>
 
-  <div class="panel panel_big" id="panel-12">
-    <label> Scale minimum <input type="number" class="scaleMin" data-js="scaleMin"></label>
-    <label> Scale maximum <input type="number" class="scaleMax" data-js="scaleMax"></label>
-    <label> Scale steps <input type="text" class="steps" data-js="scaleSteps"> </label>
-    <label> Range minimum <input type="number" class="min" data-js="min" step="1"></label>
-    <label> Range maximum <input type="number" class="max" data-js="max" step="1"></label>
-    <label> Type
-      <select class="type" data-js="type">
-        <option value="horizontal">horizontal</option>
-        <option value="vertical">vertical</option>
-      </select>
-    </label>
-    <label> Show tooltips <input type="checkbox" class="areTooltipsVisible" data-js="areTooltipsVisible"> </label>
-    <label> Show scale <input type="checkbox" class="isScaleVisible" data-js="isScaleVisible"> </label>
-    <label> Enable range <input type="checkbox" class="isRange" data-js="isRange"> </label>
-    <label> Reverse direction <input type="checkbox" class="isReverseDirection" data-js="isReverseDirection">
-    </label>
+  <div class="slider-wrapper">
+    <div class="panel panel_size_s" id="panel-21">
+      <label class="panel__row">
+        Value
+        <input type="number" class="data-input max" step="any" data-js="max">
+      </label>
+    </div>
+
+    <div class="panel panel_size_m" id="panel-22">
+      <label class="panel__row">
+        Scale minimum
+        <input type="number" class="data-input scaleMin" data-js="scaleMin">
+      </label>
+
+      <label class="panel__row">
+        Scale maximum
+        <input type="number" class="data-input scaleMax" data-js="scaleMax">
+      </label>
+
+      <label class="panel__row">
+        Scale steps
+        <input type="text" class="data-input scaleSteps" data-js="scaleSteps">
+      </label>
+
+      <label class="panel__row">
+        Range minimum
+        <input type="number" class="data-input min" data-js="min" step="1">
+      </label>
+
+      <label class="panel__row">
+        Range maximum
+        <input type="number" class="data-input max" data-js="max" step="1">
+      </label>
+
+      <label class="panel__row"> Type
+        <select class="data-input type" data-js="type">
+          <option value="horizontal">horizontal</option>
+          <option value="vertical">vertical</option>
+        </select>
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Show tooltips
+        <input type="checkbox" class="data-input areTooltipsVisible" data-js="areTooltipsVisible">
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Show scale
+        <input type="checkbox" class="data-input isScaleVisible" data-js="isScaleVisible">
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Enable range
+        <input type="checkbox" class="data-input isRange" data-js="isRange">
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Reverse direction
+        <input type="checkbox" class="data-input isReverseDirection" data-js="isReverseDirection">
+      </label>
+    </div>
+
+    <div class="slider" id="slider-2"></div>
   </div>
 
-  <div class="slider" id="slider-1"></div>
+  <div class="slider-wrapper">
+    <div class="panel panel_size_s" id="panel-31">
+      <label class="panel__row">
+        Minimum
+        <input type="number" class="data-input min" step="any" data-js="min">
+      </label>
+      <label class="panel__row">
+        Maximum
+        <input type="number" class="data-input max" step="any" data-js="max">
+      </label>
+    </div>
+
+    <div class="panel panel_size_m" id="panel-32">
+      <label class="panel__row">
+        Scale minimum
+        <input type="number" class="data-input scaleMin" data-js="scaleMin">
+      </label>
+
+      <label class="panel__row">
+        Scale maximum
+        <input type="number" class="data-input scaleMax" data-js="scaleMax">
+      </label>
+
+      <label class="panel__row">
+        Scale steps
+        <input type="text" class="data-input scaleSteps" data-js="scaleSteps">
+      </label>
+
+      <label class="panel__row">
+        Range minimum
+        <input type="number" class="data-input min" data-js="min" step="1">
+      </label>
+
+      <label class="panel__row">
+        Range maximum
+        <input type="number" class="data-input max" data-js="max" step="1">
+      </label>
+
+      <label class="panel__row"> Type
+        <select class="data-input type" data-js="type">
+          <option value="horizontal">horizontal</option>
+          <option value="vertical">vertical</option>
+        </select>
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Show tooltips
+        <input type="checkbox" class="data-input areTooltipsVisible" data-js="areTooltipsVisible">
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Show scale
+        <input type="checkbox" class="data-input isScaleVisible" data-js="isScaleVisible">
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Enable range
+        <input type="checkbox" class="data-input isRange" data-js="isRange">
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Reverse direction
+        <input type="checkbox" class="data-input isReverseDirection" data-js="isReverseDirection">
+      </label>
+    </div>
+
+    <div class="slider" id="slider-3"></div>
+  </div>
+
+  <div class="slider-wrapper">
+    <div class="panel panel_size_s" id="panel-41">
+      <label class="panel__row">
+        Value
+        <input type="number" class="data-input max" step="any" data-js="max">
+      </label>
+    </div>
+
+    <div class="panel panel_size_m" id="panel-42">
+      <label class="panel__row">
+        Scale minimum
+        <input type="number" class="data-input scaleMin" data-js="scaleMin">
+      </label>
+
+      <label class="panel__row">
+        Scale maximum
+        <input type="number" class="data-input scaleMax" data-js="scaleMax">
+      </label>
+
+      <label class="panel__row">
+        Scale steps
+        <input type="text" class="data-input scaleSteps" data-js="scaleSteps">
+      </label>
+
+      <label class="panel__row">
+        Range minimum
+        <input type="number" class="data-input min" data-js="min" step="1">
+      </label>
+
+      <label class="panel__row">
+        Range maximum
+        <input type="number" class="data-input max" data-js="max" step="1">
+      </label>
+
+      <label class="panel__row"> Type
+        <select class="data-input type" data-js="type">
+          <option value="horizontal">horizontal</option>
+          <option value="vertical">vertical</option>
+        </select>
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Show tooltips
+        <input type="checkbox" class="data-input areTooltipsVisible" data-js="areTooltipsVisible">
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Show scale
+        <input type="checkbox" class="data-input isScaleVisible" data-js="isScaleVisible">
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Enable range
+        <input type="checkbox" class="data-input isRange" data-js="isRange">
+      </label>
+
+      <label class="panel__row panel__row_check">
+        Reverse direction
+        <input type="checkbox" class="data-input isReverseDirection" data-js="isReverseDirection">
+      </label>
+    </div>
+
+    <div class="slider" id="slider-4"></div>
+  </div>
+
 </div>
 
-<div class="slider-wrapper">
-  <div class="panel panel_small" id="panel-21">
-    <label> Value <input type="number" class="max" step="any" data-js="max"> </label>
-  </div>
-
-  <div class="panel panel_big" id="panel-22">
-    <label> Scale minimum <input type="number" class="scaleMin" data-js="scaleMin"></label>
-    <label> Scale maximum <input type="number" class="scaleMax" data-js="scaleMax"></label>
-    <label> Scale steps <input type="text" class="steps" data-js="scaleSteps"> </label>
-    <label> Value <input type="number" class="max" data-js="max" step="1"></label>
-    <label> Type
-      <select class="type" data-js="type">
-        <option value="horizontal">horizontal</option>
-        <option value="vertical">vertical</option>
-      </select>
-    </label>
-    <label> Show tooltips <input type="checkbox" class="areTooltipsVisible" data-js="areTooltipsVisible"> </label>
-    <label> Show scale <input type="checkbox" class="isScaleVisible" data-js="isScaleVisible"> </label>
-    <label> Enable range <input type="checkbox" class="isRange" data-js="isRange"> </label>
-    <label> Reverse direction <input type="checkbox" class="isReverseDirection" data-js="isReverseDirection">
-    </label>
-  </div>
-
-  <div class="slider" id="slider-2"></div>
-</div>
 </body>
 </html>
