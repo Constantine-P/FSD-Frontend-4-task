@@ -42,6 +42,67 @@ describe('test Scale', () => {
     slider = new Slider(sliderEl, options, panel);
   });
 
+  it('test get min', () => {
+    expect(slider.min).toBe(2);
+  });
+
+  it('test set min', () => {
+    slider.min = 3;
+    expect(slider.min).toBe(3);
+    slider.min = -20;
+    expect(slider.min).toBe(-5);
+    slider.min = 100;
+    expect(slider.min).toBe(-5);
+  });
+
+  it('test get max', () => {
+    expect(slider.max).toBe(8);
+  });
+
+  it('test set max', () => {
+    slider.max = 9;
+    expect(slider.max).toBe(9);
+    slider.max = 100;
+    expect(slider.max).toBe(10);
+    slider.max = -100;
+    expect(slider.max).toBe(10);
+  });
+
+  it('test get scaleMin', () => {
+    expect(slider.scaleMin).toBe(-5);
+  });
+
+  it('test set scaleMin', () => {
+    slider.scaleMin = -20;
+    expect(slider.scaleMin).toBe(-20);
+    slider.scaleMin = 20;
+    expect(slider.scaleMin).toBe(9);
+  });
+
+  it('test get scaleMax', () => {
+    expect(slider.scaleMax).toBe(10);
+  });
+
+  it('test set scaleMax', () => {
+    slider.scaleMax = 20;
+    expect(slider.scaleMax).toBe(20);
+    slider.scaleMax = -20;
+    expect(slider.scaleMax).toBe(-4);
+  });
+
+  it('test get scaleSteps', () => {
+    expect(slider.scaleSteps).toBe('1');
+  });
+
+  it('test set scaleSteps', () => {
+    slider.scaleSteps = '1 2 3';
+    expect(slider.scaleSteps).toBe('1 2 3');
+    slider.scaleSteps = '1*3 2*2.5 3*56';
+    expect(slider.scaleSteps).toBe('1*3 2*2.5 3*56');
+    slider.scaleSteps = 'asd asd 123';
+    expect(slider.scaleSteps).toBe('1*3 2*2.5 3*56');
+  });
+
   it('test get range', () => {
     expect(slider.range.min).toBe(2);
     expect(slider.range.max).toBe(8);

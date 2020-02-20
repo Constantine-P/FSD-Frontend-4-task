@@ -1,8 +1,8 @@
 import Slider from './Slider';
 import SliderOptions from './interfaces/SliderOptions';
 
-$.fn.rangeSlider = function rangeSlider(options: SliderOptions,
-  panels: HTMLElement | HTMLElement[] | JQuery): Slider {
+$.fn.rangeSlider = function rangeSlider(options: SliderOptions = {},
+  panels?: HTMLElement | HTMLElement[] | JQuery): Slider {
   let pans = panels;
   if (panels instanceof Array) {
     pans = panels.map((item) => ((item instanceof jQuery) ? item[0] : item));

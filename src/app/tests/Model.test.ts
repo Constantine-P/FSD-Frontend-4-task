@@ -31,7 +31,7 @@ describe('test Model', () => {
     model.min = -20;
     expect(model.min).toBe(-10);
     model.min = 100;
-    expect(model.min).toBe(8);
+    expect(model.min).toBe(-10);
   });
 
   it('test get max', () => {
@@ -44,7 +44,7 @@ describe('test Model', () => {
     model.max = 100;
     expect(model.max).toBe(10);
     model.max = -100;
-    expect(model.max).toBe(2);
+    expect(model.max).toBe(10);
   });
 
   it('test get scaleMin', () => {
@@ -55,7 +55,7 @@ describe('test Model', () => {
     model.scaleMin = -20;
     expect(model.scaleMin).toBe(-20);
     model.scaleMin = 20;
-    expect(model.scaleMin).toBe(10);
+    expect(model.scaleMin).toBe(9);
   });
 
   it('test get scaleMax', () => {
@@ -66,7 +66,7 @@ describe('test Model', () => {
     model.scaleMax = 20;
     expect(model.scaleMax).toBe(20);
     model.scaleMax = -20;
-    expect(model.scaleMax).toBe(-10);
+    expect(model.scaleMax).toBe(-9);
   });
 
   it('test get scaleSteps', () => {
@@ -79,7 +79,7 @@ describe('test Model', () => {
     model.scaleSteps = '1*3 2*2.5 3*56';
     expect(model.scaleSteps).toBe('1*3 2*2.5 3*56');
     model.scaleSteps = 'asd asd 123';
-    expect(model.scaleSteps).toBe('');
+    expect(model.scaleSteps).toBe('1*3 2*2.5 3*56');
   });
 
   it('test get data', () => {

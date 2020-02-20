@@ -9,17 +9,17 @@ import TransitData from '../interfaces/TransitData';
 import findClosest from '../functions/findClosest';
 
 class Model extends EventEmitter {
-  _min: number;
+  private _min: number;
 
-  _max: number;
+  private _max: number;
 
-  _scaleMin: number;
+  private _scaleMin: number;
 
-  _scaleMax: number;
+  private _scaleMax: number;
 
-  _scaleSteps: string;
+  private _scaleSteps: string;
 
-  isRange: boolean;
+  private isRange: boolean;
 
   constructor(options: SliderOptions) {
     super();

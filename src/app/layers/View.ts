@@ -1,5 +1,4 @@
 import ViewModel from './ViewModel';
-import EventEmitter from '../classes/EventEmitter';
 import SliderOptions from '../interfaces/SliderOptions';
 import SliderElements from '../interfaces/SliderElements';
 import DirectionStyles from '../interfaces/DirectionStyles';
@@ -7,7 +6,7 @@ import getClickCoordsRelativeToBlock from '../functions/getClickCoordsRelativeTo
 import camelToKebab from '../functions/camelToKebab';
 import toPercent from '../functions/toPercent';
 
-class View extends EventEmitter {
+class View {
   private readonly _slider: HTMLElement;
 
   private readonly _elements: SliderElements;
@@ -15,7 +14,6 @@ class View extends EventEmitter {
   readonly model: ViewModel;
 
   constructor(slider: HTMLElement, options: SliderOptions) {
-    super();
     this._slider = slider;
     this._elements = {
       minHandle: null,

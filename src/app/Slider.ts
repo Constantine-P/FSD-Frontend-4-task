@@ -1,3 +1,4 @@
+import './styles/styles.styl';
 import Model from './layers/Model';
 import View from './layers/View';
 import Controller from './layers/Controller';
@@ -6,7 +7,6 @@ import Range from './classes/Range';
 import SliderOptions from './interfaces/SliderOptions';
 import RangeValue from './interfaces/RangeValue';
 import { SliderType } from './types/SliderType';
-import './styles/styles.styl';
 import isNumeric from './functions/isNumeric';
 import throwParamError from './functions/throwError';
 import isDefined from './functions/isDefined';
@@ -21,14 +21,14 @@ class Slider {
 
   private readonly panels: PanelView[];
 
-  constructor(slider: HTMLElement, options: SliderOptions, panels?: HTMLElement | HTMLElement[]) {
+  constructor(slider: HTMLElement, options?: SliderOptions, panels?: HTMLElement | HTMLElement[]) {
     const validPanels = (panels instanceof HTMLElement) ? [panels] : panels;
     const defaultOptions: SliderOptions = {
       min: Number.MIN_SAFE_INTEGER,
-      max: 1,
+      max: 100,
       scaleMin: 0,
-      scaleMax: 1,
-      scaleSteps: '',
+      scaleMax: 100,
+      scaleSteps: '10',
       areTooltipsVisible: true,
       isRange: true,
       isScaleVisible: true,
