@@ -1,22 +1,17 @@
 # Range slider
 
-[Demo](https://constantine-p.github.io//Slider/)
+[Demo](https://constantine-p.github.io/FSD-Frontend-4-task/index.html)
 
 Простой такой jquery слайдер, ничего особенного.
   
 ## Clone repository
 ``` 
-git clone https://github.com/Constantine-P/Slider.git
+git clone https://github.com/Constantine-P/FSD-Frontend-4-task.git
 ```
 
 ## Run development server
 ``` 
 npm start
-```
-
-## Development
-``` 
-npm run dev
 ```
 
 ## Building
