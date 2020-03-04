@@ -1,4 +1,4 @@
-import './styles/styles.styl';
+import './resources/styles/styles.styl';
 import Model from './layers/Model';
 import View from './layers/View';
 import Controller from './layers/Controller';

@@ -7,8 +7,8 @@ $.fn.rangeSlider = function rangeSlider(options: SliderOptions = {},
   if (panels instanceof Array) {
     pans = panels.map((item) => ((item instanceof jQuery) ? item[0] : item));
   } else if (panels instanceof jQuery) {
-    const zero = 0;
-    pans = panels[zero];
+    // eslint-disable-next-line prefer-destructuring
+    pans = panels[0];
   }
 
   return new Slider(this.get(0), options, pans as HTMLElement | HTMLElement[]);
