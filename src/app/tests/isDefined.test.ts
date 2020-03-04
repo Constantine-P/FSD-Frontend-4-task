@@ -11,16 +11,16 @@ describe('isDefined', () => {
   });
 
   it('a = 1, b = 0, c = "c"', () => {
-    let a = 1;
-    let b = 0;
-    let c = "c";
+    const a = 1;
+    const b = 0;
+    const c = 'c';
     expect(isDefined(a, b, c)).toBe(true);
   });
 
   it('a = 1, b = 0, c = undefined', () => {
-    let a = 1;
-    let b = 0;
-    let c = undefined;
+    const a = 1;
+    const b = 0;
+    let c;
     expect(isDefined(a, b, c)).toBe(false);
   });
 });
