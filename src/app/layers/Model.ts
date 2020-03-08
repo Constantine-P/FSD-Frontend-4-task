@@ -121,7 +121,7 @@ class Model extends EventEmitter {
     const fields = ['scaleMin', 'scaleMax', 'scaleSteps', 'min', 'max', 'isRange'];
     this.disableEmitting();
     fields.forEach((key) => {
-      if (value[key] !== undefined && this[key] !== value[key]) {
+      if (value[key] !== undefined/* && this[key] !== value[key] */) {
         this[key] = value[key];
       }
     });
