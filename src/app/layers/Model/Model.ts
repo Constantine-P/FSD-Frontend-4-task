@@ -1,12 +1,12 @@
-import EventEmitter from '../classes/EventEmitter';
-import SliderOptions from '../interfaces/SliderOptions';
-import Range from '../classes/Range';
-import Scale from '../classes/Scale';
-import isValidNumberSteps from '../functions/isValidNumberSteps';
-import normalizeToNum from '../functions/normalizeToNum';
-import RangeValue from '../interfaces/RangeValue';
-import TransitData from '../interfaces/TransitData';
-import findClosest from '../functions/findClosest';
+import EventEmitter from '../../classes/EventEmitter';
+import SliderOptions from '../../interfaces/SliderOptions';
+import Range from '../../classes/Range';
+import Scale from '../../classes/Scale';
+import isValidNumberSteps from '../../functions/isValidNumberSteps';
+import normalizeToNum from '../../functions/normalizeToNum';
+import RangeValue from '../../interfaces/RangeValue';
+import TransitData from '../../interfaces/TransitData';
+import findClosest from '../../functions/findClosest';
 
 class Model extends EventEmitter {
   private _min: number;
@@ -19,7 +19,7 @@ class Model extends EventEmitter {
 
   private _scaleSteps: string;
 
-  private isRange: boolean;
+  public isRange: boolean;
 
   constructor(options: SliderOptions) {
     super();
@@ -44,11 +44,11 @@ class Model extends EventEmitter {
     let val = findClosest(
       this.scale.values,
       Math.round(normalizeToNum(value, this.scaleMin)),
-      this._min,
+      // this._min,
     );
     const isNotValid = val < this.scaleMin || val > this.scaleMax || val >= this.max;
     if (isNotValid) val = this._min;/* Math.max(this._min, this.scaleMin); */
-    this._min = val;
+    this._min = (this.isRange) ? val : this.scaleMin;
     this.emit('change');
   }
 
@@ -60,7 +60,7 @@ class Model extends EventEmitter {
     let val = findClosest(
       this.scale.values,
       Math.round(normalizeToNum(value, this.scaleMax)),
-      this._max,
+      // this._max,
     );
     const isNotValid = val < this.scaleMin || val > this.scaleMax
       || (this.isRange ? val <= this.min : false);

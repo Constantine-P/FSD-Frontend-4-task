@@ -11,5 +11,5 @@ $.fn.rangeSlider = function rangeSlider(options: SliderOptions = {},
     pans = panels[0];
   }
 
-  return new Slider(this.get(0), options, pans as HTMLElement | HTMLElement[]);
+  return new Slider(this.get(0), options);
 };

@@ -1,8 +1,7 @@
 import './resources/styles/styles.styl';
-import Model from './layers/Model';
-import View from './layers/View';
-import Controller from './layers/Controller';
-import PanelView from './layers/PanelView';
+import Model from './layers/Model/Model';
+import View from './layers/View/View';
+import Controller from './layers/Controller/Controller';
 import Range from './classes/Range';
 import SliderOptions from './interfaces/SliderOptions';
 import RangeValue from './interfaces/RangeValue';
@@ -11,18 +10,18 @@ import isNumeric from './functions/isNumeric';
 import throwParamError from './functions/throwError';
 import isDefined from './functions/isDefined';
 import isValidNumberSteps from './functions/isValidNumberSteps';
+import EventEmitter from './classes/EventEmitter';
+import TransitData from './interfaces/TransitData';
 
-class Slider {
+class Slider extends EventEmitter {
   private readonly model: Model;
 
   private readonly controller: Controller;
 
   private readonly view: View;
 
-  private readonly panels: PanelView[];
-
-  constructor(slider: HTMLElement, options?: SliderOptions, panels?: HTMLElement | HTMLElement[]) {
-    const validPanels = (panels instanceof HTMLElement) ? [panels] : panels;
+  constructor(slider: HTMLElement, options?: SliderOptions) {
+    super();
     const defaultOptions: SliderOptions = {
       min: Number.MIN_SAFE_INTEGER,
       max: 100,
@@ -39,8 +38,8 @@ class Slider {
     const opts = Object.assign(defaultOptions, options);
     this.model = new Model(opts);
     this.view = new View(slider, opts);
-    this.panels = (validPanels) ? validPanels.map((panel) => new PanelView(panel)) : null;
-    this.controller = new Controller(this.model, this.view, this.panels);
+    this.controller = new Controller(this.model, this.view);
+    this.subscribe();
   }
 
   get min(): number {
@@ -121,48 +120,73 @@ class Slider {
   }
 
   get type(): SliderType {
-    return this.view.model.type;
+    return this.view.options.type;
   }
 
   set type(value: SliderType) {
     if (['horizontal', 'vertical'].indexOf(value) === -1) throwParamError('wrong type value');
-    this.view.model.type = value;
+    this.view.options = { ...this.view.options, type: value };
   }
 
   get isRange(): boolean {
-    return this.view.model.isRange;
+    return this.view.options.isRange;
   }
 
   set isRange(value: boolean) {
     if (typeof value !== 'boolean') throwParamError(`wrong isRange value, "${value}" is not boolean`);
-    this.view.model.isRange = value;
+    this.view.options = { ...this.view.options, isRange: value };
   }
 
   get areTooltipsVisible(): boolean {
-    return this.view.model.areTooltipsVisible;
+    return this.view.options.areTooltipsVisible;
   }
 
   set areTooltipsVisible(value: boolean) {
     if (typeof value !== 'boolean') throwParamError(`wrong areTooltipsVisible value, "${value}" is not boolean`);
-    this.view.model.areTooltipsVisible = value;
+    this.view.options = { ...this.view.options, areTooltipsVisible: value };
   }
 
   get isScaleVisible(): boolean {
-    return this.view.model.isScaleVisible;
+    return this.view.options.isScaleVisible;
   }
 
   set isScaleVisible(value: boolean) {
     if (typeof value !== 'boolean') throwParamError(`wrong isScaleVisible value, "${value}" is not boolean`);
-    this.view.model.isScaleVisible = value;
+    this.view.options = { ...this.view.options, isScaleVisible: value };
   }
 
   get isReverseDirection(): boolean {
-    return this.view.model.isReverseDirection;
+    return this.view.options.isReverseDirection;
   }
 
   set isReverseDirection(value: boolean) {
     if (typeof value !== 'boolean') throwParamError(`wrong isReverseDirection value, "${value}" is not boolean`);
-    this.view.model.isReverseDirection = value;
+    this.view.options = { ...this.view.options, isReverseDirection: value };
+  }
+
+  get data(): TransitData {
+    return { ...this.model.data, ...this.view.options };
+  }
+
+  set data(value) {
+    this.model.disableEmitting();
+    this.view.disableEmitting();
+    this.model.data = value;
+    const {
+      type, isRange, isScaleVisible, areTooltipsVisible, isReverseDirection,
+    } = value;
+    this.view.options = {
+      type, isRange, isScaleVisible, areTooltipsVisible, isReverseDirection,
+    };
+    this.model.enableEmitting();
+    this.view.enableEmitting();
+    this.model.emit('change');
+    this.view.emit('change');
+  }
+
+  private subscribe(): void {
+    this.model.on('change', () => this.emit('change'));
+    this.view.on('change', () => this.emit('change'));
   }
 
   private static validateOptions(options: SliderOptions): void {

@@ -2,18 +2,23 @@ import EventEmitter from '../classes/EventEmitter';
 import PanelElements from '../interfaces/PanelElements';
 import SliderOptions from '../interfaces/SliderOptions';
 import TransitData from '../interfaces/TransitData';
+import Slider from '../Slider';
 
 class PanelView extends EventEmitter {
   private readonly elements: PanelElements;
 
   private readonly model: SliderOptions;
 
-  constructor(panel: HTMLElement) {
+  private readonly slider: Slider;
+
+  constructor(panel: HTMLElement, slider: Slider) {
     super();
     this.model = {};
     this.elements = {};
+    this.slider = slider;
     this.initElements(panel);
     this.addChangeHandlers();
+    this.subscribeOnSliderChange();
   }
 
   get data(): TransitData {
@@ -69,11 +74,20 @@ class PanelView extends EventEmitter {
   private addChangeHandlers(): void {
     const elementChangeHandler = (): void => {
       this.updateModel();
-      this.emit('change');
+      this.slider.data = this.data;
     };
     Object.values(this.elements).forEach((el) => {
       el.addEventListener('change', elementChangeHandler);
     });
+  }
+
+  private subscribeOnSliderChange(): void {
+    const updateModel = (): void => {
+      this.data = this.slider.data;
+    };
+    updateModel();
+    const handleSliderChange = (): void => updateModel();
+    this.slider.on('change', handleSliderChange);
   }
 }
 

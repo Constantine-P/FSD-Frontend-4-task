@@ -1,4 +1,4 @@
-import Model from '../layers/Model';
+import Model from '../layers/Model/Model';
 import Range from '../classes/Range';
 import Scale from '../classes/Scale';
 import { SliderType } from '../types/SliderType';

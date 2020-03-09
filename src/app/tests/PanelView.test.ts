@@ -26,7 +26,7 @@ describe('test PanelView', () => {
       </select>
     </div>`;
     const panel = document.querySelector('.panel') as HTMLElement;
-    panelView = new PanelView(panel);
+    // panelView = new PanelView(panel);
   });
 
   it('test git/set data', () => {

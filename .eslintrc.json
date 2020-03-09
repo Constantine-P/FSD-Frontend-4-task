@@ -22,6 +22,8 @@
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["panel"] }],
     "eslint-comments/no-unlimited-disable": "off",
     "eslint-comments/disable-enable-pair": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "no-new": "off",
+    "no-nested-ternary": "off"
   }
 }

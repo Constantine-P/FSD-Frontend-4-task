@@ -39,7 +39,7 @@ describe('test Scale', () => {
     </div>`;
     const sliderEl = document.querySelector('.slider') as HTMLElement;
     const panel = document.querySelector('.panel') as HTMLElement;
-    slider = new Slider(sliderEl, options, panel);
+    // slider = new Slider(sliderEl, options, panel);
   });
 
   it('test get min', () => {
