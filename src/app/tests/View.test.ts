@@ -1,4 +1,4 @@
-// import View from '../layers/View';
+// import View from '../layers/View/View';
 // import { SliderType } from '../types/SliderType';
 // import '@testing-library/jest-dom';
 //
@@ -23,7 +23,7 @@
 //     document.body.innerHTML = '<div class="slider"></div>';
 //     const slider = document.querySelector('.slider') as HTMLElement;
 //     const view = new View(slider, options);
-//     view.render();
+//     // view.update();
 //
 //     describe('test existence of elements', () => {
 //       it('scale-line in doc', () => {
@@ -108,7 +108,7 @@
 //     document.body.innerHTML = '<div class="slider"></div>';
 //     const slider = document.querySelector('.slider') as HTMLElement;
 //     const view = new View(slider, options);
-//     view.render();
+//     view.update();
 //
 //     it('test get model', () => {
 //       expect(view.model).toBeDefined();

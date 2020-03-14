@@ -5,9 +5,9 @@ import PanelView from '../app/layers/PanelView';
 const slider1 = $('#slider-1').rangeSlider({
   min: -40,
   max: 80,
-  scaleMin: -60,
+  scaleMin: -50,
   scaleMax: 100,
-  scaleSteps: '10',
+  scaleSteps: '25',
   areTooltipsVisible: true,
   isRange: true,
   isScaleVisible: true,
@@ -20,7 +20,8 @@ new PanelView(document.querySelector('#panel-12'), slider1);
 
 setTimeout(() => {
   // slider1.isRange = false;
-  slider1.type = 'vertical';
-  // slider1.isReverseDirection = true;
+  // slider1.type = 'kkk';
+  // slider1.isReverseDirection = 'asd';
+  // slider1.isScaleVisible = false;
   // slider1.min = 0;
-}, 1);
+}, 100);

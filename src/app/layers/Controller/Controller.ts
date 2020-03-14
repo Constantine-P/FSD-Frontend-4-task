@@ -1,6 +1,5 @@
 import Model from '../Model/Model';
 import View from '../View/View';
-import RangeValue from '../../interfaces/RangeValue';
 
 class Controller {
   private readonly model: Model;
@@ -12,36 +11,31 @@ class Controller {
     this.view = view;
 
     this.addHandlers();
-    this.updateViewModel();
+    this.updateView();
   }
 
   private addHandlers(): void {
-    this.model.on('change', this.modelChangeHandler.bind(this));
-    this.view.on('change', this.viewChangeHandler.bind(this));
-    this.view.on('options-change', this.viewOptionsChangeHandler.bind(this));
-  }
+    const modelChangeHandler = (): void => {
+      this.updateView();
+    };
 
-  private modelChangeHandler(): void {
-    this.updateViewModel();
-  }
+    const viewChangeHandler = (): void => {
+      this.updateModel();
+    };
 
-  private viewChangeHandler(): void {
-    this.updateModel();
-  }
-
-  private viewOptionsChangeHandler(): void {
-    this.model.isRange = this.view.options.isRange;
-    this.model.relRange = this.view.range as RangeValue;
+    this.model.on('change', modelChangeHandler);
+    this.view.on('change-by-click', viewChangeHandler);
   }
 
   private updateModel(): void {
-    this.model.relRange = this.view.range as RangeValue;
+    this.model.data = this.view.model.dataToModel;
+    this.model.emit('change');
+    // console.log('controller update model');
   }
 
-  private updateViewModel(): void {
-    this.view.model.positions = this.model.scale.positions;
-    this.view.model.values = this.model.scale.values;
-    this.view.range = this.model.relRange;
+  private updateView(): void {
+    this.view.model.data = this.model.dataToView;
+    // console.log('controller update view-model');
   }
 }
 

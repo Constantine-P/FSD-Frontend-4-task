@@ -7,13 +7,13 @@ import Slider from '../Slider';
 class PanelView extends EventEmitter {
   private readonly elements: PanelElements;
 
-  private readonly model: SliderOptions;
+  private readonly panelModel: SliderOptions;
 
   private readonly slider: Slider;
 
   constructor(panel: HTMLElement, slider: Slider) {
     super();
-    this.model = {};
+    this.panelModel = {};
     this.elements = {};
     this.slider = slider;
     this.initElements(panel);
@@ -21,17 +21,17 @@ class PanelView extends EventEmitter {
     this.subscribeOnSliderChange();
   }
 
-  get data(): TransitData {
-    return this.model;
+  get model(): TransitData {
+    return this.panelModel;
   }
 
-  set data(value: TransitData) {
+  set model(value: TransitData) {
     Object.keys(value).forEach((key) => {
       if (this.elements[key] !== null && this.elements[key] !== undefined) {
-        this.model[key] = value[key];
+        this.panelModel[key] = value[key];
       }
     });
-    this.updateElements();
+    this.updateElementsByModel();
   }
 
   private initElements(panel): void {
@@ -42,7 +42,7 @@ class PanelView extends EventEmitter {
       });
   }
 
-  private updateModel(): void {
+  private updateModelByElements(): void {
     Object.keys(this.elements).forEach((key) => {
       const el = this.elements[key];
       const isItemSupportTextValue = (el.type === 'text' || el instanceof HTMLSelectElement);
@@ -57,7 +57,7 @@ class PanelView extends EventEmitter {
     });
   }
 
-  private updateElements(): void {
+  private updateElementsByModel(): void {
     Object.keys(this.elements).forEach((key) => {
       const el = this.elements[key];
       const isItemHasValue = (el.type === 'number' || el.type === 'text' || el instanceof HTMLSelectElement)
@@ -73,8 +73,9 @@ class PanelView extends EventEmitter {
 
   private addChangeHandlers(): void {
     const elementChangeHandler = (): void => {
-      this.updateModel();
-      this.slider.data = this.data;
+      this.updateModelByElements();
+      this.slider.data = this.model;
+      // console.log('panel update slider');
     };
     Object.values(this.elements).forEach((el) => {
       el.addEventListener('change', elementChangeHandler);
@@ -82,11 +83,15 @@ class PanelView extends EventEmitter {
   }
 
   private subscribeOnSliderChange(): void {
-    const updateModel = (): void => {
-      this.data = this.slider.data;
+    const updateModelBySlider = (): void => {
+      this.model = this.slider.data;
+      this.updateElementsByModel();
+      // console.log('slider update panel');
     };
-    updateModel();
-    const handleSliderChange = (): void => updateModel();
+    updateModelBySlider();
+    // console.log('panel-model: ', this.model);
+
+    const handleSliderChange = (): void => updateModelBySlider();
     this.slider.on('change', handleSliderChange);
   }
 }

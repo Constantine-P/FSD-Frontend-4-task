@@ -120,72 +120,63 @@ class Slider extends EventEmitter {
   }
 
   get type(): SliderType {
-    return this.view.options.type;
+    return this.view.model.type;
   }
 
   set type(value: SliderType) {
     if (['horizontal', 'vertical'].indexOf(value) === -1) throwParamError('wrong type value');
-    this.view.options = { ...this.view.options, type: value };
+    this.view.model.type = value;
   }
 
   get isRange(): boolean {
-    return this.view.options.isRange;
+    return this.view.model.isRange;
   }
 
   set isRange(value: boolean) {
     if (typeof value !== 'boolean') throwParamError(`wrong isRange value, "${value}" is not boolean`);
-    this.view.options = { ...this.view.options, isRange: value };
+    this.view.model.isRange = value;
+    this.model.isRange = value;
   }
 
   get areTooltipsVisible(): boolean {
-    return this.view.options.areTooltipsVisible;
+    return this.view.model.areTooltipsVisible;
   }
 
   set areTooltipsVisible(value: boolean) {
     if (typeof value !== 'boolean') throwParamError(`wrong areTooltipsVisible value, "${value}" is not boolean`);
-    this.view.options = { ...this.view.options, areTooltipsVisible: value };
+    this.view.model.areTooltipsVisible = value;
   }
 
   get isScaleVisible(): boolean {
-    return this.view.options.isScaleVisible;
+    return this.view.model.isScaleVisible;
   }
 
   set isScaleVisible(value: boolean) {
     if (typeof value !== 'boolean') throwParamError(`wrong isScaleVisible value, "${value}" is not boolean`);
-    this.view.options = { ...this.view.options, isScaleVisible: value };
+    this.view.model.isScaleVisible = value;
   }
 
   get isReverseDirection(): boolean {
-    return this.view.options.isReverseDirection;
+    return this.view.model.isReverseDirection;
   }
 
   set isReverseDirection(value: boolean) {
     if (typeof value !== 'boolean') throwParamError(`wrong isReverseDirection value, "${value}" is not boolean`);
-    this.view.options = { ...this.view.options, isReverseDirection: value };
+    this.view.model.isReverseDirection = value;
   }
 
   get data(): TransitData {
-    return { ...this.model.data, ...this.view.options };
+    return { ...this.model.data, ...this.view.model.data };
   }
 
   set data(value) {
-    this.model.disableEmitting();
-    this.view.disableEmitting();
+    this.view.model.data = value;
     this.model.data = value;
-    const {
-      type, isRange, isScaleVisible, areTooltipsVisible, isReverseDirection,
-    } = value;
-    this.view.options = {
-      type, isRange, isScaleVisible, areTooltipsVisible, isReverseDirection,
-    };
-    this.model.enableEmitting();
-    this.view.enableEmitting();
-    this.model.emit('change');
-    this.view.emit('change');
   }
 
   private subscribe(): void {
     this.model.on('change', () => this.emit('change'));
+
     this.view.on('change', () => this.emit('change'));
   }
 

@@ -1,4 +1,5 @@
 import PanelView from '../layers/PanelView';
+import Slider from '../Slider';
 import { SliderType } from '../types/SliderType';
 import '@testing-library/jest-dom';
 
@@ -10,6 +11,7 @@ describe('test PanelView', () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
+    <div class="slider"></div>
     <div class="panel">
       <input type="number" data-js="min" value="10">
       <input type="number" data-js="max" value="25">
@@ -25,11 +27,13 @@ describe('test PanelView', () => {
         <option selected>vertical</option>
       </select>
     </div>`;
-    const panel = document.querySelector('.panel') as HTMLElement;
-    // panelView = new PanelView(panel);
+    const sliderElement = document.querySelector('.slider') as HTMLElement;
+    const slider = new Slider(sliderElement, {});
+    const panelElement = document.querySelector('.panel') as HTMLElement;
+    panelView = new PanelView(panelElement, slider);
   });
 
-  it('test git/set data', () => {
+  it('test git/set model', () => {
     const data = {
       min: 11,
       max: 12,
@@ -42,7 +46,7 @@ describe('test PanelView', () => {
       areTooltipsVisible: false,
       isReverseDirection: false,
     };
-    panelView.data = data;
-    expect(panelView.data).toStrictEqual(data);
+    panelView.model = data;
+    expect(panelView.model).toStrictEqual(data);
   });
 });
