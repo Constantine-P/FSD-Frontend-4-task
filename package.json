@@ -9,6 +9,7 @@
     "dev": "webpack --mode development --env development",
     "build": "webpack --mode production --env production",
     "test": "jest",
+    "testcov": "jest --coverage",
     "deploy": "gh-pages -d dist",
     "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx src",
     "eslint:dump": "eslint --print-config ./.eslintrc.json"

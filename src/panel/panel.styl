@@ -1,0 +1,58 @@
+$text-color = black
+$font-size = 16px
+
+.panel
+  display block
+  align-self center
+  justify-self center
+  font-size $font-size
+  min-width 260px
+  font-family Garamond, serif
+  color $text-color
+
+  &__row
+    display flex
+    justify-content space-between
+    align-items flex-end
+    margin-top 15px
+
+    .data-input
+      font-family Garamond, serif
+      padding-left 5px
+      padding-right 5px
+      box-sizing border-box
+      font-size $font-size
+      justify-self end
+      width 110px
+      min-width 50px
+      margin-left 15px
+
+    .data-input[type="checkbox"]
+      width auto
+
+  &_size_s .panel__row
+    justify-content center
+
+  &_size_m
+    grid-area panel-big
+
+    .panel__row
+      display grid
+      grid-template-rows 1fr
+      grid-template-columns auto 1fr
+
+      @media (max-width 400px)
+        grid-template-rows 1fr 1fr
+        grid-template-columns 1fr
+
+      .data-input:not([type="checkbox"])
+        width 110px
+        min-width 50px
+
+        @media (max-width 400px)
+          width 100%
+
+      &_check
+        @media (max-width 400px)
+          grid-template-rows 1fr
+          grid-template-columns auto 1fr

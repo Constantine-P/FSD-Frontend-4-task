@@ -1,6 +1,7 @@
 import './index.styl';
-import '../app/SliderJQ';
-import PanelView from '../app/layers/PanelView';
+import '../panel/panel.styl';
+import '../slider-app/SliderJQ';
+import Panel from '../panel/Panel';
 
 const slider1 = $('#slider-1').rangeSlider({
   min: -40,
@@ -15,13 +16,5 @@ const slider1 = $('#slider-1').rangeSlider({
   type: 'horizontal',
 });
 
-new PanelView(document.querySelector('#panel-11'), slider1);
-new PanelView(document.querySelector('#panel-12'), slider1);
-
-setTimeout(() => {
-  // slider1.isRange = false;
-  // slider1.type = 'kkk';
-  // slider1.isReverseDirection = 'asd';
-  // slider1.isScaleVisible = false;
-  // slider1.min = 0;
-}, 100);
+new Panel(document.querySelector('#panel-11'), slider1);
+new Panel(document.querySelector('#panel-12'), slider1);

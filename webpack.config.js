@@ -59,7 +59,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: path.join(__dirname, 'src/app/resources/favicons/**/*.*'),
+        from: path.join(__dirname, 'src/demo-page/favicons/**/*.*'),
         to: path.join(__dirname, 'dist/assets/favicons/'),
         flatten: true,
       },
