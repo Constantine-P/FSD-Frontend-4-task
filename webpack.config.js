@@ -1,7 +1,7 @@
 /* eslint-disable */
 const path = require('path');
 const webpack = require('webpack');
-const HTMLPlugin = require('html-webpack-plugin');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -17,6 +17,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.pug$/,
+        loader: ['html-loader', 'pug-html-loader'],
+      },
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
@@ -48,10 +52,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'style.css',
     }),
-    new HTMLPlugin({
+    new HTMLWebpackPlugin({
       filename: 'index.html',
-      chunks: ['demo'],
-      template: path.join(__dirname, 'src/demo-page/index.html'),
+      template: path.join(__dirname, 'src/demo-page/index.pug'),
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',

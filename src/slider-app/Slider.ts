@@ -24,7 +24,7 @@ class Slider extends EventEmitter {
   constructor(slider: HTMLElement, options?: SliderOptions) {
     super();
     this.validateOptions(options);
-    const opts = Object.assign(DEFAULT_SLIDER_OPTIONS, options);
+    const opts = { ...DEFAULT_SLIDER_OPTIONS, ...options } as SliderOptions;
     this.model = new Model(opts);
     this.view = new View(slider, opts);
     this.controller = new Controller(this.model, this.view);

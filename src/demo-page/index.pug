@@ -1,0 +1,65 @@
+include panel-row
+-
+  const panelBig = [
+    { title: "Scale minimum", name: "scaleMin" },
+    { title: "Scale maximum", name: "scaleMax" },
+    { title: "Scale steps", name: "scaleSteps", type: "text" },
+    { title: "Minimum", name: "min"},
+    { title: "Maximum", name: "max"},
+    { title: "Type", name: "type", type: "select", options: ['horizontal', 'vertical'] },
+    { title: "Show tooltips", name: "areTooltipsVisible", type: 'checkbox' },
+    { title: "Show scale", name: "isScaleVisible", type: 'checkbox' },
+    { title: "Enable range", name: "isRange", type: 'checkbox' },
+    { title: "Reverse direction", name: "isReverseDirection", type: 'checkbox' },
+  ]
+doctype html
+html
+  head
+    meta(charset = "utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="keywords" content="FSD 4th task slider")
+    meta(name="msapplication-TileColor" content="#da532c")
+    meta(name="theme-color" content="#ffffff")
+    link(rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png")
+    link(rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png")
+    link(rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png")
+    link(rel="manifest" href="assets/favicons/site.webmanifest")
+    link(rel="mask-icon" href="assets/favicons/safari-pinned-tab.svg" color="#5bbad5")
+    title Slider demo page
+  body
+    main.page-wrapper
+      section.slider-wrapper
+        div.panel.panel_size_s#panel-11
+          +panel-row({ title: "Minimum", name: "min" })
+          +panel-row({ title: "Maximum", name: "max" })
+        div.panel.panel_size_m#panel-12
+          each row in panelBig
+            +panel-row(row)
+        div.slider#slider-1
+
+      section.slider-wrapper
+        div.panel.panel_size_s#panel-21
+          +panel-row({ title: "Minimum", name: "min" })
+          +panel-row({ title: "Maximum", name: "max" })
+        div.panel.panel_size_m#panel-22
+          each row in panelBig
+            +panel-row(row)
+        div.slider#slider-2
+
+      section.slider-wrapper
+        div.panel.panel_size_s#panel-31
+          +panel-row({ title: "Minimum", name: "min" })
+          +panel-row({ title: "Maximum", name: "max" })
+        div.panel.panel_size_m#panel-32
+          each row in panelBig
+            +panel-row(row)
+        div.slider#slider-3
+
+      section.slider-wrapper
+        div.panel.panel_size_s#panel-41
+          +panel-row({ title: "Minimum", name: "min" })
+          +panel-row({ title: "Maximum", name: "max" })
+        div.panel.panel_size_m#panel-42
+          each row in panelBig
+            +panel-row(row)
+        div.slider#slider-4

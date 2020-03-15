@@ -8,6 +8,7 @@ import SliderOptions from '../../interfaces/SliderOptions';
 import findClosest from '../../functions/findClosest';
 import isValidNumberSteps from '../../functions/isValidNumberSteps';
 import normalizeToNum from '../../functions/normalizeToNum';
+import DEFAULT_SLIDER_OPTIONS from '../../DEFAULT_SLIDER_OPTIONS';
 
 class Model extends EventEmitter {
   private _min: number;
@@ -26,7 +27,6 @@ class Model extends EventEmitter {
 
   constructor(options: SliderOptions) {
     super();
-    Object.assign(DEFAULT_MODEL_OPTIONS, options);
     this._scaleMin = Number.MIN_SAFE_INTEGER;
     this._scaleMax = Number.MAX_SAFE_INTEGER;
     this._min = Number.MIN_SAFE_INTEGER;
@@ -34,7 +34,7 @@ class Model extends EventEmitter {
     this._scaleSteps = '';
     this.isRange = true;
     this.isSlide = true;
-    this.data = options;
+    this.data = { ...DEFAULT_MODEL_OPTIONS, ...options } as SliderOptions;
   }
 
   get min(): number {

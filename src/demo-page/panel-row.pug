@@ -1,0 +1,12 @@
+mixin panel-row(params)
+  -
+    const { title = "", type = "number", name = "", options = [] } = params;
+    const mode =  (type === "checkbox") ? "panel__row_check" : "";
+
+  label.panel__row(class = mode)= title
+    if (type === "select")
+      select.data-input(type = type step = "any" name = name data-js = name)
+        each option in options
+          option(value = option)= option
+    else
+      input.data-input(type = type step = "any" name = name data-js = name)

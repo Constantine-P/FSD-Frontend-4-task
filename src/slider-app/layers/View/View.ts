@@ -5,6 +5,7 @@ import LinearScaleView from './LinearScaleView';
 import ElementView from './ElementView';
 import HandleView from './HandleView';
 import ViewModel from './ViewModel';
+import DEFAULT_MODEL_OPTIONS from '../Model/DEFAULT_MODEL_OPTIONS';
 
 class View extends EventEmitter {
   private readonly slider: HTMLElement;
@@ -28,10 +29,7 @@ class View extends EventEmitter {
 
   private init(options): void {
     this.model = new ViewModel();
-
-    Object.assign(DEFAULT_VIEW_OPTIONS, options);
-
-    this.model.data = options;
+    this.model.data = { ...DEFAULT_VIEW_OPTIONS, ...options } as SliderOptions;
 
     this.scale = new LinearScaleView({
       container: this.slider,
