@@ -73,6 +73,12 @@ describe('test Model', () => {
       scaleMin: -10,
       scaleMax: 10,
       scaleSteps: '1',
+      relRange: {
+        min: 0.6,
+        max: 0.9,
+      },
+      positions: '0'.repeat(21).split('').map((item, i) => i / 20),
+      values: '0'.repeat(21).split('').map((item, i) => i - 10),
     });
     model.data = {
       min: 1,
@@ -87,20 +93,23 @@ describe('test Model', () => {
       scaleMin: -11,
       scaleMax: 11,
       scaleSteps: '2',
+      relRange: {
+        min: 12 / 22,
+        max: 18 / 22,
+      },
+      positions: '0'.repeat(12).split('').map((item, i) => (2 * i) / 22),
+      values: [-11, -9, -7, -5, -3, -1, 1, 3, 5, 7, 9, 11],
     });
   });
-
-  // test('test get dataToView', () => {
-  //   expect(model.dataToView).toStrictEqual({
-  //     minHandlePosition: 0.6,
-  //     maxHandlePosition: 0.9,
-  //     positions: '0'.repeat(21).split('').map((item, i) => i / 20),
-  //     values: '0'.repeat(21).split('').map((item, i) => i - 10),
-  //   });
-  // });
 
   test('test range', () => {
     expect(model.range).toStrictEqual(new Range({ min: 2, max: 8 }));
     model.range = new Range({ min: 0, max: 5 });
+  });
+
+  test('test relRange', () => {
+    expect(model.relRange).toStrictEqual({ min: 12 / 20, max: 18 / 20 });
+    model.relRange = { min: 1 / 20, max: 5 / 20 };
+    expect(model.relRange).toStrictEqual({ min: 1 / 20, max: 5 / 20 });
   });
 });

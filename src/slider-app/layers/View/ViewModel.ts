@@ -40,57 +40,57 @@ class ViewModel extends EventEmitter {
     this._areTooltipsVisible = true;
   }
 
-  public get rangeLength(): number {
+  get rangeLength(): number {
     return this.maxHandlePosition - this.minHandlePosition;
   }
 
-  public get type(): SliderType {
+  get type(): SliderType {
     return this._type;
   }
 
-  public set type(value: SliderType) {
+  set type(value: SliderType) {
     const sliderTypes = ['horizontal', 'vertical'];
     this._type = (sliderTypes.indexOf(value) > -1) ? value : sliderTypes[0] as SliderType;
     this.emit('change');
   }
 
-  public get isRange(): boolean {
+  get isRange(): boolean {
     return this._isRange;
   }
 
-  public set isRange(value: boolean) {
+  set isRange(value: boolean) {
     this._isRange = Boolean(value);
     this.emit('change');
   }
 
-  public get isScaleVisible(): boolean {
+  get isScaleVisible(): boolean {
     return this._isScaleVisible;
   }
 
-  public set isScaleVisible(value: boolean) {
+  set isScaleVisible(value: boolean) {
     this._isScaleVisible = Boolean(value);
     this.emit('change');
   }
 
-  public get isReverseDirection(): boolean {
+  get isReverseDirection(): boolean {
     return this._isReverseDirection;
   }
 
-  public set isReverseDirection(value: boolean) {
+  set isReverseDirection(value: boolean) {
     this._isReverseDirection = (typeof value === 'boolean') ? value : false;
     this.emit('change');
   }
 
-  public get areTooltipsVisible(): boolean {
+  get areTooltipsVisible(): boolean {
     return this._areTooltipsVisible;
   }
 
-  public set areTooltipsVisible(value: boolean) {
+  set areTooltipsVisible(value: boolean) {
     this._areTooltipsVisible = Boolean(value);
     this.emit('change');
   }
 
-  public get data(): TransmittedData {
+  get data(): TransmittedData {
     const {
       type, isRange, isScaleVisible, isReverseDirection, areTooltipsVisible,
     } = this;
@@ -103,7 +103,7 @@ class ViewModel extends EventEmitter {
     };
   }
 
-  public set data(value: TransmittedData) {
+  set data(value: TransmittedData) {
     this.disableEmitting();
     Object.keys(value).forEach((key) => {
       if (this[key] !== undefined) {

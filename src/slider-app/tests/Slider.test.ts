@@ -152,9 +152,12 @@ describe('test Scale', () => {
       isScaleVisible: true,
       isReverseDirection: true,
       type: 'horizontal' as SliderType,
+      relRange: { min: 7 / 15, max: 13 / 15 },
+      positions: '0'.repeat(16).split('').map((item, i) => i / 15),
+      values: [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     });
     const data = {
-      min: 0,
+      min: -10,
       max: 5,
       scaleMin: -10,
       scaleMax: 20,
@@ -164,6 +167,9 @@ describe('test Scale', () => {
       isScaleVisible: false,
       isReverseDirection: false,
       type: 'vertical' as SliderType,
+      relRange: { min: 0, max: 15 / 30 },
+      positions: [0, 1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6, 1],
+      values: [-10, -5, 0, 5, 10, 15, 20],
     };
     slider.data = data;
     expect(slider.data).toStrictEqual(data);

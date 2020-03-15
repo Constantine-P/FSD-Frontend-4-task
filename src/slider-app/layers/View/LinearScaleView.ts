@@ -6,9 +6,9 @@ class LinearScaleView extends EventEmitter {
 
   private scaleValues: HTMLDivElement;
 
-  public side: side;
+  public side: Side;
 
-  public size: size;
+  public size: Size;
 
   public areValuesVisible: boolean;
 
@@ -25,8 +25,19 @@ class LinearScaleView extends EventEmitter {
     this.addHandlers();
   }
 
-  public get element(): HTMLDivElement {
+  get element(): HTMLDivElement {
     return this._element;
+  }
+
+  renderValues(): void {
+    this.scaleValues.innerHTML = '';
+    if (!this.areValuesVisible) return;
+    this.model.positions.forEach((item, i) => {
+      const value = createElement('scaleValue');
+      value.style[this.side] = `${item * 100}%`;
+      value.textContent = `${this.model.values[i]}`;
+      this.scaleValues.append(value);
+    });
   }
 
   private addElements(container): void {
@@ -68,22 +79,11 @@ class LinearScaleView extends EventEmitter {
     }
     return getClickCoordsRelativeToBlock(e, this.element)[this.side];
   }
-
-  public renderValues(): void {
-    this.scaleValues.innerHTML = '';
-    if (!this.areValuesVisible) return;
-    this.model.positions.forEach((item, i) => {
-      const value = createElement('scaleValue');
-      value.style[this.side] = `${item * 100}%`;
-      value.textContent = `${this.model.values[i]}`;
-      this.scaleValues.append(value);
-    });
-  }
 }
 
-type side = 'top' | 'bottom' | 'left' | 'right';
+type Side = 'top' | 'bottom' | 'left' | 'right';
 
-type size = 'width' | 'height';
+type Size = 'width' | 'height';
 
 interface Position {
   top: number;

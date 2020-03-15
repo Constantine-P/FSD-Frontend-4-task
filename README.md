@@ -2,7 +2,7 @@
 
 [Demo](https://constantine-p.github.io/FSD-Frontend-4-task/index.html)
 
-Простой такой jquery слайдер, ничего особенного.
+Jquery simple range slider
   
 ## Clone repository
 ``` 
@@ -23,6 +23,10 @@ npm run build
 ``` 
 npm t
 ```  
+## Testing with coverage
+``` 
+npm tc
+```  
 
 ## Application layers:
 
@@ -30,7 +34,6 @@ npm t
   - View
     - ViewModel
   - Controller
-  - PanelView
 
 ## Model
   
@@ -44,22 +47,30 @@ npm t
 ## View
 
   1. Отвечает за отрисовку слайдера;
-  2. Предоставляет один публичный метод render(), который перерисовывает слайдер в соответствии с моделью отображения.
-  3. Предоставляет публичное свойство model - экземпляр класса ViewModel;
+  2. Предоставляет публичное свойство model - экземпляр класса ViewModel;
   
 ### ViewModel
-  1. Хранит данные о состоянии представления и логику работы с ними;
-  2. Предоставляет интерфейс для работы с данными в виде get / set методов и метод updateRelRange(value: number): void, принимающий относительную координату клика (от 0 до 1) по шкале слайдера и соответственно меняющий данные представления;
+  1. Хранит данные о состоянии представления и логику работы с ними, а именно:
+    - положения ползунков;
+    - значения подсказок ползунков;
+    - массив положений шкалы;
+    - массив значений шкалы;
+    - тип слайдера (ориентация);
+    - диапазон или одно значение;
+    - видимость шкалы;
+    - видимость подсказок;
+    - направление слайдера;
+  2. Предоставляет интерфейс для работы с данными в виде get / set методов;
   3. Наследуется от класса EventEmitter: позволяет подписываться на собственные изменения;
- 
-## PanelView
-  1. Отвечает за работу панели управления слайдером;
-  2. Предоставляет интерфейс в виде методов get / set data;
    
 ## Controller
-  1. Подписывается на изменения Model, ViewModel и PanelView;
+  1. Подписывается на изменения Model, View;
   2. Осуществляет взаимодействие между слоями;
-  
+    
+## Panel
+  1. Отвечает за работу панели управления слайдером;
+  2. Предоставляет интерфейс в виде методов get / set data;
+        
 # Usage
 Простой пример:
 ```html
@@ -93,11 +104,11 @@ $('.slider').rangeSlider({
 С подключенными панелями:
 ```html
 <div class="slider" id="slider-1"></div>
-<div class="panel" id="panel-11">
+<div class="panel" id="panel-1">
     <input type="number" class="data-input" step="any" data-js="min">
     <input type="number" class="data-input" step="any" data-js="max">
 </div>
-<div class="panel" id="panel-12">
+<div class="panel" id="panel-2">
     <input type="number" class="data-input" data-js="scaleMin">
     <input type="number" class="data-input" data-js="scaleMax">
     <input type="text" class="data-input" data-js="scaleSteps">
@@ -115,7 +126,7 @@ $('.slider').rangeSlider({
 ```
 
 ``` js
-$('#slider-1').rangeSlider({
+const slider1 = $('#slider-1').rangeSlider({
   min: 40,
   max: 80,
   scaleMin: 0,
@@ -126,8 +137,9 @@ $('#slider-1').rangeSlider({
   isScaleVisible: true,
   isReverseDirection: false,
   type: 'horizontal',
-},
-[$('#panel-11'), $('#panel-12')]);
+});
+new Panel(document.querySelector('#panel-1'), slider1);
+new Panel(document.querySelector('#panel-2'), slider1);
 ```
 
 ## Options
@@ -159,7 +171,13 @@ $('#slider-1').rangeSlider({
 | get / set areTooltipsVisible | true | Отображение значений над ползунком |
 | get / set isReverseDirection | true | Обращает направление слайдера (снизу-вверх, слева-направо) |
 | get / set range | { min: number, max: number } | Сразу min и max значения |
+| get / set data | { все данные объектом } | Названия полей объекта соответствуют методам выше |
+
+## Events
+| Событие | Описание |
+| ------ | ------ |
+| change | Проосходит, если состояние слайдера меняется |
 
 ## UML 
 
-![uml](UML-chart.jpg)
+![uml](UML-chart.svg)

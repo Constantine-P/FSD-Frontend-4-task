@@ -11,7 +11,6 @@ interface SliderOptions {
   isScaleVisible?: boolean;
   isReverseDirection?: boolean;
   type?: SliderType;
-  values: [];
 }
 
 export default SliderOptions;
