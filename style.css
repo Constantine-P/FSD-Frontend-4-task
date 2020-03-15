@@ -118,6 +118,7 @@
   box-sizing: border-box;
   background-color: #67bed7;
   box-shadow: 1px 1px 3px 0 #838383;
+  cursor: pointer;
 }
 .slider__range-line {
   z-index: 1;
@@ -126,6 +127,7 @@
   transition: 300ms;
   background-color: #2086c9;
   margin: 2px;
+  cursor: pointer;
 }
 .slider__handle {
   position: absolute;
@@ -146,6 +148,7 @@
 }
 .slider__scale-value {
   position: absolute;
+  cursor: pointer;
 }
 .slider__tooltip {
   display: flex;
