@@ -63,7 +63,7 @@
       ><path d="M0 0 L0 120 L190 120 L190 0 Z"
       /></clipPath
     ></defs
-    ><g fill="rgb(136,238,136)" fill-opacity="0.4902" transform="translate(0,970)" stroke-opacity="0.4902" stroke="rgb(136,238,136)"
+    ><g fill="rgb(200,238,200)" fill-opacity="0.4902" transform="translate(0,970)" stroke-opacity="0.4902" stroke="rgb(200,238,200)"
     ><rect x="0.5" width="318.5" height="148.5" y="0.5" clip-path="url(#clipPath2)" stroke="none"
     /></g
     ><g transform="translate(0,970)"
@@ -87,7 +87,7 @@
       /><text x="5" font-size="13px" y="132.375" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >constructor(options)</text
     ></g
-    ><g fill="rgb(136,238,136)" fill-opacity="0.4902" transform="translate(0,1180)" stroke-opacity="0.4902" stroke="rgb(136,238,136)"
+    ><g fill="rgb(200,238,200)" fill-opacity="0.4902" transform="translate(0,1180)" stroke-opacity="0.4902" stroke="rgb(200,238,200)"
     ><rect x="0.5" width="318.5" height="68.5" y="0.5" clip-path="url(#clipPath3)" stroke="none"
     /></g
     ><g transform="translate(0,1180)"
@@ -101,7 +101,7 @@
       /><text x="5" font-size="13px" y="57.1406" clip-path="url(#clipPath3)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >constructor(options)</text
     ></g
-    ><g fill="rgb(136,238,136)" fill-opacity="0.4902" transform="translate(0,740)" stroke-opacity="0.4902" stroke="rgb(136,238,136)"
+    ><g fill="rgb(200,238,200)" fill-opacity="0.4902" transform="translate(0,740)" stroke-opacity="0.4902" stroke="rgb(200,238,200)"
     ><rect x="0.5" width="318.5" height="198.5" y="0.5" clip-path="url(#clipPath4)" stroke="none"
     /></g
     ><g transform="translate(0,740)"
@@ -158,7 +158,7 @@
       ><text x="5" font-size="13px" y="122.3281" clip-path="url(#clipPath6)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >+ disableEmitting(): void</text
     ></g
-    ><g fill="rgb(238,136,136)" fill-opacity="0.4902" transform="translate(730,0)" stroke-opacity="0.4902" stroke="rgb(238,136,136)"
+    ><g fill="rgb(238,200,200)" fill-opacity="0.4902" transform="translate(730,0)" stroke-opacity="0.4902" stroke="rgb(238,200,200)"
     ><rect x="0.5" width="368.5" height="698.5" y="0.5" clip-path="url(#clipPath7)" stroke="none"
     /></g
     ><g transform="translate(730,0)"
@@ -231,7 +231,7 @@
       ><text x="5" font-size="13px" y="679.0625" clip-path="url(#clipPath7)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >+ set data(value: TransmittedData)</text
     ></g
-    ><g fill="rgb(136,136,238)" fill-opacity="0.4902" transform="translate(1190,740)" stroke-opacity="0.4902" stroke="rgb(136,136,238)"
+    ><g fill="rgb(200,200,238)" fill-opacity="0.4902" transform="translate(1190,740)" stroke-opacity="0.4902" stroke="rgb(200,200,238)"
     ><rect x="0.5" width="228.5" height="538.5" y="0.5" clip-path="url(#clipPath8)" stroke="none"
     /></g
     ><g transform="translate(1190,740)"
@@ -292,7 +292,7 @@
       ><text x="5" font-size="13px" y="528.5938" clip-path="url(#clipPath8)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >+ set data(value: TransmittedData)</text
     ></g
-    ><g fill="rgb(136,136,238)" fill-opacity="0.4902" transform="translate(730,740)" stroke-opacity="0.4902" stroke="rgb(136,136,238)"
+    ><g fill="rgb(200,200,238)" fill-opacity="0.4902" transform="translate(730,740)" stroke-opacity="0.4902" stroke="rgb(200,200,238)"
     ><rect x="0.5" width="368.5" height="138.5" y="0.5" clip-path="url(#clipPath6)" stroke="none"
     /></g
     ><g transform="translate(730,740)"
@@ -315,7 +315,7 @@
       ><text x="5" font-size="13px" y="122.3281" clip-path="url(#clipPath6)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >- updateView(): void</text
     ></g
-    ><g fill="rgb(136,136,238)" fill-opacity="0.4902" transform="translate(380,740)" stroke-opacity="0.4902" stroke="rgb(136,136,238)"
+    ><g fill="rgb(200,200,238)" fill-opacity="0.4902" transform="translate(380,740)" stroke-opacity="0.4902" stroke="rgb(200,200,238)"
     ><rect x="0.5" width="258.5" height="328.5" y="0.5" clip-path="url(#clipPath9)" stroke="none"
     /></g
     ><g transform="translate(380,740)"
@@ -362,7 +362,7 @@
       ><text x="5" font-size="13px" y="302.8906" clip-path="url(#clipPath9)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >- updateHandlesPosition(position): void</text
     ></g
-    ><g fill="rgb(136,238,136)" fill-opacity="0.4902" transform="translate(380,1110)" stroke-opacity="0.4902" stroke="rgb(136,238,136)"
+    ><g fill="rgb(200,238,200)" fill-opacity="0.4902" transform="translate(380,1110)" stroke-opacity="0.4902" stroke="rgb(200,238,200)"
     ><rect x="0.5" width="258.5" height="508.5" y="0.5" clip-path="url(#clipPath10)" stroke="none"
     /></g
     ><g transform="translate(380,1110)"
