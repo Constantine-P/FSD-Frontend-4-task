@@ -19,7 +19,11 @@ describe('test ViewModel', () => {
   test('test renderValues', () => {
     const scaleValues = element.element.querySelector('.slider__scale-values') as HTMLElement;
     expect(element.element).toContainElement(scaleValues);
-    element.model = { positions: [0, 1, 2], values: [11, 22, 33] };
+    element.model = {
+      scaleMin: 11,
+      scaleMax: 33,
+      scaleStep: 11,
+    };
     element.renderValues();
     const valueElements = scaleValues.querySelectorAll('.slider__scale-value');
     expect(valueElements.length).toBe(3);

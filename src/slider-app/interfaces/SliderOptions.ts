@@ -5,7 +5,7 @@ interface SliderOptions {
   max?: number;
   scaleMin?: number;
   scaleMax?: number;
-  scaleSteps?: string;
+  scaleStep?: number;
   isRange?: boolean;
   areTooltipsVisible?: boolean;
   isScaleVisible?: boolean;

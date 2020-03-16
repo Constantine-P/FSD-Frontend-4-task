@@ -24,6 +24,7 @@
     "eslint-comments/disable-enable-pair": "off",
     "no-console": "off",
     "no-new": "off",
-    "no-nested-ternary": "off"
+    "no-nested-ternary": "off",
+    "class-methods-use-this": "off"
   }
 }

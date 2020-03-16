@@ -13,7 +13,7 @@ describe('test Scale', () => {
     max: 8,
     scaleMin: -5,
     scaleMax: 10,
-    scaleSteps: '1',
+    scaleStep: 1,
     areTooltipsVisible: true,
     isRange: true,
     isScaleVisible: true,
@@ -24,15 +24,15 @@ describe('test Scale', () => {
     document.body.innerHTML = `
     <div class="slider"></div>
     <div class="panel">
-      <input type="number" data-js="rangeMin" value="10">
-      <input type="number" data-js="rangeMax" value="25">
-      <input type="number" data-js="scaleMin" value="0">
-      <input type="number" data-js="scaleMax" value="50">
-      <input type="text"   data-js="steps" value="6">
-      <input type="checkbox" data-js="isRange" checked>
-      <input type="checkbox" data-js="areTooltipsVisible" checked>
-      <input type="checkbox" data-js="isScaleVisible" checked>
-      <input type="checkbox" data-js="isReverseDirection" checked>
+      <input type="number"   data-js="min" name="min">
+      <input type="number"   data-js="max" name="max">
+      <input type="number"   data-js="scaleMin" name="scaleMin">
+      <input type="number"   data-js="scaleMax" name="scaleMax">
+      <input type="number"   data-js="scaleStep" name="scaleStep">
+      <input type="checkbox" data-js="isRange" name="isRange" checked>
+      <input type="checkbox" data-js="areTooltipsVisible" name="areTooltipsVisible" checked>
+      <input type="checkbox" data-js="isScaleVisible" name="isScaleVisible" checked>
+      <input type="checkbox" data-js="isReverseDirection" name="isReverseDirection" checked>
       <select data-js="type">
         <option>horizontal</option>
         <option selected>vertical</option>
@@ -69,7 +69,7 @@ describe('test Scale', () => {
     slider.scaleMin = -20;
     expect(slider.scaleMin).toBe(-20);
     slider.scaleMin = 20;
-    expect(slider.scaleMin).toBe(9);
+    expect(slider.scaleMin).toBe(-20);
   });
 
   test('test scaleMax', () => {
@@ -77,17 +77,13 @@ describe('test Scale', () => {
     slider.scaleMax = 20;
     expect(slider.scaleMax).toBe(20);
     slider.scaleMax = -20;
-    expect(slider.scaleMax).toBe(-4);
+    expect(slider.scaleMax).toBe(20);
   });
 
-  test('test scaleSteps', () => {
-    expect(slider.scaleSteps).toBe('1');
-    slider.scaleSteps = '1 2 3';
-    expect(slider.scaleSteps).toBe('1 2 3');
-    slider.scaleSteps = '1*3 2*2.5 3*56';
-    expect(slider.scaleSteps).toBe('1*3 2*2.5 3*56');
-    slider.scaleSteps = 'asd asd 123';
-    expect(slider.scaleSteps).toBe('1*3 2*2.5 3*56');
+  test('test scaleStep', () => {
+    expect(slider.scaleStep).toBe(1);
+    slider.scaleStep = 2;
+    expect(slider.scaleStep).toBe(2);
   });
 
   test('test range', () => {
@@ -100,14 +96,6 @@ describe('test Scale', () => {
     };
     expect(slider.range.min).toBe(-5);
     expect(slider.range.max).toBe(10);
-
-    slider.scaleSteps = '3';
-    slider.range = {
-      min: -4,
-      max: 9,
-    };
-    expect(slider.range.min).toBe(-2);
-    expect(slider.range.max).toBe(7);
   });
 
   test('test type', () => {
@@ -146,30 +134,26 @@ describe('test Scale', () => {
       max: 8,
       scaleMin: -5,
       scaleMax: 10,
-      scaleSteps: '1',
+      scaleStep: 1,
       areTooltipsVisible: true,
       isRange: true,
       isScaleVisible: true,
       isReverseDirection: true,
       type: 'horizontal' as SliderType,
       relRange: { min: 7 / 15, max: 13 / 15 },
-      positions: '0'.repeat(16).split('').map((item, i) => i / 15),
-      values: [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     });
     const data = {
       min: -10,
       max: 5,
       scaleMin: -10,
       scaleMax: 20,
-      scaleSteps: '5',
+      scaleStep: 5,
       areTooltipsVisible: false,
       isRange: false,
       isScaleVisible: false,
       isReverseDirection: false,
       type: 'vertical' as SliderType,
       relRange: { min: 0, max: 15 / 30 },
-      positions: [0, 1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6, 1],
-      values: [-10, -5, 0, 5, 10, 15, 20],
     };
     slider.data = data;
     expect(slider.data).toStrictEqual(data);

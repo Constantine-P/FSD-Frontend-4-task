@@ -3,9 +3,7 @@ import '../panel/panel.styl';
 import '../slider-app/SliderJQ';
 import Panel from '../panel/Panel';
 
-const slider1 = $('#slider-1').rangeSlider({
-  scaleSteps: '20',
-});
+const slider1 = $('#slider-1').rangeSlider();
 new Panel(document.querySelector('#panel-11'), slider1);
 new Panel(document.querySelector('#panel-12'), slider1);
 
@@ -14,7 +12,7 @@ const slider2 = $('#slider-2').rangeSlider({
   max: 8,
   scaleMin: 0,
   scaleMax: 15,
-  scaleSteps: '2 3 5 3 2',
+  scaleStep: 5,
   areTooltipsVisible: true,
   isRange: false,
   isScaleVisible: true,
@@ -25,14 +23,14 @@ new Panel(document.querySelector('#panel-21'), slider2);
 new Panel(document.querySelector('#panel-22'), slider2);
 
 const slider3 = $('#slider-3').rangeSlider({
-  min: -40,
-  max: 80,
-  scaleMin: -50,
-  scaleMax: 100,
-  scaleSteps: '',
+  min: -100000,
+  max: 100000,
+  scaleMin: -500000,
+  scaleMax: 500000,
+  scaleStep: 50000,
   areTooltipsVisible: true,
   isRange: true,
-  isScaleVisible: false,
+  isScaleVisible: true,
   isReverseDirection: true,
   type: 'vertical',
 });
@@ -40,13 +38,13 @@ new Panel(document.querySelector('#panel-31'), slider3);
 new Panel(document.querySelector('#panel-32'), slider3);
 
 const slider4 = $('#slider-4').rangeSlider({
-  min: 20,
-  max: 80,
-  scaleMin: 0,
-  scaleMax: 100,
-  scaleSteps: '5*10 2*25',
+  min: -7000,
+  max: 7000,
+  scaleMin: -10000,
+  scaleMax: 10000,
+  scaleStep: 500,
   areTooltipsVisible: false,
-  isRange: false,
+  isRange: true,
   isScaleVisible: true,
   isReverseDirection: false,
   type: 'horizontal',

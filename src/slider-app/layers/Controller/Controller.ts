@@ -9,9 +9,9 @@ class Controller {
   constructor(model: Model, view: View) {
     this.model = model;
     this.view = view;
-
     this.addHandlers();
     this.updateView();
+    this.view.updateScale();
   }
 
   private addHandlers(): void {
@@ -19,34 +19,40 @@ class Controller {
       this.updateView();
     };
 
-    const viewChangeHandler = (): void => {
-      this.updateModel();
+    const viewChangeHandler = (e): void => {
+      this.updateModel(e);
     };
 
     this.model.on('change', modelChangeHandler);
     this.view.on('change', viewChangeHandler);
   }
 
-  private updateModel(): void {
-    this.model.data = {
-      relRange: {
-        min: this.view.model.minHandlePosition,
-        max: this.view.model.maxHandlePosition,
-      },
-      isRange: this.view.model.isRange,
-    };
-    this.model.emit('change');
+  private updateModel(e): void {
+    if (e === 'min') this.model.relMin = this.view.model.minHandlePosition;
+    if (e === 'max') this.model.relMax = this.view.model.maxHandlePosition;
+    if (e === 'isRange') this.model.isRange = this.view.model.isRange;
+    // console.log(`updateModel -> ${e}`);
   }
 
   private updateView(): void {
+    const {
+      scaleMin, scaleMax, scaleStep, min, max, relMin, relMax
+    } = this.model;
+    const isUpdateScale = (this.view.model.scaleStep !== scaleStep)
+    || (this.view.model.scaleMin !== scaleMin)
+    || (this.view.model.scaleMax !== scaleMax);
     this.view.model.data = {
-      minHandleValue: this.model.min,
-      maxHandleValue: this.model.max,
-      minHandlePosition: this.model.relRange.min,
-      maxHandlePosition: this.model.relRange.max,
-      positions: this.model.scale.positions,
-      values: this.model.scale.values,
+      minHandleValue: min,
+      maxHandleValue: max,
+      minHandlePosition: relMin,
+      maxHandlePosition: relMax,
     };
+    if (isUpdateScale) {
+      this.view.model.data = {
+        scaleMin, scaleMax, scaleStep,
+      };
+      this.view.updateScale();
+    }
   }
 }
 

@@ -1,5 +1,4 @@
 import Model from '../../layers/Model/Model';
-import Range from '../../classes/Range';
 import { SliderType } from '../../types/SliderType';
 
 describe('test Model', () => {
@@ -9,7 +8,7 @@ describe('test Model', () => {
     max: 8,
     scaleMin: -10,
     scaleMax: 10,
-    scaleSteps: '1',
+    scaleStep: 1,
     areTooltipsVisible: true,
     isRange: true,
     isScaleVisible: true,
@@ -45,6 +44,10 @@ describe('test Model', () => {
     model.scaleMin = -20;
     expect(model.scaleMin).toBe(-20);
     model.scaleMin = 20;
+    expect(model.scaleMin).toBe(-20);
+    model.scaleMin = 5;
+    expect(model.scaleMin).toBe(5);
+    model.scaleMin = 9;
     expect(model.scaleMin).toBe(9);
   });
 
@@ -53,17 +56,17 @@ describe('test Model', () => {
     model.scaleMax = 20;
     expect(model.scaleMax).toBe(20);
     model.scaleMax = -20;
-    expect(model.scaleMax).toBe(-9);
+    expect(model.scaleMax).toBe(20);
+    model.scaleMax = 0;
+    expect(model.scaleMax).toBe(20);
+    model.scaleMax = 7;
+    expect(model.scaleMax).toBe(7);
   });
 
-  test('test scaleSteps', () => {
-    expect(model.scaleSteps).toBe('1');
-    model.scaleSteps = '1 2 3';
-    expect(model.scaleSteps).toBe('1 2 3');
-    model.scaleSteps = '1*3 2*2.5 3*56';
-    expect(model.scaleSteps).toBe('1*3 2*2.5 3*56');
-    model.scaleSteps = 'asd asd 123';
-    expect(model.scaleSteps).toBe('1*3 2*2.5 3*56');
+  test('test scaleStep', () => {
+    expect(model.scaleStep).toBe(1);
+    model.scaleStep = 2;
+    expect(model.scaleStep).toBe(2);
   });
 
   test('test data', () => {
@@ -72,44 +75,62 @@ describe('test Model', () => {
       max: 8,
       scaleMin: -10,
       scaleMax: 10,
-      scaleSteps: '1',
+      scaleStep: 1,
       relRange: {
         min: 0.6,
         max: 0.9,
       },
-      positions: '0'.repeat(21).split('').map((item, i) => i / 20),
-      values: '0'.repeat(21).split('').map((item, i) => i - 10),
     });
     model.data = {
       min: 1,
       max: 7,
       scaleMin: -11,
       scaleMax: 11,
-      scaleSteps: '2',
+      scaleStep: 2,
     };
     expect(model.data).toStrictEqual({
       min: 1,
       max: 7,
       scaleMin: -11,
       scaleMax: 11,
-      scaleSteps: '2',
+      scaleStep: 2,
       relRange: {
         min: 12 / 22,
         max: 18 / 22,
       },
-      positions: '0'.repeat(12).split('').map((item, i) => (2 * i) / 22),
-      values: [-11, -9, -7, -5, -3, -1, 1, 3, 5, 7, 9, 11],
     });
   });
 
   test('test range', () => {
-    expect(model.range).toStrictEqual(new Range({ min: 2, max: 8 }));
-    model.range = new Range({ min: 0, max: 5 });
+    expect(model.range).toStrictEqual({ min: 2, max: 8 });
+    model.range = { min: 0, max: 5 };
+    expect(model.range).toStrictEqual({ min: 0, max: 5 });
   });
 
   test('test relRange', () => {
     expect(model.relRange).toStrictEqual({ min: 12 / 20, max: 18 / 20 });
     model.relRange = { min: 1 / 20, max: 5 / 20 };
     expect(model.relRange).toStrictEqual({ min: 1 / 20, max: 5 / 20 });
+  });
+
+  test('test invalid data', () => {
+    const opts = {
+      scaleMin: 500,
+      scaleMax: 100,
+      scaleStep: 10,
+      isScaleVisible: true,
+    };
+    model = new Model(opts);
+    expect(model.data).toStrictEqual({
+      min: 0,
+      max: 100,
+      scaleMin: 0,
+      scaleMax: 100,
+      scaleStep: 25,
+      relRange: {
+        min: 0,
+        max: 1,
+      },
+    });
   });
 });

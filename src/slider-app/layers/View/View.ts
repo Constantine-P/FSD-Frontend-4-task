@@ -1,11 +1,11 @@
 import EventEmitter from '../../classes/EventEmitter';
 import SliderOptions from '../../interfaces/SliderOptions';
-import DEFAULT_VIEW_OPTIONS from './DEFAULT_VIEW_OPTIONS';
 import LinearScaleView from './LinearScaleView';
 import ElementView from './ElementView';
 import HandleView from './HandleView';
 import ViewModel from './ViewModel';
-import DEFAULT_MODEL_OPTIONS from '../Model/DEFAULT_MODEL_OPTIONS';
+import minMax from '../../functions/minMax';
+import DEFAULT_SLIDER_OPTIONS from '../../DEFAULT_SLIDER_OPTIONS';
 
 class View extends EventEmitter {
   private readonly slider: HTMLElement;
@@ -29,7 +29,7 @@ class View extends EventEmitter {
 
   private init(options): void {
     this.model = new ViewModel();
-    this.model.data = { ...DEFAULT_VIEW_OPTIONS, ...options } as SliderOptions;
+    this.model.data = { ...DEFAULT_SLIDER_OPTIONS, ...options };
 
     this.scale = new LinearScaleView({
       container: this.slider,
@@ -70,12 +70,15 @@ class View extends EventEmitter {
     };
 
     const handleScaleMouseMove = (position): void => {
+      const pos = minMax(0, position, 1);
       [this.minHandle, this.maxHandle, this.rangeLine].forEach((item) => item.transitionOff());
-      this.updateHandlesPosition(position);
+      this.updateHandlesPosition(pos);
     };
 
-    const handleModelChange = (): void => {
+    const handleModelChange = (name): void => {
       this.update();
+      if (['type', 'isScaleVisible', 'isReverseDirection'].indexOf(name) > -1) this.updateScale();
+      if (name === 'isRange') this.emit('change', name);
     };
 
     this.scale.on('scaleMouseDown', handleScaleMouseDown);
@@ -99,6 +102,9 @@ class View extends EventEmitter {
     this.alignElementsVisibility();
     this.updateElementsSideAndSize();
     this.updateElementsByModel();
+  }
+
+  public updateScale(): void {
     this.scale.renderValues();
   }
 
@@ -164,10 +170,11 @@ class View extends EventEmitter {
     const distanceToMax = Math.abs(position - this.maxHandle.position);
     if (distanceToMin < distanceToMax && this.model.isRange) {
       this.model.minHandlePosition = position;
+      this.emit('change', 'min');
     } else {
       this.model.maxHandlePosition = position;
+      this.emit('change', 'max');
     }
-    this.emit('change');
   }
 }
 

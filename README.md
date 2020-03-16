@@ -56,8 +56,9 @@ npm run tc
   1. Хранит данные о состоянии представления и логику работы с ними, а именно:
   - положения ползунков;
   - значения подсказок ползунков;
-  - массив положений шкалы;
-  - массив значений шкалы;
+  - минимальное значение шкалы;
+  - маскимальное значение шкалы;
+  - шаг шкалы;
   - тип слайдера (ориентация);
   - диапазон или одно значение;
   - видимость шкалы;
@@ -95,7 +96,7 @@ $('.slider').rangeSlider({
   max: 80,
   scaleMin: 0,
   scaleMax: 100,
-  scaleSteps: '20',
+  scaleStep: 20,
   areTooltipsVisible: true,
   isRange: true,
   isScaleVisible: true,
@@ -108,23 +109,23 @@ $('.slider').rangeSlider({
 ```html
 <div class="slider" id="slider-1"></div>
 <div class="panel" id="panel-1">
-    <input type="number" class="data-input" step="any" data-js="min">
-    <input type="number" class="data-input" step="any" data-js="max">
+    <input type="number" class="data-input" step="any" data-js="min" name="min">
+    <input type="number" class="data-input" step="any" data-js="max" name="max">
 </div>
 <div class="panel" id="panel-2">
-    <input type="number" class="data-input" data-js="scaleMin">
-    <input type="number" class="data-input" data-js="scaleMax">
-    <input type="text" class="data-input" data-js="scaleSteps">
-    <input type="number" class="data-input" data-js="min" step="1">
-    <input type="number" class="data-input" data-js="max" step="1">
-    <select class="data-input" data-js="type">
+    <input type="number" class="data-input" data-js="scaleMin" name="scaleMin">
+    <input type="number" class="data-input" data-js="scaleMax" name="scaleMax">
+    <input type="text" class="data-input" data-js="scaleStep" name="scaleStep">
+    <input type="number" class="data-input" data-js="min" name="min" step="1">
+    <input type="number" class="data-input" data-js="max" name="max" step="1">
+    <select class="data-input" data-js="type" name="type">
       <option value="horizontal">horizontal</option>
       <option value="vertical">vertical</option>
     </select>
-    <input type="checkbox" class="data-input" data-js="areTooltipsVisible">
-    <input type="checkbox" class="data-input" data-js="isScaleVisible">
-    <input type="checkbox" class="data-input" data-js="isRange">
-    <input type="checkbox" class="data-input" data-js="isReverseDirection">
+    <input type="checkbox" class="data-input" data-js="areTooltipsVisible" name="areTooltipsVisible">
+    <input type="checkbox" class="data-input" data-js="isScaleVisible" name="isScaleVisible">
+    <input type="checkbox" class="data-input" data-js="isRange" name="isRange">
+    <input type="checkbox" class="data-input" data-js="isReverseDirection" name="isReverseDirection">
 </div>
 ```
 
@@ -134,7 +135,7 @@ const slider1 = $('#slider-1').rangeSlider({
   max: 80,
   scaleMin: 0,
   scaleMax: 100,
-  scaleSteps: '5*10 10*5',
+  scaleStep: 5,
   areTooltipsVisible: true,
   isRange: true,
   isScaleVisible: true,
@@ -151,7 +152,7 @@ new Panel(document.querySelector('#panel-2'), slider1);
 | ------ | ------ | ------ | ------ |
 | scaleMin | number | 0 | Минимум шкалы |
 | scaleMax | number | 100 | Максимум шкалы |
-| scaleStep | string | "10" | Шаг шкалы (либо последовательность шагов). Например: "10", "10 20 30", "3\*10 5\*20 2\*30" |
+| scaleStep | number | 25 | Шаг шкалы |
 | min | number | 0 | Минимальное значение |
 | max | number | 100 | Максимальное значение |
 | type | string | 'horizontal' | Тип ориентации слайдера: 'vertical' или 'horizontal' |
@@ -165,7 +166,7 @@ new Panel(document.querySelector('#panel-2'), slider1);
 | ------ | ------ | ------ |
 | get / set scaleMin | number | Минимум шкалы |
 | get / set scaleMax | number | Максимум шкалы |
-| get / set scaleStep | string | Шаг шкалы (либо последовательность шагов). Например: "10", "10 20 30", "3\*10 5\*20 2\*30" |
+| get / set scaleStep | number | Шаг шкалы |
 | get / set min | number | Минимальное значение |
 | get / set max | number | Максимальное значение |
 | get / set type | string | Тип ориентации слайдера: 'vertical' или 'horizontal' |
@@ -179,7 +180,7 @@ new Panel(document.querySelector('#panel-2'), slider1);
 ## Events
 | Событие | Описание |
 | ------ | ------ |
-| change | Проосходит, если состояние слайдера меняется |
+| change | Происходит, если состояние слайдера меняется |
 
 ## UML 
 

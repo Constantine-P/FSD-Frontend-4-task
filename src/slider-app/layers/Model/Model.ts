@@ -1,13 +1,10 @@
-import DEFAULT_MODEL_OPTIONS from './DEFAULT_MODEL_OPTIONS';
 import EventEmitter from '../../classes/EventEmitter';
-import Range from '../../classes/Range';
-import Scale from '../../classes/Scale';
 import RangeValue from '../../interfaces/RangeValue';
 import TransmittedData from '../../interfaces/TransmittedData';
 import SliderOptions from '../../interfaces/SliderOptions';
-import findClosest from '../../functions/findClosest';
-import isValidNumberSteps from '../../functions/isValidNumberSteps';
 import normalizeToNum from '../../functions/normalizeToNum';
+import minMax from '../../functions/minMax';
+import throwParamError from '../../functions/throwError';
 import DEFAULT_SLIDER_OPTIONS from '../../DEFAULT_SLIDER_OPTIONS';
 
 class Model extends EventEmitter {
@@ -19,22 +16,19 @@ class Model extends EventEmitter {
 
   private _scaleMax: number;
 
-  private _scaleSteps: string;
-
-  private isSlide: boolean;
+  private _scaleStep: number;
 
   public isRange: boolean;
 
   constructor(options: SliderOptions) {
     super();
-    this._scaleMin = Number.MIN_SAFE_INTEGER;
-    this._scaleMax = Number.MAX_SAFE_INTEGER;
-    this._min = Number.MIN_SAFE_INTEGER;
-    this._max = Number.MAX_SAFE_INTEGER;
-    this._scaleSteps = '';
-    this.isRange = true;
-    this.isSlide = true;
-    this.data = { ...DEFAULT_MODEL_OPTIONS, ...options } as SliderOptions;
+    let opts = { ...DEFAULT_SLIDER_OPTIONS, ...options };
+    if (!this.isValid(opts)) {
+      throwParamError('Slider options is not valid, options set to default');
+      opts = DEFAULT_SLIDER_OPTIONS;
+    }
+    this.init(opts);
+    this.data = opts;
   }
 
   get min(): number {
@@ -43,17 +37,13 @@ class Model extends EventEmitter {
 
   set min(value: number) {
     const {
-      scale, scaleMin, scaleMax, _min, max, isRange, isSlide,
+      scaleMin, scaleMax, max, isRange,
     } = this;
-    let val = findClosest(
-      scale.values,
-      Math.round(normalizeToNum(value, scaleMin)),
-      (isSlide) ? _min : null,
-    );
-    const isNotValid = (val < scaleMin) || (val > scaleMax) || (val >= max);
-    if (isNotValid) val = _min;
+    let val = this.round(normalizeToNum(value, scaleMax));
+    const isValid = (val >= scaleMin) && (val < scaleMax) && (val < max);
+    if (!isValid) val = scaleMin;
     this._min = (isRange) ? val : scaleMin;
-    this.emit('change');
+    this.emit('change', 'min');
   }
 
   get max(): number {
@@ -62,17 +52,14 @@ class Model extends EventEmitter {
 
   set max(value: number) {
     const {
-      scale, scaleMin, scaleMax, _max, min, isRange, isSlide,
+      scaleMin, scaleMax, min, isRange,
     } = this;
-    let val = findClosest(
-      scale.values,
-      Math.round(normalizeToNum(value, scaleMax)),
-      (isSlide) ? _max : null,
-    );
-    const isNotValid = (val < scaleMin) || (val > scaleMax) || (isRange ? val <= min : false);
-    if (isNotValid) val = _max;
+    let val = this.round(normalizeToNum(value, scaleMax));
+    const isValid = (isRange ? val > scaleMin : val >= scaleMin)
+      && (val <= scaleMax) && (isRange ? val > min : true);
+    if (!isValid) val = scaleMax;
     this._max = val;
-    this.emit('change');
+    this.emit('change', 'max');
   }
 
   get scaleMin(): number {
@@ -81,11 +68,20 @@ class Model extends EventEmitter {
 
   set scaleMin(value: number) {
     let val = normalizeToNum(value, this.min);
-    if (val >= this.scaleMax) val = this.scaleMax - 1;
-    if (val > this.min) this.min = val;
-    if (val > this.max) this.max = val;
+    if (val >= this.scaleMax) val = this.scaleMin;
     this._scaleMin = val;
-    this.emit('change');
+    this.scaleMax = this._scaleMax;
+    if (val > this.min) {
+      this.min = val;
+    } else {
+      this.min = this._min;
+    }
+    if (val > this.max) {
+      this.max = val;
+    } else {
+      this.max = this._max;
+    }
+    this.emit('change', 'scaleMin');
   }
 
   get scaleMax(): number {
@@ -94,73 +90,110 @@ class Model extends EventEmitter {
 
   set scaleMax(value: number) {
     let val = normalizeToNum(value, this.max);
-    if (val <= this.scaleMin) val = this.scaleMin + 1;
-    if (val < this.min) this.min = val;
-    if (val < this.max) this.max = val;
-    this._scaleMax = val;
-    this.emit('change');
-  }
-
-  get scaleSteps(): string {
-    return this._scaleSteps;
-  }
-
-  set scaleSteps(value: string) {
-    if (isValidNumberSteps(value)) {
-      this._scaleSteps = value;
-      this.emit('change');
+    if (val <= this.scaleMin) val = this.scaleMax;
+    if (val < this.max && val < this.min) {
+      val = this._scaleMax;
+    } if (val < this.max) {
+      this.max = val;
     }
+    val = this.round(val);
+    this._scaleMax = val;
+    this.emit('change', 'scaleMax');
   }
 
-  get range(): Range {
-    return new Range({ min: this.min, max: this.max });
+  get scaleStep(): number {
+    return this._scaleStep;
   }
 
-  set range(value: Range) {
+  set scaleStep(value: number) {
+    let val = Math.abs(normalizeToNum(value, 1));
+    val = minMax(1, val, this.scaleLength);
+    this._scaleStep = val;
+    this.scaleMax = this._scaleMax;
+    this.min = this._min;
+    this.max = this._max;
+    this.emit('change', 'scaleStep');
+  }
+
+  get scaleLength(): number {
+    return Math.abs(this.scaleMax - this.scaleMin);
+  }
+
+  get range(): RangeValue {
+    return { min: this.min, max: this.max };
+  }
+
+  set range(value: RangeValue) {
     this.min = value.min;
     this.max = value.max;
   }
 
   get relRange(): RangeValue {
     return ({
-      min: (this.min - this.scaleMin) / this.scale.length,
-      max: (this.max - this.scaleMin) / this.scale.length,
+      min: this.relMin,
+      max: this.relMax,
     });
   }
 
   set relRange(value: RangeValue) {
-    this.isSlide = false;
-    this.min = value.min * this.scale.length + this.scaleMin;
-    this.max = value.max * this.scale.length + this.scaleMin;
-    this.isSlide = true;
+    this.relMin = value.min;
+    this.relMax = value.max;
   }
 
-  get scale(): Scale {
-    return new Scale({ min: this.scaleMin, max: this.scaleMax, steps: this.scaleSteps });
+  get relMin(): number {
+    return (this.min - this.scaleMin) / this.scaleLength;
+  }
+
+  set relMin(value: number) {
+    this.min = value * this.scaleLength + this.scaleMin;
+  }
+
+  get relMax(): number {
+    return (this.max - this.scaleMin) / this.scaleLength;
+  }
+
+  set relMax(value: number) {
+    this.max = value * this.scaleLength + this.scaleMin;
   }
 
   get data(): TransmittedData {
     const {
-      min, max, scaleMin, scaleMax, scaleSteps,
+      min, max, scaleMin, scaleMax, scaleStep, relRange,
     } = this;
     return {
-      min, max, scaleMin, scaleMax, scaleSteps, // eslint-disable-line object-property-newline
-      relRange: this.relRange,
-      positions: this.scale.positions,
-      values: this.scale.values,
+      min, max, scaleMin, scaleMax, scaleStep, relRange,
     };
   }
 
   set data(value: TransmittedData) {
-    const fields = ['scaleMin', 'scaleMax', 'scaleSteps', 'min', 'max', 'isRange', 'relRange'];
-    this.disableEmitting();
+    const fields = ['scaleStep', 'scaleMin', 'scaleMax', 'min', 'max', 'isRange', 'relRange'];
     fields.forEach((key) => {
       if (value[key] !== undefined) {
         this[key] = value[key];
       }
     });
-    this.enableEmitting();
-    this.emit('change');
+  }
+
+  private isValid = (options): boolean => {
+    const {
+      min, max, scaleMin, scaleMax, scaleStep,
+    } = options;
+    return ((min < max) && (scaleMin < scaleMax)
+      && (min >= scaleMin) && (max <= scaleMax)
+      && (scaleStep <= scaleMax - scaleMin));
+  };
+
+  private init(options): void {
+    this._scaleMin = options.scaleMin;
+    this._scaleMax = options.scaleMax;
+    this._min = options.min;
+    this._max = options.max;
+    this._scaleStep = options.scaleStep;
+    this.isRange = options.isRange;
+  }
+
+  private round(value: number): number {
+    return Math.round((value - this.scaleMin) / this.scaleStep) * this.scaleStep + this.scaleMin;
   }
 }
 

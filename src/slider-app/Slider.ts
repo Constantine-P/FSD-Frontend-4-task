@@ -2,7 +2,6 @@ import './resources/styles/styles.styl';
 import Model from './layers/Model/Model';
 import View from './layers/View/View';
 import Controller from './layers/Controller/Controller';
-import Range from './classes/Range';
 import EventEmitter from './classes/EventEmitter';
 import { SliderType } from './types/SliderType';
 import SliderOptions from './interfaces/SliderOptions';
@@ -10,8 +9,6 @@ import RangeValue from './interfaces/RangeValue';
 import TransmittedData from './interfaces/TransmittedData';
 import isNumeric from './functions/isNumeric';
 import throwParamError from './functions/throwError';
-import isDefined from './functions/isDefined';
-import isValidNumberSteps from './functions/isValidNumberSteps';
 import DEFAULT_SLIDER_OPTIONS from './DEFAULT_SLIDER_OPTIONS';
 
 class Slider extends EventEmitter {
@@ -91,21 +88,20 @@ class Slider extends EventEmitter {
     this.model.scaleMax = value;
   }
 
-  get scaleSteps(): string {
-    return this.model.scaleSteps;
+  get scaleStep(): number {
+    return this.model.scaleStep;
   }
 
-  set scaleSteps(value: string) {
-    if (!isValidNumberSteps(value)) throwParamError('scaleSteps value is not valid');
-    this.model.scaleSteps = value;
+  set scaleStep(value: number) {
+    this.model.scaleStep = value;
   }
 
   get range(): RangeValue {
     return this.model.range;
   }
 
-  set range(range: RangeValue) {
-    this.model.range = new Range(range);
+  set range(value: RangeValue) {
+    this.model.range = value;
   }
 
   get type(): SliderType {
@@ -161,19 +157,32 @@ class Slider extends EventEmitter {
   set data(value) {
     this.view.model.data = value;
     this.model.data = value;
+    // Object.keys(value).forEach((key) => {
+    //   if (this[key] !== undefined) {
+    //     this[key] = value[key];
+    //   }
+    // });
   }
 
   private subscribe(): void {
-    this.model.on('change', () => this.emit('change'));
-    this.view.on('change', () => this.emit('change'));
+    const handleModelChange = (name): void => {
+      this.emit('change', name);
+    };
+
+    const handleViewChange = (name): void => {
+      if (['min', 'max'].indexOf(name) === -1) this.emit('change', name);
+    };
+
+    this.model.on('change', handleModelChange);
+    this.view.on('change', handleViewChange);
   }
 
   // eslint-disable-next-line class-methods-use-this
   private validateOptions(options: SliderOptions): void {
-    const numericParams = ['scaleMin', 'scaleMax', 'min', 'max'];
+    const numericParams = ['scaleMin', 'scaleMax', 'scaleStep', 'min', 'max'];
     const booleanParams = ['isRange', 'isReverseDirection', 'isScaleVisible', 'areTooltipsVisible'];
     const {
-      scaleMin, scaleMax, scaleSteps, min, max,
+      scaleMin, scaleMax, min, max,
     } = options;
 
     Object.keys(options).forEach((key) => {
@@ -197,9 +206,6 @@ class Slider extends EventEmitter {
     if (isNumeric(scaleMin, max) && max < scaleMin) throwParamError('max < scaleMin');
     if (isNumeric(min, max) && min > max) throwParamError('min > max');
     if (isNumeric(min, max) && min === max) throwParamError('min === max');
-    if (isDefined(scaleSteps) && !isValidNumberSteps(scaleSteps)) {
-      throwParamError('scaleSteps is not valid');
-    }
   }
 }
 

@@ -8,7 +8,7 @@ describe('test ViewModel', () => {
   let element: ElementView;
 
   beforeEach(() => {
-    document.body.innerHTML = `<html lang="ru"><body></body></html>`;
+    document.body.innerHTML = '<html lang="ru"><body></body></html>';
     element = new ElementView({
       container: document.querySelector('body'),
       name: 'line',
@@ -48,5 +48,4 @@ describe('test ViewModel', () => {
     element.show();
     expect(line).not.toHaveClass('hidden');
   });
-
 });

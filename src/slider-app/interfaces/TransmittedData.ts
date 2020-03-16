@@ -7,8 +7,6 @@ interface TransmittedData extends SliderOptions {
   minHandleValue?: number;
   maxHandleValue?: number;
   relRange?: RangeValue;
-  positions?: number[];
-  values?: number[];
 }
 
 export default TransmittedData;

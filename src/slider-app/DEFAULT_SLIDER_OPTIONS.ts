@@ -1,14 +1,16 @@
+import { SliderType } from './types/SliderType';
+
 const DEFAULT_SLIDER_OPTIONS = {
   min: 0,
   max: 100,
   scaleMin: 0,
   scaleMax: 100,
-  scaleSteps: '10',
+  scaleStep: 25,
   areTooltipsVisible: true,
   isRange: true,
   isScaleVisible: true,
   isReverseDirection: false,
-  type: 'horizontal',
+  type: 'horizontal' as SliderType,
 };
 
 export default DEFAULT_SLIDER_OPTIONS;

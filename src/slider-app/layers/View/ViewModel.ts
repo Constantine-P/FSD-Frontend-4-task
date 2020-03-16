@@ -3,9 +3,11 @@ import { SliderType } from '../../types/SliderType';
 import TransmittedData from '../../interfaces/TransmittedData';
 
 class ViewModel extends EventEmitter {
-  public positions: number[];
+  public scaleMin: number;
 
-  public values: number[];
+  public scaleMax: number;
+
+  public scaleStep: number;
 
   public minHandleValue: number;
 
@@ -27,8 +29,9 @@ class ViewModel extends EventEmitter {
 
   constructor() {
     super();
-    this.positions = [];
-    this.values = [];
+    this.scaleMin = 0;
+    this.scaleMax = 1;
+    this.scaleStep = 1;
     this.minHandleValue = 0;
     this.maxHandleValue = 1;
     this.minHandlePosition = 0;
@@ -51,7 +54,7 @@ class ViewModel extends EventEmitter {
   set type(value: SliderType) {
     const sliderTypes = ['horizontal', 'vertical'];
     this._type = (sliderTypes.indexOf(value) > -1) ? value : sliderTypes[0] as SliderType;
-    this.emit('change');
+    this.emit('change', 'type');
   }
 
   get isRange(): boolean {
@@ -60,7 +63,7 @@ class ViewModel extends EventEmitter {
 
   set isRange(value: boolean) {
     this._isRange = Boolean(value);
-    this.emit('change');
+    this.emit('change', 'isRange');
   }
 
   get isScaleVisible(): boolean {
@@ -69,7 +72,7 @@ class ViewModel extends EventEmitter {
 
   set isScaleVisible(value: boolean) {
     this._isScaleVisible = Boolean(value);
-    this.emit('change');
+    this.emit('change', 'isScaleVisible');
   }
 
   get isReverseDirection(): boolean {
@@ -78,7 +81,7 @@ class ViewModel extends EventEmitter {
 
   set isReverseDirection(value: boolean) {
     this._isReverseDirection = (typeof value === 'boolean') ? value : false;
-    this.emit('change');
+    this.emit('change', 'isReverseDirection');
   }
 
   get areTooltipsVisible(): boolean {
@@ -87,7 +90,7 @@ class ViewModel extends EventEmitter {
 
   set areTooltipsVisible(value: boolean) {
     this._areTooltipsVisible = Boolean(value);
-    this.emit('change');
+    this.emit('change', 'areTooltipsVisible');
   }
 
   get data(): TransmittedData {

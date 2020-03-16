@@ -26,7 +26,7 @@ class Panel extends EventEmitter {
 
   set model(value: TransmittedData) {
     Object.keys(value).forEach((key) => {
-      if (this.elements[key] !== null && this.elements[key] !== undefined) {
+      if (this.elements[key] !== undefined) {
         this.panelModel[key] = value[key];
       }
     });
@@ -58,22 +58,27 @@ class Panel extends EventEmitter {
 
   private updateElementsByModel(): void {
     Object.keys(this.elements).forEach((key) => {
-      const el = this.elements[key];
-      const isItemHasValue = (el.type === 'number' || el.type === 'text' || el instanceof HTMLSelectElement)
-        && this.model[key] !== undefined;
-
-      if (isItemHasValue) {
-        el.value = this.model[key];
-      } else if (el.type === 'checkbox') {
-        el.checked = this.model[key];
-      }
+      this.updateElementByModel(key);
     });
   }
 
+  private updateElementByModel(name): void {
+    const el = this.elements[name];
+    if (!el) return;
+    const isItemHasValue = (el.type === 'number' || el.type === 'text' || el instanceof HTMLSelectElement)
+      && this.model[name] !== undefined;
+
+    if (isItemHasValue) {
+      el.value = this.model[name];
+    } else if (el.type === 'checkbox') {
+      el.checked = this.model[name];
+    }
+  }
+
   private addChangeHandlers(): void {
-    const elementChangeHandler = (): void => {
+    const elementChangeHandler = (e): void => {
       this.updateModelByElements();
-      this.slider.data = this.model;
+      this.slider[e.target.name] = this.model[e.target.name];
     };
     Object.values(this.elements).forEach((el) => {
       el.addEventListener('change', elementChangeHandler);
@@ -81,13 +86,22 @@ class Panel extends EventEmitter {
   }
 
   private subscribeOnSliderChange(): void {
-    const updateModelBySlider = (): void => {
-      this.model = this.slider.data;
-      this.updateElementsByModel();
+    const updateModelBySlider = (name): void => {
+      if (name) {
+        this.model[name] = this.slider[name];
+        this.updateElementByModel(name);
+        // console.log(`updateModelBySlider -> ${name}`);
+      } else {
+        this.model = this.slider.data;
+        this.updateElementsByModel();
+        // console.log('this.model = this.slider.data;');
+      }
     };
-    updateModelBySlider();
+    updateModelBySlider(null);
 
-    const handleSliderChange = (): void => updateModelBySlider();
+    const handleSliderChange = (name): void => {
+      updateModelBySlider(name);
+    };
     this.slider.on('change', handleSliderChange);
   }
 }
