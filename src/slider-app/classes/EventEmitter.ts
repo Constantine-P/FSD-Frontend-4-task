@@ -1,4 +1,4 @@
-export default class EventEmitter {
+class EventEmitter {
   private _events: {};
 
   private _canEmit: boolean;
@@ -27,3 +27,5 @@ export default class EventEmitter {
     this._canEmit = false;
   }
 }
+
+export default EventEmitter;

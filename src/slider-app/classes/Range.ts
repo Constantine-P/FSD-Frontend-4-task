@@ -1,7 +1,7 @@
 import RangeValue from '../interfaces/RangeValue';
 import EventEmitter from './EventEmitter';
 
-export default class Range extends EventEmitter {
+class Range extends EventEmitter {
   private readonly _min: number;
 
   private readonly _max: number;
@@ -24,3 +24,5 @@ export default class Range extends EventEmitter {
     return this.max - this.min;
   }
 }
+
+export default Range;

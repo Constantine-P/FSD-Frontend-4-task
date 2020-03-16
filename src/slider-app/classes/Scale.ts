@@ -1,6 +1,6 @@
 import Range from './Range';
 
-export default class Scale extends Range {
+class Scale extends Range {
   private readonly _steps: string;
 
   constructor(value: ScaleValue = { min: 0, max: 0, steps: '' }) {
@@ -79,3 +79,5 @@ interface ScaleValue {
   max: number;
   steps: string;
 }
+
+export default Scale;
