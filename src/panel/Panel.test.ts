@@ -1,6 +1,6 @@
-import Panel from '../../../panel/Panel';
-import Slider from '../../Slider';
-import { SliderType } from '../../types/SliderType';
+import Panel from './Panel';
+import Slider from '../slider-app/Slider';
+import { SliderType } from '../slider-app/types/SliderType';
 import '@testing-library/jest-dom';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
