@@ -25,7 +25,7 @@ npm t
 ```  
 ## Testing with coverage
 ``` 
-npm tc
+npm run tc
 ```  
 
 ## Application layers:
