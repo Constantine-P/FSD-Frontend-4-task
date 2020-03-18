@@ -17,15 +17,15 @@ class ViewModel extends EventEmitter {
 
   public maxHandlePosition: number;
 
-  private _type: SliderType;
+  private typeValue: SliderType;
 
-  private _isRange: boolean;
+  private isRangeValue: boolean;
 
-  private _isScaleVisible: boolean;
+  private isScaleVisibleValue: boolean;
 
-  private _isReverseDirection: boolean;
+  private isReverseDirectionValue: boolean;
 
-  private _areTooltipsVisible: boolean;
+  private areTooltipsVisibleValue: boolean;
 
   constructor() {
     super();
@@ -36,11 +36,11 @@ class ViewModel extends EventEmitter {
     this.maxHandleValue = 1;
     this.minHandlePosition = 0;
     this.maxHandlePosition = 1;
-    this._type = 'horizontal';
-    this._isRange = true;
-    this._isScaleVisible = true;
-    this._isReverseDirection = false;
-    this._areTooltipsVisible = true;
+    this.typeValue = 'horizontal';
+    this.isRangeValue = true;
+    this.isScaleVisibleValue = true;
+    this.isReverseDirectionValue = false;
+    this.areTooltipsVisibleValue = true;
   }
 
   get rangeLength(): number {
@@ -48,48 +48,48 @@ class ViewModel extends EventEmitter {
   }
 
   get type(): SliderType {
-    return this._type;
+    return this.typeValue;
   }
 
   set type(value: SliderType) {
     const sliderTypes = ['horizontal', 'vertical'];
-    this._type = (sliderTypes.indexOf(value) > -1) ? value : sliderTypes[0] as SliderType;
+    this.typeValue = (sliderTypes.indexOf(value) > -1) ? value : sliderTypes[0] as SliderType;
     this.emit('change', 'type');
   }
 
   get isRange(): boolean {
-    return this._isRange;
+    return this.isRangeValue;
   }
 
   set isRange(value: boolean) {
-    this._isRange = Boolean(value);
+    this.isRangeValue = Boolean(value);
     this.emit('change', 'isRange');
   }
 
   get isScaleVisible(): boolean {
-    return this._isScaleVisible;
+    return this.isScaleVisibleValue;
   }
 
   set isScaleVisible(value: boolean) {
-    this._isScaleVisible = Boolean(value);
+    this.isScaleVisibleValue = Boolean(value);
     this.emit('change', 'isScaleVisible');
   }
 
   get isReverseDirection(): boolean {
-    return this._isReverseDirection;
+    return this.isReverseDirectionValue;
   }
 
   set isReverseDirection(value: boolean) {
-    this._isReverseDirection = (typeof value === 'boolean') ? value : false;
+    this.isReverseDirectionValue = (typeof value === 'boolean') ? value : false;
     this.emit('change', 'isReverseDirection');
   }
 
   get areTooltipsVisible(): boolean {
-    return this._areTooltipsVisible;
+    return this.areTooltipsVisibleValue;
   }
 
   set areTooltipsVisible(value: boolean) {
-    this._areTooltipsVisible = Boolean(value);
+    this.areTooltipsVisibleValue = Boolean(value);
     this.emit('change', 'areTooltipsVisible');
   }
 

@@ -3,7 +3,7 @@ import createElement from '../../functions/createElement';
 import isSimpleNumber from '../../functions/isSimpleNumber';
 
 class LinearScaleView extends EventEmitter {
-  protected _element: HTMLDivElement;
+  protected elementItem: HTMLDivElement;
 
   private scaleValues: HTMLDivElement;
 
@@ -26,7 +26,7 @@ class LinearScaleView extends EventEmitter {
   }
 
   get element(): HTMLDivElement {
-    return this._element;
+    return this.elementItem;
   }
 
   public renderValues(): void {
@@ -81,7 +81,7 @@ class LinearScaleView extends EventEmitter {
   }
 
   private addElements(container): void {
-    this._element = createElement('scale');
+    this.elementItem = createElement('scale');
     ['scaleLine', 'scaleValues'].forEach((item) => {
       this[item] = createElement(item);
       this.element.append(this[item]);

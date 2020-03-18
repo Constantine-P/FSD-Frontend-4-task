@@ -8,15 +8,15 @@ import throwParamError from '../../functions/throwError';
 import DEFAULT_SLIDER_OPTIONS from '../../DEFAULT_SLIDER_OPTIONS';
 
 class Model extends EventEmitter {
-  private _min: number;
+  private minValue: number;
 
-  private _max: number;
+  private maxValue: number;
 
-  private _scaleMin: number;
+  private scaleMinValue: number;
 
-  private _scaleMax: number;
+  private scaleMaxValue: number;
 
-  private _scaleStep: number;
+  private scaleStepValue: number;
 
   public isRange: boolean;
 
@@ -32,7 +32,7 @@ class Model extends EventEmitter {
   }
 
   get min(): number {
-    return this._min;
+    return this.minValue;
   }
 
   set min(value: number) {
@@ -42,12 +42,12 @@ class Model extends EventEmitter {
     let val = this.round(normalizeToNum(value, scaleMax));
     const isValid = (val >= scaleMin) && (val < scaleMax) && (val < max);
     if (!isValid) val = scaleMin;
-    this._min = (isRange) ? val : scaleMin;
+    this.minValue = (isRange) ? val : scaleMin;
     this.emit('change', 'min');
   }
 
   get max(): number {
-    return this._max;
+    return this.maxValue;
   }
 
   set max(value: number) {
@@ -58,60 +58,60 @@ class Model extends EventEmitter {
     const isValid = (isRange ? val > scaleMin : val >= scaleMin)
       && (val <= scaleMax) && (isRange ? val > min : true);
     if (!isValid) val = scaleMax;
-    this._max = val;
+    this.maxValue = val;
     this.emit('change', 'max');
   }
 
   get scaleMin(): number {
-    return this._scaleMin;
+    return this.scaleMinValue;
   }
 
   set scaleMin(value: number) {
     let val = normalizeToNum(value, this.min);
     if (val >= this.scaleMax) val = this.scaleMin;
-    this._scaleMin = val;
-    this.scaleMax = this._scaleMax;
+    this.scaleMinValue = val;
+    this.scaleMax = this.scaleMaxValue;
     if (val > this.min) {
       this.min = val;
     } else {
-      this.min = this._min;
+      this.min = this.minValue;
     }
     if (val > this.max) {
       this.max = val;
     } else {
-      this.max = this._max;
+      this.max = this.maxValue;
     }
     this.emit('change', 'scaleMin');
   }
 
   get scaleMax(): number {
-    return this._scaleMax;
+    return this.scaleMaxValue;
   }
 
   set scaleMax(value: number) {
     let val = normalizeToNum(value, this.max);
     if (val <= this.scaleMin) val = this.scaleMax;
     if (val < this.max && val < this.min) {
-      val = this._scaleMax;
+      val = this.scaleMaxValue;
     } if (val < this.max) {
       this.max = val;
     }
     val = this.round(val);
-    this._scaleMax = val;
+    this.scaleMaxValue = val;
     this.emit('change', 'scaleMax');
   }
 
   get scaleStep(): number {
-    return this._scaleStep;
+    return this.scaleStepValue;
   }
 
   set scaleStep(value: number) {
     let val = Math.abs(normalizeToNum(value, 1));
     val = minMax(1, val, this.scaleLength);
-    this._scaleStep = val;
-    this.scaleMax = this._scaleMax;
-    this.min = this._min;
-    this.max = this._max;
+    this.scaleStepValue = val;
+    this.scaleMax = this.scaleMaxValue;
+    this.min = this.minValue;
+    this.max = this.maxValue;
     this.emit('change', 'scaleStep');
   }
 
@@ -184,11 +184,11 @@ class Model extends EventEmitter {
   };
 
   private init(options): void {
-    this._scaleMin = options.scaleMin;
-    this._scaleMax = options.scaleMax;
-    this._min = options.min;
-    this._max = options.max;
-    this._scaleStep = options.scaleStep;
+    this.scaleMinValue = options.scaleMin;
+    this.scaleMaxValue = options.scaleMax;
+    this.minValue = options.min;
+    this.maxValue = options.max;
+    this.scaleStepValue = options.scaleStep;
     this.isRange = options.isRange;
   }
 

@@ -1,30 +1,30 @@
 class EventEmitter {
-  private _events: {};
+  private events: {};
 
-  private _canEmit: boolean;
+  private canEmit: boolean;
 
   constructor() {
-    this._events = {};
-    this._canEmit = true;
+    this.events = {};
+    this.canEmit = true;
   }
 
   on(evt: string, listener: EventListener): EventEmitter {
-    (this._events[evt] || (this._events[evt] = [])).push(listener);
+    (this.events[evt] || (this.events[evt] = [])).push(listener);
     return this;
   }
 
   emit(evt: string, arg?): void {
-    if (this._canEmit) {
-      (this._events[evt] || []).slice().forEach((lsn) => lsn(arg));
+    if (this.canEmit) {
+      (this.events[evt] || []).slice().forEach((lsn) => lsn(arg));
     }
   }
 
   enableEmitting(): void {
-    this._canEmit = true;
+    this.canEmit = true;
   }
 
   disableEmitting(): void {
-    this._canEmit = false;
+    this.canEmit = false;
   }
 }
 
