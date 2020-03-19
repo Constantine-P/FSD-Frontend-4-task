@@ -3,7 +3,18 @@ import '../panel/panel.styl';
 import '../slider-app/SliderJQ';
 import Panel from '../panel/Panel';
 
-const slider1 = $('#slider-1').rangeSlider();
+const slider1 = $('#slider-1').rangeSlider({
+  min: -2500,
+  max: -2000,
+  scaleMin: -10000,
+  scaleMax: 10000,
+  scaleStep: 1,
+  areTooltipsVisible: true,
+  isRange: true,
+  isScaleVisible: true,
+  isReverseDirection: false,
+  type: 'horizontal',
+});
 new Panel(document.querySelector('#panel-11'), slider1);
 new Panel(document.querySelector('#panel-12'), slider1);
 

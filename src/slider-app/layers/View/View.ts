@@ -83,6 +83,7 @@ class View extends EventEmitter {
 
     const handleWindowResize = (): void => {
       this.updateScale();
+      this.alignTooltips();
     };
 
     this.scale.on('scaleMouseDown', handleScaleMouseDown);
@@ -107,6 +108,7 @@ class View extends EventEmitter {
     this.alignElementsVisibility();
     this.updateElementsSideAndSize();
     this.updateElementsByModel();
+    this.alignTooltips();
   }
 
   public updateScale(): void {
@@ -179,6 +181,23 @@ class View extends EventEmitter {
     } else {
       this.model.maxHandlePosition = position;
       this.emit('change', 'max');
+    }
+  }
+
+  private alignTooltips(): void {
+    const scaleSize = Number(this.scale.element.getBoundingClientRect()[this.size]);
+    const distanceBetweenHandles = (this.model.maxHandlePosition - this.model.minHandlePosition)
+      * scaleSize;
+    const tooltipValueSize = (this.minHandle.tooltipSize + this.maxHandle.tooltipSize) * 0.5;
+    const gap = 0.1;
+    const overlayValue = (distanceBetweenHandles - tooltipValueSize) / tooltipValueSize - gap;
+
+    if (overlayValue < 0) {
+      this.minHandle.tooltipTranslateValue = overlayValue / 2;
+      this.maxHandle.tooltipTranslateValue = -overlayValue / 2;
+    } else {
+      this.minHandle.tooltipTranslateValue = null;
+      this.maxHandle.tooltipTranslateValue = null;
     }
   }
 }

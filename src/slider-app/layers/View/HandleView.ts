@@ -21,6 +21,23 @@ class HandleView extends ElementView {
     this.tooltip.classList.add('hidden');
   }
 
+  public get tooltipSize(): number {
+    return this.tooltip.getBoundingClientRect()[this.size];
+  }
+
+  public set tooltipTranslateValue(value: number | null) {
+    if (value === null && this.tooltip.style.transform === '') {
+      return;
+    }
+    if (value === null) {
+      this.tooltip.style.transform = '';
+      return;
+    }
+    const translate = this.size === 'width' ? 'translateX' : 'translateY';
+    const sign = (this.side === 'top' || this.side === 'left') ? 1 : -1;
+    this.tooltip.style.transform = `${translate}(${(-0.5 + sign * value) * 100}%)`;
+  }
+
   private addTooltip(): void {
     this.tooltip = createElement('tooltip');
     this.tooltip.textContent = '0';
