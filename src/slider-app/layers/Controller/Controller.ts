@@ -31,12 +31,11 @@ class Controller {
     if (e === 'min') this.model.relMin = this.view.model.minHandlePosition;
     if (e === 'max') this.model.relMax = this.view.model.maxHandlePosition;
     if (e === 'isRange') this.model.isRange = this.view.model.isRange;
-    // console.log(`updateModel -> ${e}`);
   }
 
   private updateView(): void {
     const {
-      scaleMin, scaleMax, scaleStep, min, max, relMin, relMax
+      scaleMin, scaleMax, scaleStep, min, max, relMin, relMax,
     } = this.model;
     const isUpdateScale = (this.view.model.scaleStep !== scaleStep)
     || (this.view.model.scaleMin !== scaleMin)

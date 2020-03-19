@@ -90,11 +90,9 @@ class Panel extends EventEmitter {
       if (name) {
         this.model[name] = this.slider[name];
         this.updateElementByModel(name);
-        // console.log(`updateModelBySlider -> ${name}`);
       } else {
         this.model = this.slider.data;
         this.updateElementsByModel();
-        // console.log('this.model = this.slider.data;');
       }
     };
     updateModelBySlider(null);

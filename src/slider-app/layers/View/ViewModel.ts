@@ -63,6 +63,10 @@ class ViewModel extends EventEmitter {
 
   set isRange(value: boolean) {
     this.isRangeValue = Boolean(value);
+    if (value === false) {
+      this.minHandlePosition = 0;
+      this.emit('change', 'min');
+    }
     this.emit('change', 'isRange');
   }
 

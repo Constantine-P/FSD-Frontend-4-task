@@ -50,8 +50,9 @@ class LinearScaleView extends EventEmitter {
       multiplier += 1;
       positionStep = basePositionStep * multiplier;
     }
+    const condition = isSimpleNumber(stepNumber, multiplier) && multiplier !== 1;
 
-    if (!(isSimpleNumber(stepNumber) && multiplier !== 1)) {
+    if (!(condition)) {
       while (stepNumber % multiplier !== 0) multiplier += 1;
     } else {
       this.appendValueElement(1, `${scaleMax}`);
@@ -59,7 +60,7 @@ class LinearScaleView extends EventEmitter {
 
     positionStep = basePositionStep * multiplier;
     const visibleValueStep = scaleStep * multiplier;
-    const offset = (isSimpleNumber(stepNumber) && multiplier !== 1) ? positionStep : 0;
+    const offset = condition ? positionStep : 0;
 
     for (let i = 0, position = 0; round(position, 2) <= 1 - offset; i += 1) {
       this.appendValueElement(position, scaleMin + visibleValueStep * i);

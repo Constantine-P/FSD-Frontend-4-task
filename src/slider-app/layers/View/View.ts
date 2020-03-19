@@ -78,12 +78,17 @@ class View extends EventEmitter {
     const handleModelChange = (name): void => {
       this.update();
       if (['type', 'isScaleVisible', 'isReverseDirection'].indexOf(name) > -1) this.updateScale();
-      if (name === 'isRange') this.emit('change', name);
+      this.emit('change', name);
+    };
+
+    const handleWindowResize = (): void => {
+      this.updateScale();
     };
 
     this.scale.on('scaleMouseDown', handleScaleMouseDown);
     this.scale.on('scaleMouseMove', handleScaleMouseMove);
     this.model.on('change', handleModelChange);
+    window.addEventListener('resize', handleWindowResize);
   }
 
   private get side(): string {
