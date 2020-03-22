@@ -11,6 +11,7 @@ const DEFAULT_SLIDER_OPTIONS = {
   isScaleVisible: true,
   isReverseDirection: false,
   type: 'horizontal' as SliderType,
+  units: '',
 };
 
 export default DEFAULT_SLIDER_OPTIONS;

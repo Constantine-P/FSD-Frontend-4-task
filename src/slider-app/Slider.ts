@@ -114,6 +114,14 @@ class Slider extends EventEmitter {
     this.view.model.isReverseDirection = value;
   }
 
+  get units(): string {
+    return this.view.model.units;
+  }
+
+  set units(value: string) {
+    this.view.model.units = value;
+  }
+
   get data(): TransmittedData {
     return { ...this.model.data, ...this.view.model.data };
   }

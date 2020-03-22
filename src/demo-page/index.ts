@@ -14,21 +14,23 @@ const slider1 = $('#slider-1').rangeSlider({
   isScaleVisible: true,
   isReverseDirection: false,
   type: 'horizontal',
+  units: 'кПа',
 });
 new Panel(document.querySelector('#panel-11'), slider1);
 new Panel(document.querySelector('#panel-12'), slider1);
 
 const slider2 = $('#slider-2').rangeSlider({
   min: 2,
-  max: 8,
+  max: 30,
   scaleMin: 0,
-  scaleMax: 15,
-  scaleStep: 5,
+  scaleMax: 38,
+  scaleStep: 1,
   areTooltipsVisible: true,
   isRange: false,
   isScaleVisible: true,
   isReverseDirection: false,
   type: 'vertical',
+  units: 'попугаев',
 });
 new Panel(document.querySelector('#panel-21'), slider2);
 new Panel(document.querySelector('#panel-22'), slider2);

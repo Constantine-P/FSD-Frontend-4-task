@@ -163,13 +163,16 @@ class View extends EventEmitter {
   }
 
   private updateElementsByModel(): void {
+    const {
+      minHandlePosition, maxHandlePosition, rangeLength, minHandleValue, maxHandleValue, units,
+    } = this.model;
     this.scale.model = this.model;
-    this.minHandle.position = this.model.minHandlePosition;
-    this.maxHandle.position = this.model.maxHandlePosition;
-    this.rangeLine.position = this.model.minHandlePosition;
-    this.rangeLine.length = this.model.rangeLength;
-    this.minHandle.tooltipValue = this.model.minHandleValue;
-    this.maxHandle.tooltipValue = this.model.maxHandleValue;
+    this.minHandle.position = minHandlePosition;
+    this.maxHandle.position = maxHandlePosition;
+    this.rangeLine.position = minHandlePosition;
+    this.rangeLine.length = rangeLength;
+    this.minHandle.tooltipValue = `${minHandleValue.toLocaleString()}${(units ? '\xa0' : '')}${units}`;
+    this.maxHandle.tooltipValue = `${maxHandleValue.toLocaleString()}${(units ? '\xa0' : '')}${units}`;
   }
 
   private updateHandlesPosition(position): void {

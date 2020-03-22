@@ -60,6 +60,7 @@ describe('test ViewModel', () => {
       isReverseDirection: false,
       isScaleVisible: true,
       type: 'horizontal',
+      units: '',
     });
   });
 

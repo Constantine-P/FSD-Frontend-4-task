@@ -27,6 +27,8 @@ class ViewModel extends EventEmitter {
 
   private areTooltipsVisibleValue: boolean;
 
+  public unitsValue: string;
+
   constructor() {
     super();
     this.scaleMin = 0;
@@ -41,6 +43,7 @@ class ViewModel extends EventEmitter {
     this.isScaleVisibleValue = true;
     this.isReverseDirectionValue = false;
     this.areTooltipsVisibleValue = true;
+    this.unitsValue = '';
   }
 
   get rangeLength(): number {
@@ -97,9 +100,18 @@ class ViewModel extends EventEmitter {
     this.emit('change', 'areTooltipsVisible');
   }
 
+  get units(): string {
+    return this.unitsValue;
+  }
+
+  set units(value: string) {
+    this.unitsValue = value;
+    this.emit('change', 'units');
+  }
+
   get data(): TransmittedData {
     const {
-      type, isRange, isScaleVisible, isReverseDirection, areTooltipsVisible,
+      type, isRange, isScaleVisible, isReverseDirection, areTooltipsVisible, units,
     } = this;
     return {
       type,
@@ -107,6 +119,7 @@ class ViewModel extends EventEmitter {
       isScaleVisible,
       isReverseDirection,
       areTooltipsVisible,
+      units,
     };
   }
 

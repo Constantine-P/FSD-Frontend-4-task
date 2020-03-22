@@ -1,6 +1,7 @@
 import EventEmitter from '../../classes/EventEmitter';
 import createElement from '../../functions/createElement';
-import isSimpleNumber from '../../functions/isSimpleNumber';
+import getPositions from '../../functions/getPositions';
+import round10 from '../../functions/round10';
 
 class LinearScaleView extends EventEmitter {
   protected elementItem: HTMLDivElement;
@@ -34,38 +35,27 @@ class LinearScaleView extends EventEmitter {
     if (!this.areValuesVisible) return;
 
     const { scaleMin, scaleMax, scaleStep } = this.model;
+
     const scaleSize = Number(this.scaleValues.getBoundingClientRect()[this.size]);
-    const minGap = 4;
-    const minRelativeGap = minGap / scaleSize;
     const maxValueSymbolNumber = Math.max(`${scaleMax}`.length, `${scaleMin}`.length);
+
     const maxValueSize = this.symbolSize * ((this.size === 'width') ? maxValueSymbolNumber : 1);
-    const maxValueRelativeSize = maxValueSize / scaleSize;
+    const minGap = Math.max(
+      0.5 * maxValueSize,
+      ((this.size === 'width'))
+        ? 1.5 * this.symbolSize
+        : 0.8 * this.symbolSize,
+    );
+
     const stepNumber = (scaleMax - scaleMin) / scaleStep;
-    const round = (val, accuracy): number => Math.round(val * (10 ** accuracy)) / (10 ** accuracy);
-    const basePositionStep = round(1 / stepNumber, 10);
-    let positionStep = basePositionStep;
-    let multiplier = 1;
+    const baseStep = round10(1 / stepNumber, 10);
+    const size = (maxValueSize + minGap) / scaleSize || 0.01;
 
-    while ((positionStep - maxValueRelativeSize) < minRelativeGap) {
-      multiplier += 1;
-      positionStep = basePositionStep * multiplier;
-    }
-    const condition = isSimpleNumber(stepNumber, multiplier) && multiplier !== 1;
+    const positions = getPositions({ base: 1, baseStep, size });
 
-    if (!(condition)) {
-      while (stepNumber % multiplier !== 0) multiplier += 1;
-    } else {
-      this.appendValueElement(1, `${scaleMax}`);
-    }
-
-    positionStep = basePositionStep * multiplier;
-    const visibleValueStep = scaleStep * multiplier;
-    const offset = condition ? positionStep : 0;
-
-    for (let i = 0, position = 0; round(position, 2) <= 1 - offset; i += 1) {
-      this.appendValueElement(position, scaleMin + visibleValueStep * i);
-      position = round(position + positionStep, 4);
-    }
+    positions.forEach((value) => {
+      this.appendValueElement(value, round10(scaleMin + value * (scaleMax - scaleMin), 0));
+    });
   }
 
   private init(options): void {
@@ -122,11 +112,11 @@ class LinearScaleView extends EventEmitter {
     return getClickCoordsRelativeToBlock(e, this.element)[this.side];
   }
 
-  private appendValueElement(position, text): void {
-    const value = createElement('scaleValue');
-    value.textContent = `${text}`;
-    value.style[this.side] = `${position * 100}%`;
-    this.scaleValues.append(value);
+  private appendValueElement(position, value): void {
+    const element = createElement('scaleValue');
+    element.textContent = `${value.toLocaleString()}`;
+    element.style[this.side] = `${position * 100}%`;
+    this.scaleValues.append(element);
   }
 
   private get symbolSize(): number {

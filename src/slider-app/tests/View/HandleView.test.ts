@@ -14,8 +14,8 @@ describe('test ViewModel', () => {
       name: 'handle',
       position: 0,
       length: 1,
-      side: this.side,
-      size: this.size,
+      side: 'left',
+      size: 'width',
     });
   });
 
@@ -31,5 +31,17 @@ describe('test ViewModel', () => {
     expect(tooltip).toHaveClass('hidden');
     element.showTooltip();
     expect(tooltip).not.toHaveClass('hidden');
+  });
+
+  test('test set tooltipTranslateValue', () => {
+    const tooltip = document.querySelector('.slider__tooltip') as HTMLElement;
+    element.tooltipTranslateValue = 0.25;
+    expect(tooltip.style.transform).toBe('translateX(-25%)');
+    element.tooltipTranslateValue = -0.25;
+    expect(tooltip.style.transform).toBe('translateX(-75%)');
+    element.tooltipTranslateValue = 0;
+    expect(tooltip.style.transform).toBe('translateX(-50%)');
+    element.tooltipTranslateValue = 1;
+    expect(tooltip.style.transform).toBe('translateX(50%)');
   });
 });

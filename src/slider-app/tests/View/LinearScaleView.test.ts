@@ -11,8 +11,8 @@ describe('test ViewModel', () => {
     document.body.innerHTML = '<html lang="ru"><body></body></html>';
     element = new LinearScaleView({
       container: document.querySelector('body'),
-      side: this.side,
-      size: this.size,
+      side: 'left',
+      size: 'width',
     });
   });
 

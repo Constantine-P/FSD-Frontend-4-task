@@ -141,6 +141,7 @@ describe('test Scale', () => {
       isReverseDirection: true,
       type: 'horizontal' as SliderType,
       relRange: { min: 7 / 15, max: 13 / 15 },
+      units: '',
     });
     const data = {
       min: -10,
@@ -154,6 +155,7 @@ describe('test Scale', () => {
       isReverseDirection: false,
       type: 'vertical' as SliderType,
       relRange: { min: 0, max: 15 / 30 },
+      units: 'zxc',
     };
     slider.data = data;
     expect(slider.data).toStrictEqual(data);
