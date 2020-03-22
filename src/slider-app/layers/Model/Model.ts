@@ -18,7 +18,7 @@ class Model extends EventEmitter {
 
   private scaleStepValue: number;
 
-  public isRange: boolean;
+  private isRangeValue: boolean;
 
   constructor(options: SliderOptions) {
     super();
@@ -156,6 +156,15 @@ class Model extends EventEmitter {
     this.max = value * this.scaleLength + this.scaleMin;
   }
 
+  get isRange(): boolean {
+    return this.isRangeValue;
+  }
+
+  set isRange(value: boolean) {
+    this.isRangeValue = value;
+    if (this.min === this.max) this.max += this.scaleStep;
+  }
+
   get data(): TransmittedData {
     const {
       min, max, scaleMin, scaleMax, scaleStep, relRange,
@@ -189,7 +198,7 @@ class Model extends EventEmitter {
     this.minValue = options.min;
     this.maxValue = options.max;
     this.scaleStepValue = options.scaleStep;
-    this.isRange = options.isRange;
+    this.isRangeValue = options.isRange;
   }
 
   private round(value: number): number {

@@ -165,13 +165,16 @@ class View extends EventEmitter {
   private updateElementsByModel(): void {
     const {
       minHandlePosition, maxHandlePosition, rangeLength, minHandleValue, maxHandleValue, units,
+      isRange,
     } = this.model;
     this.scale.model = this.model;
     this.minHandle.position = minHandlePosition;
     this.maxHandle.position = maxHandlePosition;
     this.rangeLine.position = minHandlePosition;
     this.rangeLine.length = rangeLength;
-    this.minHandle.tooltipValue = `${minHandleValue.toLocaleString()}${(units ? '\xa0' : '')}${units}`;
+    if (isRange) {
+      this.minHandle.tooltipValue = `${minHandleValue.toLocaleString()}${(units ? '\xa0' : '')}${units}`;
+    }
     this.maxHandle.tooltipValue = `${maxHandleValue.toLocaleString()}${(units ? '\xa0' : '')}${units}`;
   }
 
@@ -195,7 +198,7 @@ class View extends EventEmitter {
     const gap = 0.1;
     const overlayValue = (distanceBetweenHandles - tooltipValueSize) / tooltipValueSize - gap;
 
-    if (overlayValue < 0) {
+    if (overlayValue < 0 && this.model.isRange) {
       this.minHandle.tooltipTranslateValue = overlayValue / 2;
       this.maxHandle.tooltipTranslateValue = -overlayValue / 2;
     } else {
