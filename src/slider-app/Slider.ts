@@ -3,10 +3,10 @@ import Model from './layers/Model/Model';
 import View from './layers/View/View';
 import Controller from './layers/Controller/Controller';
 import EventEmitter from './classes/EventEmitter';
-import { SliderType } from './types/SliderType';
-import SliderOptions from './interfaces/SliderOptions';
-import RangeValue from './interfaces/RangeValue';
-import TransmittedData from './interfaces/TransmittedData';
+import SliderType from './types/SliderType';
+import ISliderOptions from './interfaces/ISliderOptions';
+import IRangeValue from './interfaces/IRangeValue';
+import ITransmittedData from './interfaces/ITransmittedData';
 import DEFAULT_SLIDER_OPTIONS from './DEFAULT_SLIDER_OPTIONS';
 
 class Slider extends EventEmitter {
@@ -16,9 +16,9 @@ class Slider extends EventEmitter {
 
   private readonly view: View;
 
-  constructor(slider: HTMLElement, options?: SliderOptions) {
+  constructor(slider: HTMLElement, options?: ISliderOptions) {
     super();
-    const opts = { ...DEFAULT_SLIDER_OPTIONS, ...options } as SliderOptions;
+    const opts = { ...DEFAULT_SLIDER_OPTIONS, ...options } as ISliderOptions;
     this.model = new Model(opts);
     this.view = new View(slider, opts);
     this.controller = new Controller(this.model, this.view);
@@ -65,11 +65,11 @@ class Slider extends EventEmitter {
     this.model.scaleStep = value;
   }
 
-  get range(): RangeValue {
+  get range(): IRangeValue {
     return this.model.range;
   }
 
-  set range(value: RangeValue) {
+  set range(value: IRangeValue) {
     this.model.range = value;
   }
 
@@ -122,21 +122,21 @@ class Slider extends EventEmitter {
     this.view.model.units = value;
   }
 
-  get data(): TransmittedData {
+  get data(): ITransmittedData {
     return { ...this.model.data, ...this.view.model.data };
   }
 
-  set data(value) {
+  set data(value: ITransmittedData) {
     this.view.model.data = value;
     this.model.data = value;
   }
 
   private subscribe(): void {
-    const handleModelChange = (name): void => {
+    const handleModelChange = (name: string): void => {
       this.emit('change', name);
     };
 
-    const handleViewChange = (name): void => {
+    const handleViewChange = (name: string): void => {
       if (['min', 'max'].indexOf(name) === -1) this.emit('change', name);
     };
 

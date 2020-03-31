@@ -1,10 +1,16 @@
 import round from './round';
 import round10 from './round10';
 
-function getPositions(params): number[] {
-  const { base = 1, baseStep = 0.1 } = params;
+interface IOptions {
+  base: number;
+  baseStep: number;
+  size: number;
+}
 
-  const size = round(params.size, baseStep, 'max');
+function getPositions(options: IOptions): number[] {
+  const { base = 1, baseStep = 0.1 } = options;
+
+  const size = round(options.size, baseStep, 'max');
   const number = Math.min(Math.floor(base / size), Math.round(base / baseStep));
   const freeSpace = base - size * number;
   const freeBaseSteps = round(freeSpace / baseStep);

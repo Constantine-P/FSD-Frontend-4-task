@@ -1,3 +1,4 @@
 interface JQuery {
-  rangeSlider(options?, panels?);
+  // @ts-ignore
+  rangeSlider(options?);
 }

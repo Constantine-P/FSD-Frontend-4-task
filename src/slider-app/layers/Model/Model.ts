@@ -1,7 +1,7 @@
 import EventEmitter from '../../classes/EventEmitter';
-import RangeValue from '../../interfaces/RangeValue';
-import TransmittedData from '../../interfaces/TransmittedData';
-import SliderOptions from '../../interfaces/SliderOptions';
+import IRangeValue from '../../interfaces/IRangeValue';
+import ITransmittedData from '../../interfaces/ITransmittedData';
+import ISliderOptions from '../../interfaces/ISliderOptions';
 import normalizeToNum from '../../functions/normalizeToNum';
 import minMax from '../../functions/minMax';
 import throwParamError from '../../functions/throwError';
@@ -18,9 +18,9 @@ class Model extends EventEmitter {
 
   private scaleStepValue: number;
 
-  private isRangeValue: boolean;
+  private isIRangeValue: boolean;
 
-  constructor(options: SliderOptions) {
+  constructor(options: ISliderOptions) {
     super();
     let opts = { ...DEFAULT_SLIDER_OPTIONS, ...options };
     if (!this.isValid(opts)) {
@@ -119,23 +119,23 @@ class Model extends EventEmitter {
     return Math.abs(this.scaleMax - this.scaleMin);
   }
 
-  get range(): RangeValue {
+  get range(): IRangeValue {
     return { min: this.min, max: this.max };
   }
 
-  set range(value: RangeValue) {
+  set range(value: IRangeValue) {
     this.min = value.min;
     this.max = value.max;
   }
 
-  get relRange(): RangeValue {
+  get relRange(): IRangeValue {
     return ({
       min: this.relMin,
       max: this.relMax,
     });
   }
 
-  set relRange(value: RangeValue) {
+  set relRange(value: IRangeValue) {
     this.relMin = value.min;
     this.relMax = value.max;
   }
@@ -157,15 +157,15 @@ class Model extends EventEmitter {
   }
 
   get isRange(): boolean {
-    return this.isRangeValue;
+    return this.isIRangeValue;
   }
 
   set isRange(value: boolean) {
-    this.isRangeValue = value;
+    this.isIRangeValue = value;
     if (this.min === this.max) this.max += this.scaleStep;
   }
 
-  get data(): TransmittedData {
+  get data(): ITransmittedData {
     const {
       min, max, scaleMin, scaleMax, scaleStep, relRange,
     } = this;
@@ -174,16 +174,17 @@ class Model extends EventEmitter {
     };
   }
 
-  set data(value: TransmittedData) {
+  set data(value: ITransmittedData) {
+    type ModelKeys = 'scaleStep' | 'scaleMin' | 'scaleMax' | 'min' | 'max' | 'isRange' | 'relRange';
     const fields = ['scaleStep', 'scaleMin', 'scaleMax', 'min', 'max', 'isRange', 'relRange'];
-    fields.forEach((key) => {
+    fields.forEach((key: ModelKeys) => {
       if (value[key] !== undefined) {
-        this[key] = value[key];
+        (this[key] as number | boolean | IRangeValue) = value[key];
       }
     });
   }
 
-  private isValid = (options): boolean => {
+  private isValid = (options: ISliderOptions): boolean => {
     const {
       min, max, scaleMin, scaleMax, scaleStep,
     } = options;
@@ -192,13 +193,13 @@ class Model extends EventEmitter {
       && (scaleStep <= scaleMax - scaleMin));
   };
 
-  private init(options): void {
+  private init(options: ISliderOptions): void {
     this.scaleMinValue = options.scaleMin;
     this.scaleMaxValue = options.scaleMax;
     this.minValue = options.min;
     this.maxValue = options.max;
     this.scaleStepValue = options.scaleStep;
-    this.isRangeValue = options.isRange;
+    this.isIRangeValue = options.isRange;
   }
 
   private round(value: number): number {

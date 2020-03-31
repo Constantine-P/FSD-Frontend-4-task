@@ -1,1 +1,3 @@
-export type SliderType = 'horizontal' | 'vertical';
+type SliderType = 'horizontal' | 'vertical';
+
+export default SliderType;

@@ -1,5 +1,5 @@
 import Model from '../../layers/Model/Model';
-import { SliderType } from '../../types/SliderType';
+import SliderType from '../../types/SliderType';
 
 describe('test Model', () => {
   let model: Model;

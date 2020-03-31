@@ -1,5 +1,5 @@
 class EventEmitter {
-  private events: {};
+  private events: { [index: string]: Function[]; };
 
   private canEmit: boolean;
 
@@ -8,12 +8,12 @@ class EventEmitter {
     this.canEmit = true;
   }
 
-  on(evt: string, listener: EventListener): EventEmitter {
+  on(evt: string, listener: Function): EventEmitter {
     (this.events[evt] || (this.events[evt] = [])).push(listener);
     return this;
   }
 
-  emit(evt: string, arg?): void {
+  emit(evt: string, arg?: string | number): void {
     if (this.canEmit) {
       (this.events[evt] || []).slice().forEach((lsn) => lsn(arg));
     }

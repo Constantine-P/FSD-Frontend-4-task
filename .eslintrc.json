@@ -7,7 +7,7 @@
   },
   "extends": [
     "airbnb-typescript/base",
-    "plugin:@typescript-eslint/recommended",
+//    "plugin:@typescript-eslint/recommended",
     "plugin:eslint-comments/recommended",
     "plugin:jest/recommended"
   ],
@@ -16,7 +16,7 @@
     "project": "tsconfig.json",
     "tsconfigRootDir": "."
   },
-  "plugins": ["@typescript-eslint"],
+//  "plugins": ["@typescript-eslint"],
   "rules": {
     "no-underscore-dangle": "off",
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["panel"] }],

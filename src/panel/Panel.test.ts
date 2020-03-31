@@ -1,6 +1,6 @@
 import Panel from './Panel';
 import Slider from '../slider-app/Slider';
-import { SliderType } from '../slider-app/types/SliderType';
+import SliderType from '../slider-app/types/SliderType';
 import '@testing-library/jest-dom';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -33,7 +33,7 @@ describe('test PanelView', () => {
     panelView = new Panel(panelElement, slider);
   });
 
-  it('test git/set model', () => {
+  it('test get/set model', () => {
     const data = {
       min: 11,
       max: 12,

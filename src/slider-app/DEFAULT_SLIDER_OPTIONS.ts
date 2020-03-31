@@ -1,4 +1,4 @@
-import { SliderType } from './types/SliderType';
+import SliderType from './types/SliderType';
 
 const DEFAULT_SLIDER_OPTIONS = {
   min: 0,

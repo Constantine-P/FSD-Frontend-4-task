@@ -1,10 +1,20 @@
 import ElementView from './ElementView';
+import Side from '../../types/Side';
+import Size from '../../types/Size';
 import createElement from '../../functions/createElement';
 
-class HandleView extends ElementView {
-  private tooltip: HTMLDivElement;
+interface IOptions {
+  container: HTMLElement;
+  name: string;
+  position: number;
+  side: Side;
+  size: Size;
+}
 
-  constructor(options) {
+class HandleView extends ElementView {
+  private tooltip: HTMLElement;
+
+  constructor(options: IOptions) {
     super(options);
     this.addTooltip();
   }

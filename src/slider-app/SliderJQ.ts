@@ -1,6 +1,6 @@
 import Slider from './Slider';
-import SliderOptions from './interfaces/SliderOptions';
+import ISliderOptions from './interfaces/ISliderOptions';
 
-$.fn.rangeSlider = function rangeSlider(options: SliderOptions = {}): Slider {
+$.fn.rangeSlider = function rangeSlider(options: ISliderOptions = {}): Slider {
   return new Slider(this.get(0), options);
 };

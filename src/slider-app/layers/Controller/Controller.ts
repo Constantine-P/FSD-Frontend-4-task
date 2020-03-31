@@ -19,7 +19,7 @@ class Controller {
       this.updateView();
     };
 
-    const viewChangeHandler = (e): void => {
+    const viewChangeHandler = (e: string): void => {
       this.updateModel(e);
     };
 
@@ -27,7 +27,7 @@ class Controller {
     this.view.on('change', viewChangeHandler);
   }
 
-  private updateModel(e): void {
+  private updateModel(e: string): void {
     if (e === 'min') this.model.relMin = this.view.model.minHandlePosition;
     if (e === 'max') this.model.relMax = this.view.model.maxHandlePosition;
     if (e === 'isRange') this.model.isRange = this.view.model.isRange;

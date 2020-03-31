@@ -13,7 +13,6 @@ describe('test ViewModel', () => {
       container: document.querySelector('body'),
       name: 'handle',
       position: 0,
-      length: 1,
       side: 'left',
       size: 'width',
     });

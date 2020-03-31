@@ -1,4 +1,4 @@
-function throwParamError(text): void {
+function throwParamError(text: string): void {
   console.error(`Error setting slider parameters: ${text}`);
 }
 

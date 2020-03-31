@@ -1,11 +1,13 @@
-import EventEmitter from '../../classes/EventEmitter';
-import SliderOptions from '../../interfaces/SliderOptions';
 import LinearScaleView from './LinearScaleView';
-import ElementView from './ElementView';
 import HandleView from './HandleView';
 import ViewModel from './ViewModel';
+import EventEmitter from '../../classes/EventEmitter';
+import ISliderOptions from '../../interfaces/ISliderOptions';
+import Side from '../../types/Side';
+import Size from '../../types/Size';
 import minMax from '../../functions/minMax';
 import DEFAULT_SLIDER_OPTIONS from '../../DEFAULT_SLIDER_OPTIONS';
+import RangeLineView from './RangeLineView';
 
 class View extends EventEmitter {
   private readonly slider: HTMLElement;
@@ -16,18 +18,18 @@ class View extends EventEmitter {
 
   private maxHandle: HandleView;
 
-  private rangeLine: ElementView;
+  private rangeLine: RangeLineView;
 
   public model: ViewModel;
 
-  constructor(slider: HTMLElement, options: SliderOptions) {
+  constructor(slider: HTMLElement, options: ISliderOptions) {
     super();
     this.slider = slider;
     this.init(options);
     this.addHandlers();
   }
 
-  private init(options): void {
+  private init(options: ISliderOptions): void {
     this.model = new ViewModel();
     this.model.data = { ...DEFAULT_SLIDER_OPTIONS, ...options };
 
@@ -53,7 +55,7 @@ class View extends EventEmitter {
       size: this.size,
     });
 
-    this.rangeLine = new ElementView({
+    this.rangeLine = new RangeLineView({
       container: this.scale.element,
       name: 'rangeLine',
       position: 0,
@@ -64,18 +66,18 @@ class View extends EventEmitter {
   }
 
   private addHandlers(): void {
-    const handleScaleMouseDown = (position): void => {
+    const handleScaleMouseDown = (position: number): void => {
       [this.minHandle, this.maxHandle, this.rangeLine].forEach((item) => item.transitionOn());
       this.updateHandlesPosition(position);
     };
 
-    const handleScaleMouseMove = (position): void => {
+    const handleScaleMouseMove = (position: number): void => {
       const pos = minMax(0, position, 1);
       [this.minHandle, this.maxHandle, this.rangeLine].forEach((item) => item.transitionOff());
       this.updateHandlesPosition(pos);
     };
 
-    const handleModelChange = (name): void => {
+    const handleModelChange = (name: string): void => {
       this.update();
       if (['type', 'isScaleVisible', 'isReverseDirection'].indexOf(name) > -1) this.updateScale();
       this.emit('change', name);
@@ -92,14 +94,14 @@ class View extends EventEmitter {
     window.addEventListener('resize', handleWindowResize);
   }
 
-  private get side(): string {
+  private get side(): Side {
     const { type, isReverseDirection } = this.model;
     return (type === 'horizontal')
       ? (isReverseDirection) ? 'right' : 'left'
       : (isReverseDirection) ? 'top' : 'bottom';
   }
 
-  private get size(): string {
+  private get size(): Size {
     return (this.model.type === 'horizontal') ? 'width' : 'height';
   }
 
@@ -155,11 +157,17 @@ class View extends EventEmitter {
   }
 
   private updateElementsSideAndSize(): void {
-    ['minHandle', 'maxHandle', 'rangeLine', 'scale'].forEach((name) => {
-      this[name].side = this.side;
-      this[name].size = this.size;
-      if (name !== 'scale') this[name].update();
+    const {
+      minHandle, maxHandle, rangeLine, scale,
+    } = this;
+    [minHandle, maxHandle, rangeLine].forEach((item) => {
+      const name = item;
+      name.side = this.side;
+      name.size = this.size;
+      name.update();
     });
+    scale.side = this.side;
+    scale.size = this.size;
   }
 
   private updateElementsByModel(): void {
@@ -178,7 +186,7 @@ class View extends EventEmitter {
     this.maxHandle.tooltipValue = `${maxHandleValue.toLocaleString()}${(units ? '\xa0' : '')}${units}`;
   }
 
-  private updateHandlesPosition(position): void {
+  private updateHandlesPosition(position: number): void {
     const distanceToMin = Math.abs(position - this.minHandle.position);
     const distanceToMax = Math.abs(position - this.maxHandle.position);
     if (distanceToMin < distanceToMax && this.model.isRange) {

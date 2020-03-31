@@ -1,6 +1,6 @@
 import EventEmitter from '../../classes/EventEmitter';
-import { SliderType } from '../../types/SliderType';
-import TransmittedData from '../../interfaces/TransmittedData';
+import SliderType from '../../types/SliderType';
+import ITransmittedData from '../../interfaces/ITransmittedData';
 
 class ViewModel extends EventEmitter {
   public scaleMin: number;
@@ -19,7 +19,7 @@ class ViewModel extends EventEmitter {
 
   private typeValue: SliderType;
 
-  private isRangeValue: boolean;
+  private isIRangeValue: boolean;
 
   private isScaleVisibleValue: boolean;
 
@@ -39,7 +39,7 @@ class ViewModel extends EventEmitter {
     this.minHandlePosition = 0;
     this.maxHandlePosition = 1;
     this.typeValue = 'horizontal';
-    this.isRangeValue = true;
+    this.isIRangeValue = true;
     this.isScaleVisibleValue = true;
     this.isReverseDirectionValue = false;
     this.areTooltipsVisibleValue = true;
@@ -61,11 +61,11 @@ class ViewModel extends EventEmitter {
   }
 
   get isRange(): boolean {
-    return this.isRangeValue;
+    return this.isIRangeValue;
   }
 
   set isRange(value: boolean) {
-    this.isRangeValue = Boolean(value);
+    this.isIRangeValue = Boolean(value);
     if (value === false) {
       this.minHandlePosition = 0;
       this.emit('change', 'min');
@@ -109,7 +109,7 @@ class ViewModel extends EventEmitter {
     this.emit('change', 'units');
   }
 
-  get data(): TransmittedData {
+  get data(): ITransmittedData {
     const {
       type, isRange, isScaleVisible, isReverseDirection, areTooltipsVisible, units,
     } = this;
@@ -123,11 +123,16 @@ class ViewModel extends EventEmitter {
     };
   }
 
-  set data(value: TransmittedData) {
+  set data(value: ITransmittedData) {
+    type ViewModelKeys =
+      'minHandleValue' | 'maxHandleValue' | 'minHandlePosition' | 'maxHandlePosition'
+      | 'scaleMin' | 'scaleMax' | 'scaleStep' | 'type' | 'units'
+      | 'isRange' | 'areTooltipsVisible' | 'isScaleVisible' | 'isReverseDirection';
+
     this.disableEmitting();
-    Object.keys(value).forEach((key) => {
+    Object.keys(value).forEach((key: ViewModelKeys) => {
       if (this[key] !== undefined) {
-        this[key] = value[key];
+        (this[key] as number | string | boolean | SliderType) = value[key];
       }
     });
     this.enableEmitting();

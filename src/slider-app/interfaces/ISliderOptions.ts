@@ -1,6 +1,6 @@
-import { SliderType } from '../types/SliderType';
+import SliderType from '../types/SliderType';
 
-interface SliderOptions {
+interface ISliderOptions {
   min?: number;
   max?: number;
   scaleMin?: number;
@@ -14,4 +14,4 @@ interface SliderOptions {
   units?: string;
 }
 
-export default SliderOptions;
+export default ISliderOptions;

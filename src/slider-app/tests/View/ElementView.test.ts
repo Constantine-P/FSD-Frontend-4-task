@@ -13,9 +13,8 @@ describe('test ViewModel', () => {
       container: document.querySelector('body'),
       name: 'line',
       position: 0,
-      length: 1,
-      side: this.side,
-      size: this.size,
+      side: 'left',
+      size: 'width',
     });
   });
 
@@ -23,12 +22,6 @@ describe('test ViewModel', () => {
     expect(element.position).toBe(0);
     element.position = 0.5;
     expect(element.position).toBe(0.5);
-  });
-
-  test('test length', () => {
-    expect(element.length).toBe(1);
-    element.length = 0.7;
-    expect(element.length).toBe(0.7);
   });
 
   test('test transitionOn / transitionOff', () => {

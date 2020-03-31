@@ -1,12 +1,26 @@
 import EventEmitter from '../../classes/EventEmitter';
+import Side from '../../types/Side';
+import Size from '../../types/Size';
 import createElement from '../../functions/createElement';
 import getPositions from '../../functions/getPositions';
 import round10 from '../../functions/round10';
 
-class LinearScaleView extends EventEmitter {
-  protected elementItem: HTMLDivElement;
+interface IOptions {
+  container: HTMLElement;
+  side: Side;
+  size: Size;
+}
 
-  private scaleValues: HTMLDivElement;
+type Position = {
+  [key in Side]: number;
+};
+
+class LinearScaleView extends EventEmitter {
+  protected elementItem: HTMLElement;
+
+  private scaleLine: HTMLElement;
+
+  private scaleValues: HTMLElement;
 
   public side: Side;
 
@@ -20,13 +34,13 @@ class LinearScaleView extends EventEmitter {
     scaleStep: number;
   };
 
-  constructor(options) {
+  constructor(options: IOptions) {
     super();
     this.init(options);
     this.addHandlers();
   }
 
-  get element(): HTMLDivElement {
+  get element(): HTMLElement {
     return this.elementItem;
   }
 
@@ -58,7 +72,7 @@ class LinearScaleView extends EventEmitter {
     });
   }
 
-  private init(options): void {
+  private init(options: IOptions): void {
     const { container, side, size } = options;
     this.side = side;
     this.size = size;
@@ -71,9 +85,9 @@ class LinearScaleView extends EventEmitter {
     this.addElements(container);
   }
 
-  private addElements(container): void {
+  private addElements(container: HTMLElement): void {
     this.elementItem = createElement('scale');
-    ['scaleLine', 'scaleValues'].forEach((item) => {
+    ['scaleLine', 'scaleValues'].forEach((item: 'scaleLine' | 'scaleValues') => {
       this[item] = createElement(item);
       this.element.append(this[item]);
     });
@@ -81,10 +95,10 @@ class LinearScaleView extends EventEmitter {
   }
 
   private addHandlers(): void {
-    const handleMouseDown = (e): void => {
+    const handleMouseDown = (e: MouseEvent): void => {
       this.emit('scaleMouseDown', this.getPosition(e));
 
-      const handleMouseMove = (event): void => {
+      const handleMouseMove = (event: MouseEvent): void => {
         this.emit('scaleMouseMove', this.getPosition(event));
       };
 
@@ -98,7 +112,7 @@ class LinearScaleView extends EventEmitter {
     this.element.addEventListener('mousedown', handleMouseDown);
   }
 
-  private getPosition(e): number {
+  private getPosition(e: MouseEvent): number {
     function getClickCoordsRelativeToBlock(event: MouseEvent, base: HTMLElement): Position {
       const baseBox = base.getBoundingClientRect();
       return {
@@ -112,7 +126,7 @@ class LinearScaleView extends EventEmitter {
     return getClickCoordsRelativeToBlock(e, this.element)[this.side];
   }
 
-  private appendValueElement(position, value): void {
+  private appendValueElement(position: number, value: number): void {
     const element = createElement('scaleValue');
     element.textContent = `${value.toLocaleString()}`;
     element.style[this.side] = `${position * 100}%`;
@@ -127,17 +141,6 @@ class LinearScaleView extends EventEmitter {
     this.scaleValues.removeChild(symbol);
     return symbolSize;
   }
-}
-
-type Side = 'top' | 'bottom' | 'left' | 'right';
-
-type Size = 'width' | 'height';
-
-interface Position {
-  top: number;
-  left: number;
-  bottom: number;
-  right: number;
 }
 
 export default LinearScaleView;
