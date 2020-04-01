@@ -30,37 +30,84 @@ html
   body
     main.page-wrapper
       section.slider-wrapper
-        div.panel.panel_size_s#panel-11
+        div.panel.panel_size_s
           +panel-row({ title: "Minimum", name: "min" })
           +panel-row({ title: "Maximum", name: "max" })
-        div.panel.panel_size_m#panel-12
+        div.panel.panel_size_m
           each row in panelBig
             +panel-row(row)
-        div.slider#slider-1
+        div.slider(
+          data-min = "-2500",
+          data-max = "-2000",
+          data-scale-min = "-10000",
+          data-scale-max = "10000",
+          data-scale-step = "1",
+          data-are-tooltips-visible = "true",
+          data-is-range = "true",
+          data-is-scale-visible = "true",
+          data-is-reverse-direction = "false",
+          data-type = "horizontal",
+          data-units = "Дж",
+        )
 
       section.slider-wrapper
-        div.panel.panel_size_s#panel-21
+        div.panel.panel_size_s
           +panel-row({ title: "Minimum", name: "min" })
           +panel-row({ title: "Maximum", name: "max" })
-        div.panel.panel_size_m#panel-22
+        div.panel.panel_size_m
           each row in panelBig
             +panel-row(row)
-        div.slider#slider-2
+        div.slider(
+          data-min = "2",
+          data-max = "30",
+          data-scale-min = "0",
+          data-scale-max = "38",
+          data-scale-step = "1",
+          data-are-tooltips-visible = "true",
+          data-is-range = "false",
+          data-is-scale-visible = "true",
+          data-is-reverse-direction = "false",
+          data-type = "vertical",
+          data-units = "какаду",
+        )
 
       section.slider-wrapper
-        div.panel.panel_size_s#panel-31
+        div.panel.panel_size_s
           +panel-row({ title: "Minimum", name: "min" })
           +panel-row({ title: "Maximum", name: "max" })
-        div.panel.panel_size_m#panel-32
+        div.panel.panel_size_m
           each row in panelBig
             +panel-row(row)
-        div.slider#slider-3
+        div.slider(
+          data-min = "-100000",
+          data-max = "100000",
+          data-scale-min = "-500000",
+          data-scale-max = "500000",
+          data-scale-step = "50000",
+          data-are-tooltips-visible = "true",
+          data-is-range = "true",
+          data-is-scale-visible = "true",
+          data-is-reverse-direction = "true",
+          data-type = "vertical",
+          data-units = "$",
+        )
 
       section.slider-wrapper
-        div.panel.panel_size_s#panel-41
+        div.panel.panel_size_s
           +panel-row({ title: "Minimum", name: "min" })
           +panel-row({ title: "Maximum", name: "max" })
-        div.panel.panel_size_m#panel-42
+        div.panel.panel_size_m
           each row in panelBig
             +panel-row(row)
-        div.slider#slider-4
+        div.slider(
+          data-min = "-7000",
+          data-max = "7000",
+          data-scale-min = "-10000",
+          data-scale-max = "10000",
+          data-scale-step = "500",
+          data-are-tooltips-visible = "false",
+          data-is-range = "true",
+          data-is-scale-visible = "true",
+          data-is-reverse-direction = "false",
+          data-type = "horizontal",
+        )

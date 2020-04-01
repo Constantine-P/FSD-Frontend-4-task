@@ -17,7 +17,20 @@ class Slider extends EventEmitter {
 
   constructor(slider: HTMLElement, options?: ISliderOptions) {
     super();
-    const opts = { ...DEFAULT_SLIDER_OPTIONS, ...options } as ISliderOptions;
+
+    const dataOptions: {[name: string]: number | string | boolean} = { ...slider.dataset };
+    Object.keys(dataOptions).forEach((key) => {
+      const value = dataOptions[key];
+      if (`${Number(value)}` === value) {
+        dataOptions[key] = Number(value);
+      } else if (value === 'true') {
+        dataOptions[key] = true;
+      } else if (value === 'false') {
+        dataOptions[key] = false;
+      }
+    });
+
+    const opts = { ...DEFAULT_SLIDER_OPTIONS, ...dataOptions, ...options } as ISliderOptions;
     this.model = new Model(opts);
     this.view = new View(slider, opts);
     this.controller = new Controller(this.model, this.view);
