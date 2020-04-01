@@ -97,7 +97,15 @@ class LinearScaleView extends EventEmitter {
   private addHandlers(): void {
     const handleMouseDown = (e: MouseEvent): void => {
       if (!(e.target instanceof HTMLElement)) return;
-      if (this.scaleValues.contains(e.target)) return;
+
+      if (this.scaleValues.contains(e.target)) {
+        const valueElem = e.target;
+        const { scaleMin, scaleMax } = this.model;
+        const value = Number(valueElem.textContent.split('\xa0').join(''));
+        const position = (value - scaleMin) / (scaleMax - scaleMin);
+        this.emit('scaleMouseDown', position);
+        return;
+      }
 
       this.emit('scaleMouseDown', this.getPosition(e));
 
