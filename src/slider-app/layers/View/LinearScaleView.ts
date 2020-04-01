@@ -139,7 +139,7 @@ class LinearScaleView extends EventEmitter {
 
   private appendValueElement(position: number, value: number): void {
     const element = createElement('scaleValue');
-    element.textContent = `${value.toLocaleString()}`;
+    element.textContent = `${value.toLocaleString('ru-RU')}`;
     element.style[this.side] = `${position * 100}%`;
     this.scaleValues.append(element);
   }

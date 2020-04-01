@@ -181,9 +181,9 @@ class View extends EventEmitter {
     this.rangeLine.position = minHandlePosition;
     this.rangeLine.length = rangeLength;
     if (isRange) {
-      this.minHandle.tooltipValue = `${minHandleValue.toLocaleString()}${(units ? '\xa0' : '')}${units}`;
+      this.minHandle.tooltipValue = `${minHandleValue.toLocaleString('ru-RU')}${(units ? '\xa0' : '')}${units}`;
     }
-    this.maxHandle.tooltipValue = `${maxHandleValue.toLocaleString()}${(units ? '\xa0' : '')}${units}`;
+    this.maxHandle.tooltipValue = `${maxHandleValue.toLocaleString('ru-RU')}${(units ? '\xa0' : '')}${units}`;
   }
 
   private updateHandlesPosition(position: number): void {
