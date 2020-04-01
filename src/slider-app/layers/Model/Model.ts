@@ -32,17 +32,17 @@ class Model extends EventEmitter {
   }
 
   get min(): number {
-    return this.minValue;
+    return (this.isRange) ? this.minValue : this.scaleMin;
   }
 
   set min(value: number) {
     const {
-      scaleMin, scaleMax, max, isRange,
+      scaleMin, scaleMax, max,
     } = this;
     let val = this.round(normalizeToNum(value, scaleMax));
     const isValid = (val >= scaleMin) && (val < scaleMax) && (val < max);
     if (!isValid) val = scaleMin;
-    this.minValue = (isRange) ? val : scaleMin;
+    this.minValue = val;
     this.emit('change', 'min');
   }
 
@@ -163,6 +163,8 @@ class Model extends EventEmitter {
   set isRange(value: boolean) {
     this.isIRangeValue = value;
     if (this.min === this.max) this.max += this.scaleStep;
+    if (this.min > this.max) this.min = this.scaleMin;
+    this.emit('change', 'isRange');
   }
 
   get data(): ITransmittedData {

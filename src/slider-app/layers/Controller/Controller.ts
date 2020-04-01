@@ -28,7 +28,7 @@ class Controller {
   }
 
   private updateModel(e: string): void {
-    if (e === 'min') this.model.relMin = this.view.model.minHandlePosition;
+    if (e === 'min' && this.view.model.isRange) this.model.relMin = this.view.model.minHandlePosition;
     if (e === 'max') this.model.relMax = this.view.model.maxHandlePosition;
     if (e === 'isRange') this.model.isRange = this.view.model.isRange;
   }
