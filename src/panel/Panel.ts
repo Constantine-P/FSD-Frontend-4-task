@@ -3,8 +3,7 @@ import EventEmitter from '../slider-app/classes/EventEmitter';
 import ISliderOptions from '../slider-app/interfaces/ISliderOptions';
 import IRangeValue from '../slider-app/interfaces/IRangeValue';
 
-type PanelKey = 'min' | 'max' | 'scaleMin' | 'scaleMax' | 'scaleStep' | 'units'
-| 'isRange' | 'areTooltipsVisible' | 'isScaleVisible' | 'isReverseDirection' | 'type';
+type PanelKey = keyof ISliderOptions;
 
 type PanelValue = number | string | boolean | IRangeValue;
 

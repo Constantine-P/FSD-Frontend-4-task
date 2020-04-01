@@ -1,6 +1,21 @@
 import EventEmitter from '../../classes/EventEmitter';
 import SliderType from '../../types/SliderType';
-import ITransmittedData from '../../interfaces/ITransmittedData';
+
+interface IViewModelData {
+  minHandlePosition?: number;
+  maxHandlePosition?: number;
+  minHandleValue?: number;
+  maxHandleValue?: number;
+  scaleMin?: number;
+  scaleMax?: number;
+  scaleStep?: number;
+  isRange?: boolean;
+  areTooltipsVisible?: boolean;
+  isScaleVisible?: boolean;
+  isReverseDirection?: boolean;
+  type?: SliderType;
+  units?: string;
+}
 
 class ViewModel extends EventEmitter {
   public scaleMin: number;
@@ -109,7 +124,7 @@ class ViewModel extends EventEmitter {
     this.emit('change', 'units');
   }
 
-  get data(): ITransmittedData {
+  get data(): IViewModelData {
     const {
       type, isRange, isScaleVisible, isReverseDirection, areTooltipsVisible, units,
     } = this;
@@ -123,14 +138,11 @@ class ViewModel extends EventEmitter {
     };
   }
 
-  set data(value: ITransmittedData) {
-    type ViewModelKeys =
-      'minHandleValue' | 'maxHandleValue' | 'minHandlePosition' | 'maxHandlePosition'
-      | 'scaleMin' | 'scaleMax' | 'scaleStep' | 'type' | 'units'
-      | 'isRange' | 'areTooltipsVisible' | 'isScaleVisible' | 'isReverseDirection';
+  set data(value: IViewModelData) {
+    type ViewModelKey = keyof IViewModelData;
 
     this.disableEmitting();
-    Object.keys(value).forEach((key: ViewModelKeys) => {
+    Object.keys(value).forEach((key: ViewModelKey) => {
       if (this[key] !== undefined) {
         (this[key] as number | string | boolean | SliderType) = value[key];
       }

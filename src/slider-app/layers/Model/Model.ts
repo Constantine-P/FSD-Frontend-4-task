@@ -1,11 +1,20 @@
 import EventEmitter from '../../classes/EventEmitter';
 import IRangeValue from '../../interfaces/IRangeValue';
-import ITransmittedData from '../../interfaces/ITransmittedData';
 import ISliderOptions from '../../interfaces/ISliderOptions';
 import normalizeToNum from '../../functions/normalizeToNum';
 import minMax from '../../functions/minMax';
 import throwParamError from '../../functions/throwError';
 import DEFAULT_SLIDER_OPTIONS from '../../DEFAULT_SLIDER_OPTIONS';
+
+interface IModelData {
+  min?: number;
+  max?: number;
+  scaleMin?: number;
+  scaleMax?: number;
+  scaleStep?: number;
+  isRange?: boolean;
+  relRange?: IRangeValue;
+}
 
 class Model extends EventEmitter {
   private minValue: number;
@@ -18,7 +27,7 @@ class Model extends EventEmitter {
 
   private scaleStepValue: number;
 
-  private isIRangeValue: boolean;
+  private isRangeValue: boolean;
 
   constructor(options: ISliderOptions) {
     super();
@@ -157,17 +166,17 @@ class Model extends EventEmitter {
   }
 
   get isRange(): boolean {
-    return this.isIRangeValue;
+    return this.isRangeValue;
   }
 
   set isRange(value: boolean) {
-    this.isIRangeValue = value;
+    this.isRangeValue = value;
     if (this.min === this.max) this.max += this.scaleStep;
     if (this.min > this.max) this.min = this.scaleMin;
     this.emit('change', 'isRange');
   }
 
-  get data(): ITransmittedData {
+  get data(): IModelData {
     const {
       min, max, scaleMin, scaleMax, scaleStep, relRange,
     } = this;
@@ -176,8 +185,8 @@ class Model extends EventEmitter {
     };
   }
 
-  set data(value: ITransmittedData) {
-    type ModelKeys = 'scaleStep' | 'scaleMin' | 'scaleMax' | 'min' | 'max' | 'isRange' | 'relRange';
+  set data(value: IModelData) {
+    type ModelKeys = keyof IModelData;
     const fields = ['scaleStep', 'scaleMin', 'scaleMax', 'min', 'max', 'isRange', 'relRange'];
     fields.forEach((key: ModelKeys) => {
       if (value[key] !== undefined) {
@@ -201,7 +210,7 @@ class Model extends EventEmitter {
     this.minValue = options.min;
     this.maxValue = options.max;
     this.scaleStepValue = options.scaleStep;
-    this.isIRangeValue = options.isRange;
+    this.isRangeValue = options.isRange;
   }
 
   private round(value: number): number {

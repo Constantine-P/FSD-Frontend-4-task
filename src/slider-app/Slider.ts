@@ -6,7 +6,6 @@ import EventEmitter from './classes/EventEmitter';
 import SliderType from './types/SliderType';
 import ISliderOptions from './interfaces/ISliderOptions';
 import IRangeValue from './interfaces/IRangeValue';
-import ITransmittedData from './interfaces/ITransmittedData';
 import DEFAULT_SLIDER_OPTIONS from './DEFAULT_SLIDER_OPTIONS';
 
 class Slider extends EventEmitter {
@@ -122,11 +121,11 @@ class Slider extends EventEmitter {
     this.view.model.units = value;
   }
 
-  get data(): ITransmittedData {
+  get data(): ISliderOptions {
     return { ...this.model.data, ...this.view.model.data };
   }
 
-  set data(value: ITransmittedData) {
+  set data(value: ISliderOptions) {
     this.view.model.data = value;
     this.model.data = value;
   }
