@@ -30,7 +30,7 @@ class Slider extends EventEmitter {
       }
     });
 
-    const opts = { ...DEFAULT_SLIDER_OPTIONS, ...dataOptions, ...options } as ISliderOptions;
+    const opts: ISliderOptions = { ...DEFAULT_SLIDER_OPTIONS, ...dataOptions, ...options };
     this.model = new Model(opts);
     this.view = new View(slider, opts);
     this.controller = new Controller(this.model, this.view);

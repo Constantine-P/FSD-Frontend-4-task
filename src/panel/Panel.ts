@@ -101,7 +101,7 @@ class Panel extends EventEmitter {
     if (isElemSupportValue) {
       elem.value = `${value}`;
     } else if (isElemTypeCheckbox) {
-      (elem as HTMLInputElement).checked = value as boolean;
+      (elem as HTMLInputElement).checked = Boolean(value);
     }
   }
 
@@ -114,7 +114,7 @@ class Panel extends EventEmitter {
 
       if (keys.indexOf(e.target.dataset.js) < 0) return;
 
-      const key = e.target.dataset.js as PanelKey;
+      const key: PanelKey = e.target.dataset.js as PanelKey;
       this.updateModelByElements();
       (this.slider[key] as PanelValue) = this.model[key];
     };

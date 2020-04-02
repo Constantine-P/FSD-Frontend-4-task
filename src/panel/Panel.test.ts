@@ -1,6 +1,6 @@
 import Panel from './Panel';
 import Slider from '../slider-app/Slider';
-import SliderType from '../slider-app/types/SliderType';
+import ISliderOptions from '../slider-app/interfaces/ISliderOptions';
 import '@testing-library/jest-dom';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -27,20 +27,20 @@ describe('test PanelView', () => {
         <option selected>vertical</option>
       </select>
     </div>`;
-    const sliderElement = document.querySelector('.slider') as HTMLElement;
+    const sliderElement: HTMLElement = document.querySelector('.slider');
     const slider = new Slider(sliderElement, {});
-    const panelElement = document.querySelector('.panel') as HTMLElement;
+    const panelElement: HTMLElement = document.querySelector('.panel');
     panelView = new Panel(panelElement, slider);
   });
 
   it('test get/set model', () => {
-    const data = {
+    const data: ISliderOptions = {
       min: 11,
       max: 12,
       scaleMin: -20,
       scaleMax: 30,
       scaleStep: 10,
-      type: 'horizontal' as SliderType,
+      type: 'horizontal',
       isRange: false,
       isScaleVisible: false,
       areTooltipsVisible: false,
@@ -51,8 +51,8 @@ describe('test PanelView', () => {
   });
 
   it('test model', () => {
-    const min = document.querySelector('.min') as HTMLInputElement;
-    const scaleStep = document.querySelector('.scaleStep') as HTMLInputElement;
+    const min: HTMLInputElement = document.querySelector('.min');
+    const scaleStep: HTMLInputElement = document.querySelector('.scaleStep');
 
     min.value = '20';
     min.dispatchEvent(new Event('change'));
@@ -62,7 +62,7 @@ describe('test PanelView', () => {
       scaleMin: 0,
       scaleMax: 100,
       scaleStep: 25,
-      type: 'horizontal' as SliderType,
+      type: 'horizontal',
       isRange: true,
       isScaleVisible: true,
       areTooltipsVisible: true,
@@ -79,7 +79,7 @@ describe('test PanelView', () => {
       scaleMin: 0,
       scaleMax: 100,
       scaleStep: 1,
-      type: 'horizontal' as SliderType,
+      type: 'horizontal',
       isRange: true,
       isScaleVisible: true,
       areTooltipsVisible: true,

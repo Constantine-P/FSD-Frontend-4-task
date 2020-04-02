@@ -1,6 +1,6 @@
 import Slider from '../Slider';
 import Panel from '../../panel/Panel';
-import SliderType from '../types/SliderType';
+import ISliderOptions from '../interfaces/ISliderOptions';
 import '@testing-library/jest-dom';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -8,7 +8,7 @@ require('jsdom-global')();
 
 describe('test Scale', () => {
   let slider: Slider;
-  const options = {
+  const options: ISliderOptions = {
     min: 2,
     max: 8,
     scaleMin: -5,
@@ -18,11 +18,23 @@ describe('test Scale', () => {
     isRange: true,
     isScaleVisible: true,
     isReverseDirection: true,
-    type: 'horizontal' as SliderType,
+    type: 'horizontal',
   };
   beforeEach(() => {
     document.body.innerHTML = `
-    <div class="slider"></div>
+    <div class="slider"
+      data-min = "-2500"
+      data-max = "-2000"
+      data-scale-min = "-10000"
+      data-scale-max = "10000"
+      data-scale-step = "1"
+      data-are-tooltips-visible = "true"
+      data-is-range = "true"
+      data-is-scale-visible = "true"
+      data-is-reverse-direction = "false"
+      data-type = "horizontal"
+      data-units = "Дж"
+    ></div>
     <div class="panel">
       <input type="number"   data-js="min" name="min">
       <input type="number"   data-js="max" name="max">
@@ -38,8 +50,8 @@ describe('test Scale', () => {
         <option selected>vertical</option>
       </select>
     </div>`;
-    const sliderEl = document.querySelector('.slider') as HTMLElement;
-    const panel = document.querySelector('.panel') as HTMLElement;
+    const sliderEl: HTMLElement = document.querySelector('.slider');
+    const panel: HTMLElement = document.querySelector('.panel');
     slider = new Slider(sliderEl, options);
     new Panel(panel, slider);
   });
@@ -139,11 +151,11 @@ describe('test Scale', () => {
       isRange: true,
       isScaleVisible: true,
       isReverseDirection: true,
-      type: 'horizontal' as SliderType,
+      type: 'horizontal',
       relRange: { min: 7 / 15, max: 13 / 15 },
-      units: '',
+      units: 'Дж',
     });
-    const data = {
+    const data: ISliderOptions = {
       min: -10,
       max: 5,
       scaleMin: -10,
@@ -153,11 +165,12 @@ describe('test Scale', () => {
       isRange: false,
       isScaleVisible: false,
       isReverseDirection: false,
-      type: 'vertical' as SliderType,
-      relRange: { min: 0, max: 15 / 30 },
+      type: 'vertical',
       units: 'zxc',
     };
     slider.data = data;
-    expect(slider.data).toStrictEqual(data);
+    expect(slider.data).toStrictEqual({
+      ...data, relRange: { min: 0, max: 15 / 30 },
+    });
   });
 });

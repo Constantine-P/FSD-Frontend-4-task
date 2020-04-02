@@ -25,7 +25,7 @@ describe('test ViewModel', () => {
   });
 
   test('test transitionOn / transitionOff', () => {
-    const line = document.querySelector('.slider__line') as HTMLElement;
+    const line: HTMLElement = document.querySelector('.slider__line');
     expect(line.style.transitionDuration).toBe('');
     element.transitionOff();
     expect(line.style.transitionDuration).toBe('0s');
@@ -34,7 +34,7 @@ describe('test ViewModel', () => {
   });
 
   test('test hide / show', () => {
-    const line = document.querySelector('.slider__line') as HTMLElement;
+    const line: HTMLElement = document.querySelector('.slider__line');
     element.hide();
     expect(line).toHaveClass('hidden');
     expect(element.position).toBe(0);

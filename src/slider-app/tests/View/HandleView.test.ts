@@ -19,13 +19,13 @@ describe('test ViewModel', () => {
   });
 
   test('test set tooltipValue', () => {
-    const handle = document.querySelector('.slider__handle') as HTMLElement;
+    const handle: HTMLElement = document.querySelector('.slider__handle');
     element.tooltipValue = 123;
     expect(handle).toHaveTextContent('123');
   });
 
   test('test hideTooltip / showTooltip', () => {
-    const tooltip = document.querySelector('.slider__tooltip') as HTMLElement;
+    const tooltip: HTMLElement = document.querySelector('.slider__tooltip');
     element.hideTooltip();
     expect(tooltip).toHaveClass('hidden');
     element.showTooltip();
@@ -33,7 +33,7 @@ describe('test ViewModel', () => {
   });
 
   test('test set tooltipTranslateValue', () => {
-    const tooltip = document.querySelector('.slider__tooltip') as HTMLElement;
+    const tooltip: HTMLElement = document.querySelector('.slider__tooltip');
     element.tooltipTranslateValue = 0.25;
     expect(tooltip.style.transform).toBe('translateX(-25%)');
     element.tooltipTranslateValue = -0.25;

@@ -1,6 +1,6 @@
-import SliderType from './types/SliderType';
+import ISliderOptions from './interfaces/ISliderOptions';
 
-const DEFAULT_SLIDER_OPTIONS = {
+const DEFAULT_SLIDER_OPTIONS: ISliderOptions = {
   min: 0,
   max: 100,
   scaleMin: 0,
@@ -10,7 +10,7 @@ const DEFAULT_SLIDER_OPTIONS = {
   isRange: true,
   isScaleVisible: true,
   isReverseDirection: false,
-  type: 'horizontal' as SliderType,
+  type: 'horizontal',
   units: '',
 };
 

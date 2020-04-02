@@ -70,8 +70,8 @@ class ViewModel extends EventEmitter {
   }
 
   set type(value: SliderType) {
-    const sliderTypes = ['horizontal', 'vertical'];
-    this.typeValue = (sliderTypes.indexOf(value) > -1) ? value : sliderTypes[0] as SliderType;
+    const sliderTypes: SliderType[] = ['horizontal', 'vertical'];
+    this.typeValue = (sliderTypes.indexOf(value) > -1) ? value : sliderTypes[0];
     this.emit('change', 'type');
   }
 

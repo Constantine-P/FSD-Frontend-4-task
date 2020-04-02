@@ -17,7 +17,7 @@ describe('test ViewModel', () => {
   });
 
   test('test renderValues', () => {
-    const scaleValues = element.element.querySelector('.slider__scale-values') as HTMLElement;
+    const scaleValues: HTMLElement = element.element.querySelector('.slider__scale-values');
     expect(element.element).toContainElement(scaleValues);
     element.model = {
       scaleMin: 11,

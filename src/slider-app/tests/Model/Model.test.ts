@@ -1,9 +1,9 @@
 import Model from '../../layers/Model/Model';
-import SliderType from '../../types/SliderType';
+import ISliderOptions from '../../interfaces/ISliderOptions';
 
 describe('test Model', () => {
   let model: Model;
-  const options = {
+  const options: ISliderOptions = {
     min: 2,
     max: 8,
     scaleMin: -10,
@@ -13,7 +13,7 @@ describe('test Model', () => {
     isRange: true,
     isScaleVisible: true,
     isReverseDirection: false,
-    type: 'horizontal' as SliderType,
+    type: 'horizontal',
   };
   beforeEach(() => {
     model = new Model(options);
