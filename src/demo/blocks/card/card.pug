@@ -1,0 +1,34 @@
+include ../../../panel/blocks/panel/panel
+include ../../../panel/blocks/panel-row/panel-row
+-
+  const panelSmall = [
+    { title: "Minimum", name: "min" },
+    { title: "Maximum", name: "max" },
+  ]
+  const panelMiddle = [
+    { title: "Scale minimum", name: "scaleMin" },
+    { title: "Scale maximum", name: "scaleMax" },
+    { title: "Scale step", name: "scaleStep"},
+    { title: "Minimum", name: "min"},
+    { title: "Maximum", name: "max"},
+    { title: "Type", name: "type", type: "select", options: ["horizontal", "vertical"] },
+    { title: "Show tooltips", name: "areTooltipsVisible", type: "checkbox" },
+    { title: "Show scale", name: "isScaleVisible", type: "checkbox" },
+    { title: "Enable range", name: "isRange", type: "checkbox" },
+    { title: "Reverse direction", name: "isReverseDirection", type: "checkbox" },
+    { title: "Units", name: "units", type: "text" },
+  ]
+
+mixin card
+  +b("section").card
+    +e.panel._small
+      +panel
+        each row in panelSmall
+          +e.row
+            +panel-row(row)
+    +e.panel._middle
+      +panel
+        each row in panelMiddle
+          +e.row
+            +panel-row(row)
+    block

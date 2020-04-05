@@ -1,0 +1,43 @@
+$background-color = #e7e7e7
+$text-color = black
+$border-color = #FFFFFF
+$shadow-color = #838383
+$font-size = 16px
+
+.card
+  display grid
+  grid-template-areas 'panel-small panel-middle'\
+                      'slider      panel-middle'
+  grid-template-rows auto 1fr
+  grid-template-columns 1fr 1fr
+  grid-gap 30px
+  padding 20px 10px 20px 10px
+  color $text-color
+  font-family Garamond, serif
+  font-size $font-size
+  background-color $background-color
+  border 1px solid $border-color
+  box-shadow 1px 1px 3px 0 $shadow-color
+
+  @media (max-width 800px)
+    grid-template-areas 'panel-small'\
+                        'slider'\
+                        'panel-middle'
+    grid-template-columns 1fr
+
+  &__panel
+    display flex
+    justify-content center
+    align-items center
+
+  &__panel_small
+    grid-area panel-small
+
+  &__panel_middle
+    grid-area panel-middle
+
+  &__slider
+    grid-area slider
+    display flex
+    justify-content center
+    align-items center

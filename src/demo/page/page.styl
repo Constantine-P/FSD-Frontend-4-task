@@ -1,0 +1,13 @@
+@import '../../panel/blocks/*/*.styl'
+@import '../blocks/card/card.styl'
+
+.page
+  display grid
+  grid-template-rows 1fr 1fr
+  grid-template-columns 1fr 1fr
+  grid-gap 15px
+  margin 10px
+
+  @media (max-width 1200px)
+    grid-template-rows auto
+    grid-template-columns 1fr

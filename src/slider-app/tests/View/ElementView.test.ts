@@ -36,9 +36,9 @@ describe('test ViewModel', () => {
   test('test hide / show', () => {
     const line: HTMLElement = document.querySelector('.slider__line');
     element.hide();
-    expect(line).toHaveClass('hidden');
+    expect(line).toHaveClass('slider__line_hidden');
     expect(element.position).toBe(0);
     element.show();
-    expect(line).not.toHaveClass('hidden');
+    expect(line).not.toHaveClass('slider__line_hidden');
   });
 });

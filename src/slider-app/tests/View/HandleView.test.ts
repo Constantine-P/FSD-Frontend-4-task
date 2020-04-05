@@ -27,9 +27,9 @@ describe('test ViewModel', () => {
   test('test hideTooltip / showTooltip', () => {
     const tooltip: HTMLElement = document.querySelector('.slider__tooltip');
     element.hideTooltip();
-    expect(tooltip).toHaveClass('hidden');
+    expect(tooltip).toHaveClass('slider__tooltip_hidden');
     element.showTooltip();
-    expect(tooltip).not.toHaveClass('hidden');
+    expect(tooltip).not.toHaveClass('slider__tooltip_hidden');
   });
 
   test('test set tooltipTranslateValue', () => {

@@ -1,0 +1,47 @@
+include ../../../node_modules/bemto.pug/bemto
+include ../../slider-app/resources/slider/slider
+include ../blocks/card/card
+
+doctype html
+html
+  head
+    meta(charset = "utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="keywords" content="FSD 4th task slider")
+    meta(name="msapplication-TileColor" content="#da532c")
+    meta(name="theme-color" content="#ffffff")
+    link(rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png")
+    link(rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png")
+    link(rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png")
+    link(rel="manifest" href="assets/favicons/site.webmanifest")
+    link(rel="mask-icon" href="assets/favicons/safari-pinned-tab.svg" color="#5bbad5")
+    title Slider demo page
+  body
+    main.page
+      -
+        const sliderOptions = [
+          {
+            min: -2500, max: -2000, scaleMin: -10000, scaleMax: 10000, scaleStep: 1,
+            areTooltipsVisible: true, isRange: true, isScaleVisible: true, isReverseDirection: false,
+            type: "horizontal", units: "Дж",
+          },
+          {
+            min: 2, max: 30, scaleMin: 0, scaleMax: 38, scaleStep: 1,
+            areTooltipsVisible: true, isRange: false, isScaleVisible: true, isReverseDirection: false,
+            type: "vertical", units: "какаду",
+          },
+          {
+            min: -100000, max: 100000, scaleMin: -500000, scaleMax: 500000, scaleStep: 50000,
+            areTooltipsVisible: true, isRange: true, isScaleVisible: true, isReverseDirection: true,
+            type: "vertical", units: "$"
+          },
+          {
+            min: -7000, max: 7000, scaleMin: -10000, scaleMax: 10000, scaleStep: 500,
+            areTooltipsVisible: false, isRange: true, isScaleVisible: true, isReverseDirection: false,
+            type: "horizontal",
+          },
+        ]
+
+      each options in sliderOptions
+        +card
+          +slider(options)

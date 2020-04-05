@@ -9,7 +9,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
   devtool: 'eval',
   entry: {
-    demo: path.join(__dirname, 'src/demo-page/index.ts'),
+    demo: path.join(__dirname, 'src/demo/index.ts'),
   },
   output: {
     filename: 'main.js',
@@ -54,7 +54,7 @@ module.exports = {
     }),
     new HTMLWebpackPlugin({
       filename: 'index.html',
-      template: path.join(__dirname, 'src/demo-page/index.pug'),
+      template: path.join(__dirname, 'src/demo/page/page.pug'),
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -62,7 +62,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: path.join(__dirname, 'src/demo-page/favicons/**/*.*'),
+        from: path.join(__dirname, 'src/demo/favicons/**/*.*'),
         to: path.join(__dirname, 'dist/assets/favicons/'),
         flatten: true,
       },

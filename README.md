@@ -39,16 +39,14 @@ npm run tc
   - Controller
 
 ## Model
-  
   1. Содержит, так называемые, бизнес-данные и логику работы с ними, а именно:
      - минимальное и максимальное значение слайдера;
      - минимальное и максимальное значение шкалы слайдера;
-     - шаг шкалы (либо последовательность шагов);
+     - шаг шкалы;
   2. Предоставляет интерфейс для работы с данными в виде get / set методов;
   3. Наследуется от класса EventEmitter: позволяет подписываться на собственные изменения;
      
 ## View
-
   1. Отвечает за отрисовку слайдера;
   2. Предоставляет публичное свойство model - экземпляр класса ViewModel;
   
@@ -73,21 +71,31 @@ npm run tc
     
 ## Panel
   1. Отвечает за работу панели управления слайдером;
-  2. Предоставляет интерфейс в виде методов get / set data;
+  2. Предоставляет интерфейс в виде методов get / set model;
         
 # Usage
 Простой пример:
 ```html
-<div class='slider'></div>
+<div class="slider"></div>
+```
+С опциями в data-атрибутах:
+```html
+<div class="slider"
+ data-min="100"
+ data-max="200"
+ data-scale-min="0"
+ data-scale-max="300"
+ data-scale-step="300"
+></div>
 ```
 
 ``` js
 $('.slider').rangeSlider();
 ```
 
-С опциями:
+С опциями в js-объекте (имеют приоритет над опциями в data-атрибутах):
 ```html
-<div class='slider'></div>
+<div class="slider"></div>
 ```
 
 ``` js
@@ -160,6 +168,7 @@ new Panel(document.querySelector('#panel-2'), slider1);
 | isScaleVisible | boolean | true | Отображение значений шкалы |
 | areTooltipsVisible | boolean | true | Отображение значений над ползунком |
 | isReverseDirection | boolean | false | Обращает направление слайдера (снизу-вверх, слева-направо) |
+| units | string | "" | Единицы измерения |
 
 ## Methods
 | Метод | Аргумент  | Описание |
@@ -176,6 +185,7 @@ new Panel(document.querySelector('#panel-2'), slider1);
 | get / set isReverseDirection | true | Обращает направление слайдера (снизу-вверх, слева-направо) |
 | get / set range | { min: number, max: number } | Сразу min и max значения |
 | get / set data | { все данные объектом } | Названия полей объекта соответствуют методам выше |
+| get / set units | string | Единицы измерения |
 
 ## Events
 | Событие | Описание |

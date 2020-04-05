@@ -23,6 +23,8 @@ class ElementView extends EventEmitter {
 
   private transitionDuration: string;
 
+  private readonly name: string;
+
   constructor(options: IOptions) {
     super();
     const {
@@ -33,6 +35,7 @@ class ElementView extends EventEmitter {
     this.size = size;
     this.positionValue = position;
     this.transitionDuration = '';
+    this.name = name;
 
     this.addElement(container, name);
     this.position = this.positionValue;
@@ -59,11 +62,11 @@ class ElementView extends EventEmitter {
   }
 
   show(): void {
-    this.element.classList.remove('hidden');
+    this.element.classList.remove(`slider__${this.name}_hidden`);
   }
 
   hide(): void {
-    this.element.classList.add('hidden');
+    this.element.classList.add(`slider__${this.name}_hidden`);
     this.position = 0;
   }
 

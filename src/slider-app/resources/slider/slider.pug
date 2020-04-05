@@ -1,0 +1,23 @@
+mixin slider(params)
+  -
+    const options = {};
+    Object.keys(params).forEach((key) => options[key] = `${params[key]}`);
+    const {
+      min, max, scaleMin, scaleMax, scaleStep,
+      areTooltipsVisible, isRange, isScaleVisible, isReverseDirection,
+      type, units,
+    } = options;
+
+  +b.slider(
+    data-min = min
+    data-max = max
+    data-scale-min = scaleMin
+    data-scale-max = scaleMax
+    data-scale-step = scaleStep
+    data-are-tooltips-visible = areTooltipsVisible
+    data-is-range = isRange
+    data-is-scale-visible = isScaleVisible
+    data-is-reverse-direction = isReverseDirection
+    data-type = type
+    data-units = units
+  )

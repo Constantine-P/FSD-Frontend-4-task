@@ -24,11 +24,11 @@ class HandleView extends ElementView {
   }
 
   public showTooltip(): void {
-    this.tooltip.classList.remove('hidden');
+    this.tooltip.classList.remove('slider__tooltip_hidden');
   }
 
   public hideTooltip(): void {
-    this.tooltip.classList.add('hidden');
+    this.tooltip.classList.add('slider__tooltip_hidden');
   }
 
   public get tooltipSize(): number {

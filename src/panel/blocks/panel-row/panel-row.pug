@@ -1,0 +1,10 @@
+mixin panel-row(params)
+  - const { title = "", type = "number", name = "", options = [] } = params;
+
+  +b("label").panel-row= title
+    if (type === "select")
+      +e("select").input(type = type name = name data-js = name)
+        each option in options
+          option(value = option)= option
+    else
+      +e("input").input(type = type step = "any" name = name data-js = name)
