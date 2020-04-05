@@ -1,39 +1,3 @@
-.card {
-  display: grid;
-  grid-template-areas: 'panel-small panel-middle' 'slider      panel-middle';
-  grid-template-rows: auto 1fr;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 30px;
-  padding: 20px 10px 20px 10px;
-  color: #000;
-  font-family: Garamond, serif;
-  background-color: #e7e7e7;
-  border: 1px solid #fff;
-  box-shadow: 1px 1px 3px 0 #838383;
-}
-@media (max-width: 800px) {
-  .card {
-    grid-template-areas: 'panel-small' 'slider' 'panel-middle';
-    grid-template-columns: 1fr;
-  }
-}
-.card__panel {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.card__panel_small {
-  grid-area: panel-small;
-}
-.card__panel_middle {
-  grid-area: panel-middle;
-}
-.card__slider {
-  grid-area: slider;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .panel-row {
   display: flex;
   justify-content: space-between;
@@ -63,10 +27,44 @@
 .panel__row {
   margin-top: 15px;
 }
-.panel_size_small .panel__row {
-  justify-content: center;
+.card {
+  display: grid;
+  grid-template-areas: 'panel-small panel-middle' 'slider      panel-middle';
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
+  padding: 20px 10px 20px 10px;
+  color: #000;
+  font-family: Garamond, serif;
+  font-size: 16px;
+  background-color: #e7e7e7;
+  border: 1px solid #fff;
+  box-shadow: 1px 1px 3px 0 #838383;
 }
-.demo-page {
+@media (max-width: 800px) {
+  .card {
+    grid-template-areas: 'panel-small' 'slider' 'panel-middle';
+    grid-template-columns: 1fr;
+  }
+}
+.card__panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card__panel_small {
+  grid-area: panel-small;
+}
+.card__panel_middle {
+  grid-area: panel-middle;
+}
+.card__slider {
+  grid-area: slider;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.page {
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr;
@@ -74,7 +72,7 @@
   margin: 10px;
 }
 @media (max-width: 1200px) {
-  .demo-page {
+  .page {
     grid-template-rows: auto;
     grid-template-columns: 1fr;
   }
