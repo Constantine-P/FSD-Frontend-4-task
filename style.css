@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: 15px;
 }
 .panel-row__input {
   font-family: Garamond, serif;
@@ -69,7 +68,6 @@
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr;
   grid-gap: 15px;
-  margin: 10px;
 }
 @media (max-width: 1200px) {
   .page {
