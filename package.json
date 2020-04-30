@@ -19,7 +19,7 @@
   "dependencies": {
     "@types/jquery": "^3.3.32",
     "core-js": "^3.6.4",
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.0.2",
